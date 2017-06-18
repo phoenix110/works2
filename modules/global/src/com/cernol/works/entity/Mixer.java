@@ -31,7 +31,16 @@ public class Mixer extends StandardEntity {
     protected String currentStatus;
 
     @Column(name = "PHYSICAL_FORM", nullable = false)
-    protected Integer physicalForm;
+    protected String physicalForm;
+
+    public PhysicalForm getPhysicalForm() {
+        return physicalForm == null ? null : PhysicalForm.fromId(physicalForm);
+    }
+
+    public void setPhysicalForm(PhysicalForm physicalForm) {
+        this.physicalForm = physicalForm == null ? null : physicalForm.getId();
+    }
+
 
     public Unit getUnit() {
         return unit == null ? null : Unit.fromId(unit);
@@ -74,14 +83,6 @@ public class Mixer extends StandardEntity {
 
     public Integer getMaxLoad() {
         return maxLoad;
-    }
-
-    public void setPhysicalForm(PhysicalForm physicalForm) {
-        this.physicalForm = physicalForm == null ? null : physicalForm.getId();
-    }
-
-    public PhysicalForm getPhysicalForm() {
-        return physicalForm == null ? null : PhysicalForm.fromId(physicalForm);
     }
 
 

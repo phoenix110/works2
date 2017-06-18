@@ -48,7 +48,7 @@ public class Product extends StockItem {
     protected Boolean isPoisonous;
 
     @Column(name = "PHYSICAL_FORM", nullable = false)
-    protected Integer physicalForm;
+    protected String physicalForm;
 
     @OrderBy("sequenceNo")
     @Composition
@@ -57,6 +57,15 @@ public class Product extends StockItem {
     @Size(min = 1)
     @Valid
     protected List<Formula> formula;
+    public PhysicalForm getPhysicalForm() {
+        return physicalForm == null ? null : PhysicalForm.fromId(physicalForm);
+    }
+
+    public void setPhysicalForm(PhysicalForm physicalForm) {
+        this.physicalForm = physicalForm == null ? null : physicalForm.getId();
+    }
+
+
 
     public List<Formula> getFormula() {
         return formula;
@@ -109,13 +118,7 @@ public class Product extends StockItem {
         return applyOverhead;
     }
 
-    public void setPhysicalForm(PhysicalForm physicalForm) {
-        this.physicalForm = physicalForm == null ? null : physicalForm.getId();
-    }
 
-    public PhysicalForm getPhysicalForm() {
-        return physicalForm == null ? null : PhysicalForm.fromId(physicalForm);
-    }
 
     public void setCategory(Category category) {
         this.category = category;

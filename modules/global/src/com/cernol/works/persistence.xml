@@ -15,5 +15,6 @@
         <class>com.cernol.works.entity.WorksOrderPacking</class>
         <class>com.cernol.works.entity.WorksOrderIngredient</class>
         <class>com.cernol.works.entity.WorksOrderLable</class>
+        <class>com.cernol.works.entity.Formula</class>
     </persistence-unit>
 </persistence>
