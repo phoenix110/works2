@@ -2,5 +2,12 @@
 <metadata xmlns="http://schemas.haulmont.com/cuba/metadata.xsd">
 
     <metadata-model root-package="com.cernol.works" namespace="works"/>
-
+<datatypes>
+        <datatype class="com.cernol.works.entity.PartsPer100Datatype"
+                  format="#0.0000"
+                  decimalSeparator="."
+                  groupingSeparator="'"
+                  javaType="java.math.BigDecimal"/>
+        <datatype class="com.cernol.works.entity.CurrencyDatatype" javaType="java.math.BigDecimal"/>
+    </datatypes>
 </metadata>

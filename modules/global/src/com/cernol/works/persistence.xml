@@ -4,5 +4,16 @@
     <persistence-unit name="works2"
                       transaction-type="RESOURCE_LOCAL">
         <class>com.cernol.works.entity.Category</class>
+        <class>com.cernol.works.entity.Order</class>
+        <class>com.cernol.works.entity.WorksOrder</class>
+        <class>com.cernol.works.entity.StockItem</class>
+        <class>com.cernol.works.entity.Mixer</class>
+        <class>com.cernol.works.entity.Container</class>
+        <class>com.cernol.works.entity.RawMaterial</class>
+        <class>com.cernol.works.entity.Product</class>
+        <class>com.cernol.works.entity.Lable</class>
+        <class>com.cernol.works.entity.WorksOrderPacking</class>
+        <class>com.cernol.works.entity.WorksOrderIngredient</class>
+        <class>com.cernol.works.entity.WorksOrderLable</class>
     </persistence-unit>
 </persistence>
