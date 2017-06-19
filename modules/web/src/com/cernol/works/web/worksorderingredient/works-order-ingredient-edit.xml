@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/window.xsd"
+        caption="msg://editorCaption"
+        class="com.cernol.works.web.worksorderingredient.WorksOrderIngredientEdit"
+        datasource="worksOrderIngredientDs"
+        focusComponent="fieldGroup"
+        messagesPack="com.cernol.works.web.worksorderingredient">
+    <dsContext>
+        <datasource id="worksOrderIngredientDs"
+                    class="com.cernol.works.entity.WorksOrderIngredient"
+                    view="worksOrderIngredient-view"/>
+    </dsContext>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="windowActions"
+            spacing="true">
+        <fieldGroup id="fieldGroup"
+                    datasource="worksOrderIngredientDs">
+            <column width="250px">
+                <field property="sequenceNo"/>
+                <field property="rawMaterial"/>
+                <field property="mass"/>
+                <field property="kgCost"/>
+                <field property="lineCost"/>
+            </column>
+        </fieldGroup>
+        <frame id="windowActions"
+               screen="editWindowActions"/>
+    </layout>
+</window>

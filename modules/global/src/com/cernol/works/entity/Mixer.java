@@ -8,6 +8,7 @@ import javax.persistence.Table;
 import javax.persistence.Column;
 import com.haulmont.cuba.core.entity.StandardEntity;
 import com.haulmont.chile.core.annotations.NamePattern;
+import javax.validation.constraints.NotNull;
 
 @NamePattern("%s|name")
 @Table(name = "WORKS_MIXER")
@@ -27,6 +28,7 @@ public class Mixer extends StandardEntity {
     @Column(name = "UNIT", nullable = false)
     protected String unit;
 
+    @NotNull
     @Column(name = "CURRENT_STATUS", nullable = false)
     protected String currentStatus;
 
@@ -51,11 +53,11 @@ public class Mixer extends StandardEntity {
     }
 
 
-    public MIxerStatus getCurrentStatus() {
-        return currentStatus == null ? null : MIxerStatus.fromId(currentStatus);
+    public MixerStatus getCurrentStatus() {
+        return currentStatus == null ? null : MixerStatus.fromId(currentStatus);
     }
 
-    public void setCurrentStatus(MIxerStatus currentStatus) {
+    public void setCurrentStatus(MixerStatus currentStatus) {
         this.currentStatus = currentStatus == null ? null : currentStatus.getId();
     }
 

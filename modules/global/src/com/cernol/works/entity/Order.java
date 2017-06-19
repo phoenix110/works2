@@ -35,7 +35,7 @@ public class Order extends StandardEntity {
     protected String description;
 
     @Column(name = "UNIT", nullable = false)
-    protected String unit;
+    protected String unit = Unit.Litre.toString();
 
     @MetaProperty(datatype = PartsPer100Datatype.NAME, mandatory = true)
     @Column(name = "VOLUME", nullable = false)
@@ -53,12 +53,18 @@ public class Order extends StandardEntity {
     protected BigDecimal containerCost = BigDecimal.ZERO;
 
     @MetaProperty(datatype = CurrencyDatatype.NAME, mandatory = true)
+    @Column(name = "LABLE_COST", nullable = false)
+    protected BigDecimal lableCost = BigDecimal.ZERO;
+
+    @MetaProperty(datatype = CurrencyDatatype.NAME, mandatory = true)
     @Column(name = "OVERHEAD_COST", nullable = false)
     protected BigDecimal overheadCost = BigDecimal.ZERO;
 
     @Transient
-    @MetaProperty(datatype = CurrencyDatatype.NAME, mandatory = true)
-    protected BigDecimal totalCost;
+    @MetaProperty(datatype = CurrencyDatatype.NAME,
+            mandatory = true,
+            related = {"rawMaterialCost", "containerCost", "lableCost", "overheadCost"})
+    protected BigDecimal totalCost = BigDecimal.ZERO;
 
     @Column(name = "CURRENT_STATUS", nullable = false)
     protected String currentStatus = DocumentStatus.New.toString();
@@ -136,6 +142,14 @@ public class Order extends StandardEntity {
         return containerCost;
     }
 
+    public BigDecimal getLableCost() {
+        return lableCost;
+    }
+
+    public void setLableCost(BigDecimal lableCost) {
+        this.lableCost = lableCost;
+    }
+
     public void setOverheadCost(BigDecimal overheadCost) {
         this.overheadCost = overheadCost;
     }
@@ -144,12 +158,8 @@ public class Order extends StandardEntity {
         return overheadCost;
     }
 
-    public void setTotalCost(BigDecimal totalCost) {
-        this.totalCost = totalCost;
-    }
-
     public BigDecimal getTotalCost() {
-        return totalCost;
+        return getRawMaterialCost().add(getContainerCost()).add(getLableCost()).add(getOverheadCost());
     }
 
 

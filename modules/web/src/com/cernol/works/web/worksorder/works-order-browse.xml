@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/window.xsd"
+        caption="msg://browseCaption"
+        class="com.cernol.works.web.worksorder.WorksOrderBrowse"
+        focusComponent="worksOrdersTable"
+        lookupComponent="worksOrdersTable"
+        messagesPack="com.cernol.works.web.worksorder">
+    <dsContext>
+        <groupDatasource id="worksOrdersDs"
+                         class="com.cernol.works.entity.WorksOrder"
+                         view="worksOrder-view">
+            <query>
+                <![CDATA[select e from works$WorksOrder e]]>
+            </query>
+        </groupDatasource>
+    </dsContext>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="worksOrdersTable"
+            spacing="true">
+        <filter id="filter"
+                applyTo="worksOrdersTable"
+                datasource="worksOrdersDs">
+            <properties include=".*"/>
+        </filter>
+        <groupTable id="worksOrdersTable"
+                    width="100%">
+            <actions>
+                <action id="create"/>
+                <action id="edit"/>
+                <action id="remove"/>
+            </actions>
+            <columns>
+                <column id="documentNo"/>
+                <column id="documentOn"/>
+                <column id="description"/>
+                <column id="unit"/>
+                <column id="volume"/>
+                <column id="mass"/>
+                <column id="rawMaterialCost"/>
+                <column id="containerCost"/>
+                <column id="overheadCost"/>
+                <column id="currentStatus"/>
+                <column id="product"/>
+                <column id="mixer"/>
+                <column id="batchQuantity"/>
+                <column id="manufacturingKey"/>
+            </columns>
+            <rows datasource="worksOrdersDs"/>
+            <rowsCount/>
+            <buttonsPanel id="buttonsPanel"
+                          alwaysVisible="true">
+                <button id="createBtn"
+                        action="worksOrdersTable.create"/>
+                <button id="editBtn"
+                        action="worksOrdersTable.edit"/>
+                <button id="removeBtn"
+                        action="worksOrdersTable.remove"/>
+            </buttonsPanel>
+        </groupTable>
+    </layout>
+</window>

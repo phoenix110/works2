@@ -1,0 +1,2 @@
+alter table WORKS_ORDER add constraint FK_WORKS_ORDER_PRODUCT foreign key (PRODUCT_ID) references WORKS_PRODUCT(STOCK_ITEM_ID);
+create index IDX_WORKS_ORDER_PRODUCT on WORKS_ORDER (PRODUCT_ID);

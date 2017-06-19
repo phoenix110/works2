@@ -3,8 +3,10 @@ create unique index IDX_WORKS_CATEGORY_UK_CODE on WORKS_CATEGORY (CODE) where DE
 create unique index IDX_WORKS_CATEGORY_UK_DESCRIPTION on WORKS_CATEGORY (DESCRIPTION) where DELETE_TS is null ^
 -- end WORKS_CATEGORY
 -- begin WORKS_ORDER
+alter table WORKS_ORDER add constraint FK_WORKS_ORDER_PRODUCT foreign key (PRODUCT_ID) references WORKS_PRODUCT(STOCK_ITEM_ID)^
 alter table WORKS_ORDER add constraint FK_WORKS_ORDER_MIXER foreign key (MIXER_ID) references WORKS_MIXER(ID)^
 create unique index IDX_WORKS_ORDER_UK_DOCUMENT_NO on WORKS_ORDER (DOCUMENT_NO) where DELETE_TS is null ^
+create index IDX_WORKS_ORDER_PRODUCT on WORKS_ORDER (PRODUCT_ID)^
 create index IDX_WORKS_ORDER_MIXER on WORKS_ORDER (MIXER_ID)^
 -- end WORKS_ORDER
 -- begin WORKS_STOCK_ITEM

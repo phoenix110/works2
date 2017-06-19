@@ -13,13 +13,16 @@ import com.haulmont.chile.core.annotations.Composition;
 import java.util.List;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
+import javax.validation.constraints.NotNull;
 
 @Entity(name = "works$WorksOrder")
 public class WorksOrder extends Order {
     private static final long serialVersionUID = 705235975323362925L;
 
-    @Column(name = "PRODUCT")
-    protected String product;
+    @NotNull
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "PRODUCT_ID")
+    protected Product product;
 
     @Lookup(type = LookupType.DROPDOWN, actions = {"lookup"})
     @OnDelete(DeletePolicy.CASCADE)
@@ -28,7 +31,7 @@ public class WorksOrder extends Order {
     protected Mixer mixer;
 
     @Column(name = "BATCH_QUANTITY", nullable = false)
-    protected Integer batchQuantity;
+    protected Integer batchQuantity = 0;
 
     @Column(name = "MANUFACTURING_KEY")
     protected String manufacturingKey;
@@ -47,7 +50,25 @@ public class WorksOrder extends Order {
     @Composition
     @OnDelete(DeletePolicy.CASCADE)
     @OneToMany(mappedBy = "worksOrder")
-    protected List<WorksOrderLable> orderLables;
+    protected List<WorksOrderLable> worksOrderLables;
+
+    public void setWorksOrderLables(List<WorksOrderLable> worksOrderLables) {
+        this.worksOrderLables = worksOrderLables;
+    }
+
+    public List<WorksOrderLable> getWorksOrderLables() {
+        return worksOrderLables;
+    }
+
+
+    public Product getProduct() {
+        return product;
+    }
+
+    public void setProduct(Product product) {
+        this.product = product;
+    }
+
 
     public void setWorksOrderPackings(List<WorksOrderPacking> worksOrderPackings) {
         this.worksOrderPackings = worksOrderPackings;
@@ -63,14 +84,6 @@ public class WorksOrder extends Order {
 
     public List<WorksOrderIngredient> getWorksOrderIngredients() {
         return worksOrderIngredients;
-    }
-
-    public void setOrderLables(List<WorksOrderLable> orderLables) {
-        this.orderLables = orderLables;
-    }
-
-    public List<WorksOrderLable> getOrderLables() {
-        return orderLables;
     }
 
 
@@ -99,14 +112,6 @@ public class WorksOrder extends Order {
         return batchQuantity;
     }
 
-
-    public void setProduct(String product) {
-        this.product = product;
-    }
-
-    public String getProduct() {
-        return product;
-    }
 
 
 }

@@ -36,11 +36,12 @@ create table WORKS_ORDER (
     MASS decimal(19, 2) not null,
     RAW_MATERIAL_COST decimal not null,
     CONTAINER_COST decimal not null,
+    LABLE_COST decimal not null,
     OVERHEAD_COST decimal not null,
     CURRENT_STATUS varchar(50) not null,
     --
     -- from works$WorksOrder
-    PRODUCT varchar(255),
+    PRODUCT_ID uuid not null,
     MIXER_ID uuid not null,
     BATCH_QUANTITY integer not null,
     MANUFACTURING_KEY varchar(50),

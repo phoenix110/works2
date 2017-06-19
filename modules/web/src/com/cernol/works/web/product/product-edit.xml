@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/window.xsd"
+        caption="msg://editorCaption"
+        class="com.cernol.works.web.product.ProductEdit"
+        datasource="productDs"
+        focusComponent="fieldGroup"
+        messagesPack="com.cernol.works.web.product">
+    <dsContext>
+        <datasource id="productDs"
+                    class="com.cernol.works.entity.Product"
+                    view="_local"/>
+    </dsContext>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="scrollBox"
+            spacing="true">
+        <scrollBox id="scrollBox"
+                   spacing="true">
+            <fieldGroup id="fieldGroup"
+                        datasource="productDs">
+                <column width="250px">
+                    <field property="code"/>
+                    <field property="description"/>
+                    <field property="reorder"/>
+                    <field property="maxStock"/>
+                    <field property="unit"/>
+                    <field property="currentStatus"/>
+                    <field property="specificGravity"/>
+                    <field property="applyOverhead"/>
+                    <field property="isCorrosive"/>
+                    <field property="isFlammable"/>
+                    <field property="isPoisonous"/>
+                    <field property="physicalForm"/>
+                </column>
+            </fieldGroup>
+        </scrollBox>
+        <frame id="windowActions"
+               screen="editWindowActions"/>
+    </layout>
+</window>

@@ -8,7 +8,7 @@ import com.haulmont.chile.core.datatypes.impl.EnumClass;
 import javax.annotation.Nullable;
 
 
-public enum MIxerStatus implements EnumClass<String> {
+public enum MixerStatus implements EnumClass<String> {
 
     Active("A"),
     Inactive("I"),
@@ -16,7 +16,7 @@ public enum MIxerStatus implements EnumClass<String> {
 
     private String id;
 
-    MIxerStatus(String value) {
+    MixerStatus(String value) {
         this.id = value;
     }
 
@@ -25,8 +25,8 @@ public enum MIxerStatus implements EnumClass<String> {
     }
 
     @Nullable
-    public static MIxerStatus fromId(String id) {
-        for (MIxerStatus at : MIxerStatus.values()) {
+    public static MixerStatus fromId(String id) {
+        for (MixerStatus at : MixerStatus.values()) {
             if (at.getId().equals(id)) {
                 return at;
             }

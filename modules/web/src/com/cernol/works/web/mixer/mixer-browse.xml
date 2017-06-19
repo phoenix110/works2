@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/window.xsd"
+        caption="msg://browseCaption"
+        class="com.cernol.works.web.mixer.MixerBrowse"
+        focusComponent="mixersTable"
+        lookupComponent="mixersTable"
+        messagesPack="com.cernol.works.web.mixer">
+    <dsContext>
+        <groupDatasource id="mixersDs"
+                         class="com.cernol.works.entity.Mixer"
+                         view="_local">
+            <query>
+                <![CDATA[select e from works$Mixer e]]>
+            </query>
+        </groupDatasource>
+    </dsContext>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="mixersTable"
+            spacing="true">
+        <filter id="filter"
+                applyTo="mixersTable"
+                datasource="mixersDs">
+            <properties include=".*"/>
+        </filter>
+        <groupTable id="mixersTable"
+                    width="100%">
+            <actions>
+                <action id="create"/>
+                <action id="edit"/>
+                <action id="remove"/>
+            </actions>
+            <columns>
+                <column id="name"/>
+                <column id="minLoad"/>
+                <column id="maxLoad"/>
+                <column id="unit"/>
+                <column id="currentStatus"/>
+                <column id="physicalForm"/>
+            </columns>
+            <rows datasource="mixersDs"/>
+            <rowsCount/>
+            <buttonsPanel id="buttonsPanel"
+                          alwaysVisible="true">
+                <button id="createBtn"
+                        action="mixersTable.create"/>
+                <button id="editBtn"
+                        action="mixersTable.edit"/>
+                <button id="removeBtn"
+                        action="mixersTable.remove"/>
+            </buttonsPanel>
+        </groupTable>
+    </layout>
+</window>

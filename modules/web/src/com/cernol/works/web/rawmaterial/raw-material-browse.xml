@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/window.xsd"
+        caption="msg://browseCaption"
+        class="com.cernol.works.web.rawmaterial.RawMaterialBrowse"
+        focusComponent="rawMaterialsTable"
+        lookupComponent="rawMaterialsTable"
+        messagesPack="com.cernol.works.web.rawmaterial">
+    <dsContext>
+        <groupDatasource id="rawMaterialsDs"
+                         class="com.cernol.works.entity.RawMaterial"
+                         view="_local">
+            <query>
+                <![CDATA[select e from works$RawMaterial e]]>
+            </query>
+        </groupDatasource>
+    </dsContext>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="rawMaterialsTable"
+            spacing="true">
+        <filter id="filter"
+                applyTo="rawMaterialsTable"
+                datasource="rawMaterialsDs">
+            <properties include=".*"/>
+        </filter>
+        <groupTable id="rawMaterialsTable"
+                    width="100%">
+            <actions>
+                <action id="create"/>
+                <action id="edit"/>
+                <action id="remove"/>
+            </actions>
+            <columns>
+                <column id="code"/>
+                <column id="description"/>
+                <column id="reorder"/>
+                <column id="maxStock"/>
+                <column id="unit"/>
+                <column id="currentStatus"/>
+                <column id="cost"/>
+            </columns>
+            <rows datasource="rawMaterialsDs"/>
+            <rowsCount/>
+            <buttonsPanel id="buttonsPanel"
+                          alwaysVisible="true">
+                <button id="createBtn"
+                        action="rawMaterialsTable.create"/>
+                <button id="editBtn"
+                        action="rawMaterialsTable.edit"/>
+                <button id="removeBtn"
+                        action="rawMaterialsTable.remove"/>
+            </buttonsPanel>
+        </groupTable>
+    </layout>
+</window>
