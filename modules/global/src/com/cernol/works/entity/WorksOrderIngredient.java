@@ -23,7 +23,7 @@ public class WorksOrderIngredient extends StandardEntity {
     protected WorksOrder worksOrder;
 
     @Column(name = "SEQUENCE_NO", nullable = false)
-    protected Integer sequenceNo;
+    protected Integer sequenceNo = 0;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "RAW_MATERIAL_ID")
@@ -31,14 +31,14 @@ public class WorksOrderIngredient extends StandardEntity {
 
     @MetaProperty(datatype = PartsPer100Datatype.NAME, mandatory = true)
     @Column(name = "MASS", nullable = false)
-    protected BigDecimal mass;
+    protected BigDecimal mass = BigDecimal.ZERO;
 
     @MetaProperty(datatype = CurrencyDatatype.NAME, mandatory = true)
     @Column(name = "KG_COST", nullable = false)
-    protected BigDecimal kgCost;
+    protected BigDecimal kgCost = BigDecimal.ZERO;
 
     @Transient
-    @MetaProperty(datatype = CurrencyDatatype.NAME)
+    @MetaProperty(datatype = CurrencyDatatype.NAME, related = {"mass", "kgCost"})
     protected BigDecimal lineCost;
 
     public void setWorksOrder(WorksOrder worksOrder) {
@@ -81,12 +81,9 @@ public class WorksOrderIngredient extends StandardEntity {
         return kgCost;
     }
 
-    public void setLineCost(BigDecimal lineCost) {
-        this.lineCost = lineCost;
-    }
-
     public BigDecimal getLineCost() {
-        return lineCost;
+
+        return getMass().multiply(getKgCost());
     }
 
 

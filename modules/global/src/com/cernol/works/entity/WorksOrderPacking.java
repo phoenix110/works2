@@ -31,21 +31,22 @@ public class WorksOrderPacking extends StandardEntity {
 
     @MetaProperty(datatype = CurrencyDatatype.NAME, mandatory = true)
     @Column(name = "UNIT_COST", nullable = false)
-    protected BigDecimal unitCost;
+    protected BigDecimal unitCost = BigDecimal.ZERO;
 
     @Column(name = "CUSTOMERS_OWN")
-    protected Boolean customersOwn;
+    protected Boolean customersOwn = Boolean.FALSE;
 
     @Column(name = "ADDITIONAL")
-    protected Boolean additional;
+    protected Boolean additional = Boolean.FALSE;
 
     @Transient
-    @MetaProperty(datatype = CurrencyDatatype.NAME)
-    protected BigDecimal lineCost;
+    @MetaProperty(datatype = CurrencyDatatype.NAME,
+    related = {"quantity", "container", "customersOwn"})
+    protected BigDecimal lineCost = BigDecimal.ZERO;
 
     @Transient
-    @MetaProperty
-    protected BigDecimal lineCapacity;
+    @MetaProperty(related = {"quantity", "container", "additional"})
+    protected BigDecimal lineCapacity = BigDecimal.ZERO;
 
     public void setWorksOrder(WorksOrder worksOrder) {
         this.worksOrder = worksOrder;
@@ -95,20 +96,28 @@ public class WorksOrderPacking extends StandardEntity {
         return additional;
     }
 
-    public void setLineCost(BigDecimal lineCost) {
-        this.lineCost = lineCost;
-    }
-
     public BigDecimal getLineCost() {
-        return lineCost;
-    }
+        if (getContainer() == null) {
+            return BigDecimal.ZERO;
+        }
 
-    public void setLineCapacity(BigDecimal lineCapacity) {
-        this.lineCapacity = lineCapacity;
+        if (getCustomersOwn()) {
+            return BigDecimal.ZERO;
+        } else {
+            return getContainer().getCostPerUnit().multiply(BigDecimal.valueOf(getQuantity()));
+        }
     }
 
     public BigDecimal getLineCapacity() {
-        return lineCapacity;
+        if (getContainer() == null) {
+            return BigDecimal.ZERO;
+        }
+        if (getAdditional()) {
+            return BigDecimal.ZERO;
+        }
+        else {
+            return getContainer().getCapacity().multiply(BigDecimal.valueOf(getQuantity()));
+        }
     }
 
 

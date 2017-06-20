@@ -2,13 +2,12 @@
 <menu-config xmlns="http://schemas.haulmont.com/cuba/menu.xsd">
     <menu id="application-works"
           insertBefore="administration">
-        <item screen="works$Product.browse"/>
         <item screen="works$Mixer.browse"/>
         <item screen="works$WorksOrder.browse"/>
         <item screen="works$Category.browse"/>
         <item screen="works$Container.browse"/>
-        <item screen="works$Formula.browse"/>
         <item screen="works$Lable.browse"/>
         <item screen="works$RawMaterial.browse"/>
+        <item screen="works$Product.browse"/>
     </menu>
 </menu-config>

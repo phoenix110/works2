@@ -14,7 +14,9 @@ import java.util.List;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 import javax.validation.constraints.NotNull;
+import com.haulmont.cuba.core.entity.annotation.Listeners;
 
+@Listeners("works_WorksOrderEntityListener")
 @Entity(name = "works$WorksOrder")
 public class WorksOrder extends Order {
     private static final long serialVersionUID = 705235975323362925L;

@@ -6,6 +6,7 @@
         focusComponent="fieldGroup"
         messagesPack="com.cernol.works.web.worksorder">
     <dsContext>
+
         <datasource id="worksOrderDs"
                     class="com.cernol.works.entity.WorksOrder"
                     view="worksOrder-view">
@@ -17,6 +18,11 @@
                                   property="worksOrderLables"/>
         </datasource>
     </dsContext>
+    <actions>
+        <action id="refreshValues"
+                caption="msg://refreshButton"
+                invoke="resetIngredients"/>
+    </actions>
     <dialogMode height="600"
                 width="800"/>
     <layout expand="scrollBox"
@@ -26,7 +32,8 @@
             <fieldGroup id="fieldGroup"
                         datasource="worksOrderDs">
                 <column width="250px">
-                    <field property="documentNo"/>
+                    <field property="documentNo"
+                           editable="false"/>
                     <field property="documentOn"/>
                     <field property="product"/>
                     <field property="mixer"/>
@@ -59,7 +66,7 @@
                      caption="msg://com.cernol.works.entity/WorksOrder.worksOrderPackings"
                      margin="true,false,false,false">
                     <table id="worksOrderPackingsTable"
-                           height="200px"
+                           height="300px"
                            width="100%">
                         <actions>
                             <action id="create"/>
@@ -68,6 +75,11 @@
                         </actions>
                         <columns>
                             <column id="container"/>
+                            <column id="quantity"/>
+                            <column id="unitCost"/>
+                            <column id="customersOwn"/>
+                            <column id="additional"/>
+                            <column id="lineCost"/>
                         </columns>
                         <rows datasource="worksOrderPackingsDs"/>
                         <buttonsPanel>
@@ -82,7 +94,7 @@
                      margin="true,false,false,false"
                      spacing="true">
                     <table id="worksOrderIngredientsTable"
-                           height="200px"
+                           height="300px"
                            width="100%">
                         <actions>
                             <action id="create"/>
@@ -90,14 +102,16 @@
                             <action id="remove"/>
                         </actions>
                         <columns>
+                            <column id="sequenceNo"/>
                             <column id="rawMaterial"/>
+                            <column id="mass"/>
+                            <column id="kgCost"/>
                             <column id="lineCost"/>
                         </columns>
                         <rows datasource="worksOrderIngredientsDs"/>
                         <buttonsPanel>
-                            <button action="worksOrderIngredientsTable.create"/>
-                            <button action="worksOrderIngredientsTable.edit"/>
-                            <button action="worksOrderIngredientsTable.remove"/>
+                            <button action="refreshValues"
+                                    icon="icons/refresh.png"/>
                         </buttonsPanel>
                     </table>
                 </tab>
@@ -106,7 +120,7 @@
                      margin="true,false,false,false"
                      spacing="true">
                     <table id="worksOrderLablesTable"
-                           height="200px"
+                           height="300px"
                            width="100%">
                         <actions>
                             <action id="create"/>
@@ -127,6 +141,6 @@
             </tabSheet>
         </scrollBox>
         <frame id="windowActions"
-               screen="editWindowActions"/>
+               screen="extendedEditWindowActions"/>
     </layout>
 </window>

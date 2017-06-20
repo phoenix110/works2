@@ -8,7 +8,17 @@
     <dsContext>
         <datasource id="productDs"
                     class="com.cernol.works.entity.Product"
-                    view="_local"/>
+                    view="product-view">
+            <collectionDatasource id="formulaDs"
+                                  property="formula"/>
+        </datasource>
+        <collectionDatasource id="categoriesDs"
+                              class="com.cernol.works.entity.Category"
+                              view="_minimal">
+            <query>
+                <![CDATA[select e from works$Category e]]>
+            </query>
+        </collectionDatasource>
     </dsContext>
     <dialogMode height="600"
                 width="800"/>
@@ -21,18 +31,41 @@
                 <column width="250px">
                     <field property="code"/>
                     <field property="description"/>
-                    <field property="reorder"/>
-                    <field property="maxStock"/>
+                    <field optionsDatasource="categoriesDs"
+                           property="category"/>
                     <field property="unit"/>
-                    <field property="currentStatus"/>
+                    <field property="physicalForm"/>
                     <field property="specificGravity"/>
                     <field property="applyOverhead"/>
                     <field property="isCorrosive"/>
                     <field property="isFlammable"/>
                     <field property="isPoisonous"/>
-                    <field property="physicalForm"/>
+                    <field property="currentStatus"/>
                 </column>
             </fieldGroup>
+            <groupBox id="formulaBox"
+                      caption="msg://com.cernol.works.entity/Product.formula">
+                <table id="formulaTable"
+                       height="200px"
+                       width="100%">
+                    <actions>
+                        <action id="create"/>
+                        <action id="edit"/>
+                        <action id="remove"/>
+                    </actions>
+                    <columns>
+                        <column id="sequenceNo"/>
+                        <column id="rawMaterial"/>
+                        <column id="partsPer100"/>
+                    </columns>
+                    <rows datasource="formulaDs"/>
+                    <buttonsPanel>
+                        <button action="formulaTable.create"/>
+                        <button action="formulaTable.edit"/>
+                        <button action="formulaTable.remove"/>
+                    </buttonsPanel>
+                </table>
+            </groupBox>
         </scrollBox>
         <frame id="windowActions"
                screen="editWindowActions"/>

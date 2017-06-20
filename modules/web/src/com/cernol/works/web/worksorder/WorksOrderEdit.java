@@ -28,6 +28,9 @@ public class WorksOrderEdit extends AbstractEditor<WorksOrder> {
     private CollectionDatasource<WorksOrderIngredient, UUID> worksOrderIngredientsDs;
 
     @Inject
+    private CollectionDatasource<WorksOrderPacking, UUID> worksOrderPackingsDs;
+
+    @Inject
     private Metadata metadata;
 
     @Named("fieldGroup.product")
@@ -50,18 +53,87 @@ public class WorksOrderEdit extends AbstractEditor<WorksOrder> {
         super.postInit();
 
         productPicker.addValueChangeListener(e -> productChanged());
+
+        worksOrderPackingsDs.addCollectionChangeListener(e -> packingChanged());
+    }
+
+    private void packingChanged() {
+
+        BigDecimal volume = BigDecimal.ZERO;
+
+        BigDecimal containerCost = BigDecimal.ZERO;
+
+        for (WorksOrderPacking line : worksOrderPackingsDs.getItems()) {
+            volume = volume.add(line.getLineCapacity());
+
+            containerCost = containerCost.add(line.getLineCost());
+        }
+
+        getItem().setVolume(volume);
+        getItem().setMass(calculateMass(volume));
+        getItem().setBatchQuantity(calculateBatches(volume));
+        getItem().setContainerCost(containerCost);
+        resetIngredients();
+        getItem().setOverheadCost(calculateOverhead());
     }
 
     private void productChanged() {
 
         if (getItem().getProduct() != null) {
-            getItem().setDescription(getItem().getProduct().toString());
 
+            getItem().setDescription(getItem().getProduct().getCode());
+            getItem().setMass(calculateMass(getItem().getVolume()));
+            getItem().setUnit(getItem().getProduct().getUnit());
             resetIngredients();
+            getItem().setOverheadCost(calculateOverhead());
         }
     }
 
-    private void resetIngredients() {
+    private BigDecimal calculateOverhead() {
+        BigDecimal overheadCost = BigDecimal.ZERO;
+
+        if (getItem().getProduct().getApplyOverhead()) {
+            overheadCost = getItem().getContainerCost()
+                    .add(getItem().getRawMaterialCost())
+                    .add(getItem().getLableCost())
+                    .divide(BigDecimal.valueOf(4),2);
+        }
+
+        return overheadCost;
+    }
+
+    private BigDecimal calculateMass(BigDecimal volume) {
+        BigDecimal mass = BigDecimal.ZERO;
+
+        mass = volume.multiply(getItem().getProduct().getSpecificGravity());
+
+        return mass;
+    }
+
+    private Integer calculateBatches(BigDecimal volume) {
+
+        Integer batches = 0;
+        BigDecimal bdBatches = BigDecimal.ZERO;
+
+        if (getItem().getMixer() == null) {
+            getItem().setBatchQuantity(0);
+        } else {
+            if (volume.compareTo(BigDecimal.valueOf(getItem().getMixer().getMaxLoad())) < 0) {
+                batches = 1;
+            } else {
+                bdBatches = volume.divide(BigDecimal.valueOf(getItem().getMixer().getMaxLoad()),BigDecimal.ROUND_DOWN);
+                batches = bdBatches.intValue()+1;
+            }
+
+        }
+
+        return batches;
+    }
+
+    public void resetIngredients() {
+
+        BigDecimal ingredientCost = BigDecimal.ZERO;
+
         removeAllIngredients();
 
         if (getItem().getProduct() != null) {
@@ -83,12 +155,16 @@ public class WorksOrderEdit extends AbstractEditor<WorksOrder> {
                 orderIngredient.setRawMaterial(formula.getRawMaterial());
                 orderIngredient.setMass(getItem().getMass()
                         .multiply(partsPer100)
-                        .divide(BigDecimal.valueOf(100.0),4,BigDecimal.ROUND_HALF_DOWN));
+                        .divide(BigDecimal.valueOf(100.0), 4, BigDecimal.ROUND_HALF_DOWN));
                 orderIngredient.setKgCost(formula.getRawMaterial().getCost());
 
                 worksOrderIngredientsDs.addItem(orderIngredient);
+
+                ingredientCost = ingredientCost.add(orderIngredient.getLineCost());
             }
         }
+
+        getItem().setRawMaterialCost(ingredientCost);
     }
 
     private void removeAllIngredients() {

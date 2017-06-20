@@ -21,7 +21,6 @@
                 <field property="rawMaterial"/>
                 <field property="mass"/>
                 <field property="kgCost"/>
-                <field property="lineCost"/>
             </column>
         </fieldGroup>
         <frame id="windowActions"

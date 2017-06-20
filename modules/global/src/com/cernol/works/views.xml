@@ -4,32 +4,35 @@
           extends="_local"
           name="worksOrderIngredient-view">
         <property name="rawMaterial"
-                  view="_minimal"/>
+                  view="_local"/>
         <property name="lineCost"/>
     </view>
     <view class="com.cernol.works.entity.WorksOrderLable"
           extends="_local"
           name="worksOrderLable-view">
         <property name="lable"
-                  view="_minimal"/>
+                  view="_local"/>
+        <property name="lineCost"/>
     </view>
     <view class="com.cernol.works.entity.WorksOrderPacking"
           extends="_local"
           name="worksOrderPacking-view">
         <property name="container"
-                  view="_minimal"/>
+                  view="_local"/>
+        <property name="lineCost"/>
+        <property name="lineCapacity"/>
     </view>
     <view class="com.cernol.works.entity.WorksOrder"
           extends="_local"
           name="worksOrder-view">
         <property name="mixer"
-                  view="_minimal"/>
+                  view="_local"/>
         <property name="worksOrderPackings"
                   view="worksOrderPacking-view"/>
         <property name="worksOrderIngredients"
                   view="worksOrderIngredient-view"/>
         <property name="product"
-                  view="_minimal"/>
+                  view="_local"/>
         <property name="worksOrderLables"
                   view="worksOrderLable-view"/>
     </view>

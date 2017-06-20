@@ -28,7 +28,7 @@ create table WORKS_ORDER (
     DELETED_BY varchar(50),
     DTYPE varchar(31),
     --
-    DOCUMENT_NO varchar(10) not null,
+    DOCUMENT_NO varchar(10),
     DOCUMENT_ON date not null,
     DESCRIPTION varchar(255) not null,
     UNIT varchar(50) not null,

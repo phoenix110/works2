@@ -8,7 +8,7 @@
     <dsContext>
         <groupDatasource id="productsDs"
                          class="com.cernol.works.entity.Product"
-                         view="_local">
+                         view="product-view">
             <query>
                 <![CDATA[select e from works$Product e]]>
             </query>
@@ -39,6 +39,7 @@
                 <column id="currentStatus"/>
                 <column id="specificGravity"/>
                 <column id="applyOverhead"/>
+                <column id="category"/>
                 <column id="isCorrosive"/>
                 <column id="isFlammable"/>
                 <column id="isPoisonous"/>

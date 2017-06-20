@@ -15,6 +15,7 @@ import javax.persistence.InheritanceType;
 import javax.persistence.DiscriminatorType;
 import javax.persistence.Inheritance;
 import javax.persistence.DiscriminatorColumn;
+import com.haulmont.cuba.core.entity.annotation.Listeners;
 
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "DTYPE", discriminatorType = DiscriminatorType.STRING)
@@ -24,7 +25,7 @@ import javax.persistence.DiscriminatorColumn;
 public class Order extends StandardEntity {
     private static final long serialVersionUID = 9160207427728061320L;
 
-    @Column(name = "DOCUMENT_NO", nullable = false, unique = true, length = 10)
+    @Column(name = "DOCUMENT_NO", unique = true, length = 10)
     protected String documentNo;
 
     @Temporal(TemporalType.DATE)

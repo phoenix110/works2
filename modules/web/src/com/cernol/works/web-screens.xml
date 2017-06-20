@@ -7,10 +7,6 @@
             template="com/cernol/works/web/worksorderlable/works-order-lable-edit.xml"/>
     <screen id="works$WorksOrderPacking.edit"
             template="com/cernol/works/web/worksorderpacking/works-order-packing-edit.xml"/>
-    <screen id="works$Product.edit"
-            template="com/cernol/works/web/product/product-edit.xml"/>
-    <screen id="works$Product.browse"
-            template="com/cernol/works/web/product/product-browse.xml"/>
     <screen id="works$Mixer.browse"
             template="com/cernol/works/web/mixer/mixer-browse.xml"/>
     <screen id="works$Mixer.edit"
@@ -27,10 +23,6 @@
             template="com/cernol/works/web/container/container-browse.xml"/>
     <screen id="works$Container.edit"
             template="com/cernol/works/web/container/container-edit.xml"/>
-    <screen id="works$Formula.browse"
-            template="com/cernol/works/web/formula/formula-browse.xml"/>
-    <screen id="works$Formula.edit"
-            template="com/cernol/works/web/formula/formula-edit.xml"/>
     <screen id="works$Lable.browse"
             template="com/cernol/works/web/lable/lable-browse.xml"/>
     <screen id="works$Lable.edit"
@@ -39,4 +31,10 @@
             template="com/cernol/works/web/rawmaterial/raw-material-browse.xml"/>
     <screen id="works$RawMaterial.edit"
             template="com/cernol/works/web/rawmaterial/raw-material-edit.xml"/>
+    <screen id="works$Product.browse"
+            template="com/cernol/works/web/product/product-browse.xml"/>
+    <screen id="works$Product.edit"
+            template="com/cernol/works/web/product/product-edit.xml"/>
+    <screen id="works$Formula.edit"
+            template="com/cernol/works/web/formula/formula-edit.xml"/>
 </screen-config>
