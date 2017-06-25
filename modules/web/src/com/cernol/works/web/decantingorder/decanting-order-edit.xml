@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/window.xsd"
+        caption="msg://editorCaption"
+        class="com.cernol.works.web.decantingorder.DecantingOrderEdit"
+        datasource="decantingOrderDs"
+        focusComponent="fieldGroup"
+        messagesPack="com.cernol.works.web.decantingorder">
+    <dsContext>
+        <datasource id="decantingOrderDs"
+                    class="com.cernol.works.entity.DecantingOrder"
+                    view="decantingOrder-view">
+            <collectionDatasource id="decantingOrderSourcesDs"
+                                  property="decantingOrderSources"/>
+            <collectionDatasource id="decantingOrderTargetsDs"
+                                  property="decantingOrderTargets"/>
+        </datasource>
+    </dsContext>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="scrollBox"
+            spacing="true">
+        <scrollBox id="scrollBox"
+                   spacing="true">
+            <fieldGroup id="fieldGroup"
+                        datasource="decantingOrderDs">
+                <column width="250px">
+                    <field editable="false"
+                           property="documentNo"/>
+                    <field property="documentOn"/>
+                    <field property="product"/>
+                    <field property="currentStatus"/>
+                </column>
+                <column>
+                    <field editable="false"
+                           property="sourceVolume"/>
+                    <field editable="false"
+                           property="targetVolume"/>
+                    <field editable="false"
+                           property="containerCost"/>
+                    <field editable="false"
+                           property="overheadCost"/>
+                    <field editable="false"
+                           property="totalCost"/>
+                </column>
+            </fieldGroup>
+            <groupBox orientation="horizontal"
+                      width="100%">
+                <groupBox id="decantingOrderSourcesBox"
+                          caption="msg://com.cernol.works.entity/DecantingOrder.decantingOrderSources"
+                          orientation="horizontal"
+                          width="100%">
+                    <table id="decantingOrderSourcesTable"
+                           height="300px"
+                           width="100%">
+                        <actions>
+                            <action id="create"/>
+                            <action id="edit"/>
+                            <action id="remove"/>
+                        </actions>
+                        <columns>
+                            <column id="container"/>
+                            <column id="quantity"/>
+                            <column id="lineCapacity"/>
+                        </columns>
+                        <rows datasource="decantingOrderSourcesDs"/>
+                        <buttonsPanel>
+                            <button action="decantingOrderSourcesTable.create"/>
+                            <button action="decantingOrderSourcesTable.edit"/>
+                            <button action="decantingOrderSourcesTable.remove"/>
+                        </buttonsPanel>
+                    </table>
+                </groupBox>
+                <groupBox id="decantingOrderTargetsBox"
+                          caption="msg://com.cernol.works.entity/DecantingOrder.decantingOrderTargets">
+                    <table id="decantingOrderTargetsTable"
+                           height="300px"
+                           width="100%">
+                        <actions>
+                            <action id="create"/>
+                            <action id="edit"/>
+                            <action id="remove"/>
+                        </actions>
+                        <columns>
+                            <column id="container"/>
+                            <column id="quantity"/>
+                            <column id="lineCapacity"/>
+                            <column id="unitCost"/>
+                            <column id="lineCost"/>
+                        </columns>
+                        <rows datasource="decantingOrderTargetsDs"/>
+                        <buttonsPanel>
+                            <button action="decantingOrderTargetsTable.create"/>
+                            <button action="decantingOrderTargetsTable.edit"/>
+                            <button action="decantingOrderTargetsTable.remove"/>
+                        </buttonsPanel>
+                    </table>
+                </groupBox>
+            </groupBox>
+        </scrollBox>
+        <frame id="windowActions"
+               screen="editWindowActions"/>
+    </layout>
+</window>

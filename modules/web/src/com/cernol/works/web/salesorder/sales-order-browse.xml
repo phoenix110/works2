@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/window.xsd"
+        caption="msg://browseCaption"
+        class="com.cernol.works.web.salesorder.SalesOrderBrowse"
+        focusComponent="salesOrdersTable"
+        lookupComponent="salesOrdersTable"
+        messagesPack="com.cernol.works.web.salesorder">
+    <dsContext>
+        <groupDatasource id="salesOrdersDs"
+                         class="com.cernol.works.entity.SalesOrder"
+                         view="salesOrder-view">
+            <query>
+                <![CDATA[select e from works$SalesOrder e]]>
+            </query>
+        </groupDatasource>
+    </dsContext>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="salesOrdersTable"
+            spacing="true">
+        <filter id="filter"
+                applyTo="salesOrdersTable"
+                datasource="salesOrdersDs">
+            <properties include=".*"/>
+        </filter>
+        <groupTable id="salesOrdersTable"
+                    width="100%">
+            <actions>
+                <action id="create"/>
+                <action id="edit"/>
+                <action id="remove"/>
+            </actions>
+            <columns>
+                <column id="documentNo"/>
+                <column id="documentOn"/>
+                <column id="invoiceNo"/>
+                <column id="rawMaterialCost"/>
+                <column id="containerCost"/>
+                <column id="totalCost"/>
+                <column id="currentStatus"/>
+            </columns>
+            <rows datasource="salesOrdersDs"/>
+            <rowsCount/>
+            <buttonsPanel id="buttonsPanel"
+                          alwaysVisible="true">
+                <button id="createBtn"
+                        action="salesOrdersTable.create"/>
+                <button id="editBtn"
+                        action="salesOrdersTable.edit"/>
+                <button id="removeBtn"
+                        action="salesOrdersTable.remove"/>
+            </buttonsPanel>
+        </groupTable>
+    </layout>
+</window>

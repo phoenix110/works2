@@ -50,4 +50,51 @@
         <property name="rawMaterial"
                   view="_local"/>
     </view>
+    <view class="com.cernol.works.entity.DecantingOrderTarget"
+          extends="_local"
+          name="decantingOrderTarget-view">
+        <property name="container"
+                  view="_local"/>
+        <property name="lineCapacity"/>
+        <property name="lineCost"/>
+    </view>
+    <view class="com.cernol.works.entity.DecantingOrderSource"
+          extends="_local"
+          name="decantingOrderSource-view">
+        <property name="container"
+                  view="_local"/>
+        <property name="lineCapacity"/>
+    </view>
+    <view class="com.cernol.works.entity.DecantingOrder"
+          extends="_local"
+          name="decantingOrder-view">
+        <property name="product"
+                  view="_minimal"/>
+        <property name="decantingOrderSources"
+                  view="decantingOrderSource-view"/>
+        <property name="decantingOrderTargets"
+                  view="decantingOrderTarget-view"/>
+    </view>
+    <view class="com.cernol.works.entity.SalesOrderRawMaterial"
+          extends="_local"
+          name="salesOrderRawMaterial-view">
+        <property name="rawMaterial"
+                  view="_local"/>
+        <property name="linePrice"/>
+    </view>
+    <view class="com.cernol.works.entity.SalesOrderContainer"
+          extends="_local"
+          name="salesOrderContainer-view">
+        <property name="container"
+                  view="_local"/>
+        <property name="linePrice"/>
+    </view>
+    <view class="com.cernol.works.entity.SalesOrder"
+          extends="_local"
+          name="salesOrder-view">
+        <property name="salesOrderContainers"
+                  view="salesOrderContainer-view"/>
+        <property name="salesOrderRawMaterials"
+                  view="salesOrderRawMaterial-view"/>
+    </view>
 </views>

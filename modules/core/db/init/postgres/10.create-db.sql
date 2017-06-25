@@ -40,10 +40,18 @@ create table WORKS_ORDER (
     OVERHEAD_COST decimal not null,
     CURRENT_STATUS varchar(50) not null,
     --
-    -- from works$WorksOrder
+    -- from works$SalesOrder
+    INVOICE_NO varchar(255),
+    --
+    -- from works$DecantingOrder
     PRODUCT_ID uuid not null,
-    MIXER_ID uuid not null,
-    BATCH_QUANTITY integer not null,
+    SOURCE_VOLUME decimal(19, 2),
+    TARGET_VOLUME decimal(19, 2),
+    --
+    -- from works$WorksOrder
+    PRODUCT_ID uuid,
+    MIXER_ID uuid,
+    BATCH_QUANTITY integer,
     MANUFACTURING_KEY varchar(50),
     --
     primary key (ID)
@@ -214,3 +222,78 @@ create table WORKS_FORMULA (
     primary key (ID)
 )^
 -- end WORKS_FORMULA
+-- begin WORKS_DECANTING_ORDER_SOURCE
+create table WORKS_DECANTING_ORDER_SOURCE (
+    ID uuid,
+    VERSION integer not null,
+    CREATE_TS timestamp,
+    CREATED_BY varchar(50),
+    UPDATE_TS timestamp,
+    UPDATED_BY varchar(50),
+    DELETE_TS timestamp,
+    DELETED_BY varchar(50),
+    --
+    DECANTING_ORDER_ID uuid not null,
+    CONTAINER_ID uuid not null,
+    QUANTITY integer not null,
+    --
+    primary key (ID)
+)^
+-- end WORKS_DECANTING_ORDER_SOURCE
+-- begin WORKS_DECANTING_ORDER_TARGET
+create table WORKS_DECANTING_ORDER_TARGET (
+    ID uuid,
+    VERSION integer not null,
+    CREATE_TS timestamp,
+    CREATED_BY varchar(50),
+    UPDATE_TS timestamp,
+    UPDATED_BY varchar(50),
+    DELETE_TS timestamp,
+    DELETED_BY varchar(50),
+    --
+    DECANTING_ORDER_ID uuid not null,
+    CONTAINER_ID uuid not null,
+    UNIT_COST decimal not null,
+    QUANTITY integer not null,
+    --
+    primary key (ID)
+)^
+-- end WORKS_DECANTING_ORDER_TARGET
+-- begin WORKS_SALES_ORDER_CONTAINER
+create table WORKS_SALES_ORDER_CONTAINER (
+    ID uuid,
+    VERSION integer not null,
+    CREATE_TS timestamp,
+    CREATED_BY varchar(50),
+    UPDATE_TS timestamp,
+    UPDATED_BY varchar(50),
+    DELETE_TS timestamp,
+    DELETED_BY varchar(50),
+    --
+    SALES_ORDER_ID uuid not null,
+    CONTAINER_ID uuid not null,
+    UNIT_PRICE decimal not null,
+    QUANTITY decimal(19, 2) not null,
+    --
+    primary key (ID)
+)^
+-- end WORKS_SALES_ORDER_CONTAINER
+-- begin WORKS_SALES_ORDER_RAW_MATERIAL
+create table WORKS_SALES_ORDER_RAW_MATERIAL (
+    ID uuid,
+    VERSION integer not null,
+    CREATE_TS timestamp,
+    CREATED_BY varchar(50),
+    UPDATE_TS timestamp,
+    UPDATED_BY varchar(50),
+    DELETE_TS timestamp,
+    DELETED_BY varchar(50),
+    --
+    SALES_ORDER_ID uuid not null,
+    RAW_MATERIAL_ID uuid not null,
+    UNIT_PRICE decimal not null,
+    QUANTITY decimal(19, 2) not null,
+    --
+    primary key (ID)
+)^
+-- end WORKS_SALES_ORDER_RAW_MATERIAL

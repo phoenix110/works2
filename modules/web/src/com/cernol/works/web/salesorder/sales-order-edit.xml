@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/window.xsd"
+        caption="msg://editorCaption"
+        class="com.cernol.works.web.salesorder.SalesOrderEdit"
+        datasource="salesOrderDs"
+        focusComponent="fieldGroup"
+        messagesPack="com.cernol.works.web.salesorder">
+    <dsContext>
+        <datasource id="salesOrderDs"
+                    class="com.cernol.works.entity.SalesOrder"
+                    view="salesOrder-view">
+            <collectionDatasource id="salesOrderContainersDs"
+                                  property="salesOrderContainers"/>
+            <collectionDatasource id="salesOrderRawMaterialsDs"
+                                  property="salesOrderRawMaterials"/>
+        </datasource>
+    </dsContext>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="scrollBox"
+            spacing="true">
+        <scrollBox id="scrollBox"
+                   spacing="true">
+            <fieldGroup id="fieldGroup"
+                        datasource="salesOrderDs">
+                <column width="250px">
+                    <field editable="false"
+                           property="documentNo"/>
+                    <field property="documentOn"/>
+                    <field property="invoiceNo"/>
+                    <field property="currentStatus"/>
+                </column>
+                <column>
+                    <field editable="false"
+                           property="rawMaterialCost"/>
+                    <field editable="false"
+                           property="containerCost"/>
+                    <field editable="false"
+                           property="totalCost"/>
+                </column>
+            </fieldGroup>
+            <groupBox id="salesOrderContainersBox"
+                      caption="msg://com.cernol.works.entity/SalesOrder.salesOrderContainers">
+                <table id="salesOrderContainersTable"
+                       height="200px"
+                       width="100%">
+                    <actions>
+                        <action id="create"/>
+                        <action id="edit"/>
+                        <action id="remove"/>
+                    </actions>
+                    <columns>
+                        <column id="container"/>
+                        <column id="unitPrice"/>
+                        <column id="quantity"/>
+                        <column id="linePrice"/>
+                    </columns>
+                    <rows datasource="salesOrderContainersDs"/>
+                    <buttonsPanel>
+                        <button action="salesOrderContainersTable.create"/>
+                        <button action="salesOrderContainersTable.edit"/>
+                        <button action="salesOrderContainersTable.remove"/>
+                    </buttonsPanel>
+                </table>
+            </groupBox>
+            <groupBox id="salesOrderRawMaterialsBox"
+                      caption="msg://com.cernol.works.entity/SalesOrder.salesOrderRawMaterials">
+                <table id="salesOrderRawMaterialsTable"
+                       height="200px"
+                       width="100%">
+                    <actions>
+                        <action id="create"/>
+                        <action id="edit"/>
+                        <action id="remove"/>
+                    </actions>
+                    <columns>
+                        <column id="rawMaterial"/>
+                        <column id="unitPrice"/>
+                        <column id="quantity"/>
+                        <column id="linePrice"/>
+                    </columns>
+                    <rows datasource="salesOrderRawMaterialsDs"/>
+                    <buttonsPanel>
+                        <button action="salesOrderRawMaterialsTable.create"/>
+                        <button action="salesOrderRawMaterialsTable.edit"/>
+                        <button action="salesOrderRawMaterialsTable.remove"/>
+                    </buttonsPanel>
+                </table>
+            </groupBox>
+        </scrollBox>
+        <frame id="windowActions"
+               screen="editWindowActions"/>
+    </layout>
+</window>

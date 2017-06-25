@@ -37,4 +37,20 @@
             template="com/cernol/works/web/product/product-edit.xml"/>
     <screen id="works$Formula.edit"
             template="com/cernol/works/web/formula/formula-edit.xml"/>
+    <screen id="works$DecantingOrder.browse"
+            template="com/cernol/works/web/decantingorder/decanting-order-browse.xml"/>
+    <screen id="works$DecantingOrder.edit"
+            template="com/cernol/works/web/decantingorder/decanting-order-edit.xml"/>
+    <screen id="works$DecantingOrderSource.edit"
+            template="com/cernol/works/web/decantingordersource/decanting-order-source-edit.xml"/>
+    <screen id="works$DecantingOrderTarget.edit"
+            template="com/cernol/works/web/decantingordertarget/decanting-order-target-edit.xml"/>
+    <screen id="works$SalesOrder.browse"
+            template="com/cernol/works/web/salesorder/sales-order-browse.xml"/>
+    <screen id="works$SalesOrder.edit"
+            template="com/cernol/works/web/salesorder/sales-order-edit.xml"/>
+    <screen id="works$SalesOrderContainer.edit"
+            template="com/cernol/works/web/salesordercontainer/sales-order-container-edit.xml"/>
+    <screen id="works$SalesOrderRawMaterial.edit"
+            template="com/cernol/works/web/salesorderrawmaterial/sales-order-raw-material-edit.xml"/>
 </screen-config>

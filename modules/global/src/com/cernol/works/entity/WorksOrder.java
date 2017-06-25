@@ -15,24 +15,25 @@ import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 import javax.validation.constraints.NotNull;
 import com.haulmont.cuba.core.entity.annotation.Listeners;
+import com.haulmont.chile.core.annotations.NamePattern;
 
+@NamePattern("%s %s|documentNo,description")
 @Listeners("works_WorksOrderEntityListener")
 @Entity(name = "works$WorksOrder")
 public class WorksOrder extends Order {
     private static final long serialVersionUID = 705235975323362925L;
 
-    @NotNull
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "PRODUCT_ID")
     protected Product product;
 
     @Lookup(type = LookupType.DROPDOWN, actions = {"lookup"})
     @OnDelete(DeletePolicy.CASCADE)
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "MIXER_ID")
     protected Mixer mixer;
 
-    @Column(name = "BATCH_QUANTITY", nullable = false)
+    @Column(name = "BATCH_QUANTITY")
     protected Integer batchQuantity = 0;
 
     @Column(name = "MANUFACTURING_KEY")

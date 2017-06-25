@@ -1,6 +1,6 @@
 
 buildscript {
-    ext.cubaVersion = '6.5.4'
+    ext.cubaVersion = '6.5.5'
     repositories {
         maven {
             url 'https://repo.cuba-platform.com/content/groups/premium'
@@ -225,3 +225,11 @@ task wrapper(type: Wrapper) {
 }
 
 apply from: 'extra.gradle'
+
+task buildWar(type: CubaWarBuilding) {
+    appProperties = ['cuba.automaticDatabaseUpdate' : true]
+    singleWar = false
+    includeContextXml = true
+    includeJdbcDriver = true
+    appHome = 'app_home'
+}

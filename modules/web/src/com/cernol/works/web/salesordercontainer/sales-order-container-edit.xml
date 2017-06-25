@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/window.xsd"
+        caption="msg://editorCaption"
+        class="com.cernol.works.web.salesordercontainer.SalesOrderContainerEdit"
+        datasource="salesOrderContainerDs"
+        focusComponent="fieldGroup"
+        messagesPack="com.cernol.works.web.salesordercontainer">
+    <dsContext>
+        <datasource id="salesOrderContainerDs"
+                    class="com.cernol.works.entity.SalesOrderContainer"
+                    view="salesOrderContainer-view"/>
+    </dsContext>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="windowActions"
+            spacing="true">
+        <fieldGroup id="fieldGroup"
+                    datasource="salesOrderContainerDs">
+            <column width="250px">
+                <field property="container"/>
+                <field editable="false"
+                       property="unitPrice"/>
+                <field property="quantity"/>
+            </column>
+        </fieldGroup>
+        <frame id="windowActions"
+               screen="editWindowActions"/>
+    </layout>
+</window>

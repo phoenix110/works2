@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/window.xsd"
+        caption="msg://editorCaption"
+        class="com.cernol.works.web.decantingordertarget.DecantingOrderTargetEdit"
+        datasource="decantingOrderTargetDs"
+        focusComponent="fieldGroup"
+        messagesPack="com.cernol.works.web.decantingordertarget">
+    <dsContext>
+        <datasource id="decantingOrderTargetDs"
+                    class="com.cernol.works.entity.DecantingOrderTarget"
+                    view="decantingOrderTarget-view"/>
+    </dsContext>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="windowActions"
+            spacing="true">
+        <fieldGroup id="fieldGroup"
+                    datasource="decantingOrderTargetDs">
+            <column width="250px">
+                <field property="container"/>
+                <field property="unitCost"
+                editable="false"/>
+                <field property="quantity"/>
+            </column>
+        </fieldGroup>
+        <frame id="windowActions"
+               screen="editWindowActions"/>
+    </layout>
+</window>
