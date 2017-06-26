@@ -98,6 +98,6 @@
             </groupBox>
         </scrollBox>
         <frame id="windowActions"
-               screen="editWindowActions"/>
+               screen="extendedEditWindowActions"/>
     </layout>
 </window>

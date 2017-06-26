@@ -27,7 +27,8 @@
                     <field editable="false"
                            property="documentNo"/>
                     <field property="documentOn"/>
-                    <field property="invoiceNo"/>
+                    <field property="invoiceNo"
+                           required="true"/>
                     <field property="currentStatus"/>
                 </column>
                 <column>
@@ -89,6 +90,6 @@
             </groupBox>
         </scrollBox>
         <frame id="windowActions"
-               screen="editWindowActions"/>
+               screen="extendedEditWindowActions"/>
     </layout>
 </window>
