@@ -29,7 +29,7 @@ create table WORKS_ORDER (
     DTYPE varchar(31),
     --
     DOCUMENT_NO varchar(10),
-    DOCUMENT_ON date not null,
+    DOCUMENT_ON timestamp not null,
     DESCRIPTION varchar(255) not null,
     UNIT varchar(50) not null,
     VOLUME decimal not null,
@@ -297,3 +297,79 @@ create table WORKS_SALES_ORDER_RAW_MATERIAL (
     primary key (ID)
 )^
 -- end WORKS_SALES_ORDER_RAW_MATERIAL
+-- begin WORKS_STOCK_COUNT
+create table WORKS_STOCK_COUNT (
+    ID uuid,
+    VERSION integer not null,
+    CREATE_TS timestamp,
+    CREATED_BY varchar(50),
+    UPDATE_TS timestamp,
+    UPDATED_BY varchar(50),
+    DELETE_TS timestamp,
+    DELETED_BY varchar(50),
+    --
+    DOCUMENT_NO varchar(255) not null,
+    DOCUMENT_ON timestamp not null,
+    DESCRIPTION varchar(255),
+    --
+    primary key (ID)
+)^
+-- end WORKS_STOCK_COUNT
+-- begin WORKS_STOCK_COUNT_ITEM
+create table WORKS_STOCK_COUNT_ITEM (
+    ID uuid,
+    VERSION integer not null,
+    CREATE_TS timestamp,
+    CREATED_BY varchar(50),
+    UPDATE_TS timestamp,
+    UPDATED_BY varchar(50),
+    DELETE_TS timestamp,
+    DELETED_BY varchar(50),
+    --
+    STOCK_COUNT_ID uuid not null,
+    STOCK_ITEM_ID uuid not null,
+    CURRENT_VALUE decimal not null,
+    COUNTED_QUANTITY decimal(19, 2) not null,
+    CURRENT_QUANTITY decimal(19, 2) not null,
+    --
+    primary key (ID)
+)^
+-- end WORKS_STOCK_COUNT_ITEM
+-- begin WORKS_STOCK_INTAKE
+create table WORKS_STOCK_INTAKE (
+    ID uuid,
+    VERSION integer not null,
+    CREATE_TS timestamp,
+    CREATED_BY varchar(50),
+    UPDATE_TS timestamp,
+    UPDATED_BY varchar(50),
+    DELETE_TS timestamp,
+    DELETED_BY varchar(50),
+    --
+    SUPPLIER varchar(255) not null,
+    DOCUMENT_NO varchar(255) not null,
+    DOCUMENT_ON date not null,
+    CURRENT_STATUS varchar(50) not null,
+    --
+    primary key (ID)
+)^
+-- end WORKS_STOCK_INTAKE
+-- begin WORKS_STOCK_INTAKE_ITEM
+create table WORKS_STOCK_INTAKE_ITEM (
+    ID uuid,
+    VERSION integer not null,
+    CREATE_TS timestamp,
+    CREATED_BY varchar(50),
+    UPDATE_TS timestamp,
+    UPDATED_BY varchar(50),
+    DELETE_TS timestamp,
+    DELETED_BY varchar(50),
+    --
+    STOCK_INTAKE_ID uuid not null,
+    STOCK_ITEM_ID uuid not null,
+    QUANTITY decimal(19, 2) not null,
+    UNIT_PRICE decimal not null,
+    --
+    primary key (ID)
+)^
+-- end WORKS_STOCK_INTAKE_ITEM

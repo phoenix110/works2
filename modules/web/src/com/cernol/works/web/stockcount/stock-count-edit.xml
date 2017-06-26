@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/window.xsd"
+        caption="msg://editorCaption"
+        class="com.cernol.works.web.stockcount.StockCountEdit"
+        datasource="stockCountDs"
+        focusComponent="fieldGroup"
+        messagesPack="com.cernol.works.web.stockcount">
+    <dsContext>
+        <datasource id="stockCountDs"
+                    class="com.cernol.works.entity.StockCount"
+                    view="stockCount-view">
+            <collectionDatasource id="stockCountItemsDs"
+                                  property="stockCountItems"/>
+        </datasource>
+    </dsContext>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="windowActions"
+            spacing="true">
+        <fieldGroup id="fieldGroup"
+                    datasource="stockCountDs">
+            <column width="250px">
+                <field property="documentNo"/>
+                <field property="documentOn"/>
+                <field property="description"/>
+            </column>
+        </fieldGroup>
+        <groupBox id="stockCountItemsBox"
+                  caption="msg://com.cernol.works.entity/StockCount.stockCountItems">
+            <table id="stockCountItemsTable"
+                   height="200px"
+                   width="100%">
+                <actions>
+                    <action id="create"/>
+                    <action id="edit"/>
+                    <action id="remove"/>
+                </actions>
+                <columns>
+                    <column id="currentValue"/>
+                    <column id="countedQuantity"/>
+                    <column id="currentQuantity"/>
+                </columns>
+                <rows datasource="stockCountItemsDs"/>
+                <buttonsPanel>
+                    <button action="stockCountItemsTable.create"/>
+                    <button action="stockCountItemsTable.edit"/>
+                    <button action="stockCountItemsTable.remove"/>
+                </buttonsPanel>
+            </table>
+        </groupBox>
+        <frame id="windowActions"
+               screen="editWindowActions"/>
+    </layout>
+</window>

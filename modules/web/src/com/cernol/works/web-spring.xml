@@ -12,6 +12,8 @@
             <map>
                 <entry key="works_ToolsService"
                        value="com.cernol.works.service.ToolsService"/>
+                <entry key="works_StockItemService"
+                       value="com.cernol.works.service.StockItemService"/>
             </map>
         </property>
     </bean>

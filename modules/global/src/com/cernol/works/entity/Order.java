@@ -28,7 +28,7 @@ public class Order extends StandardEntity {
     @Column(name = "DOCUMENT_NO", unique = true, length = 10)
     protected String documentNo;
 
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "DOCUMENT_ON", nullable = false)
     protected Date documentOn;
 

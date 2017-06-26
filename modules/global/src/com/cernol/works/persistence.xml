@@ -22,5 +22,9 @@
         <class>com.cernol.works.entity.SalesOrder</class>
         <class>com.cernol.works.entity.SalesOrderContainer</class>
         <class>com.cernol.works.entity.SalesOrderRawMaterial</class>
+        <class>com.cernol.works.entity.StockCount</class>
+        <class>com.cernol.works.entity.StockCountItem</class>
+        <class>com.cernol.works.entity.StockIntake</class>
+        <class>com.cernol.works.entity.StockIntakeItem</class>
     </persistence-unit>
 </persistence>

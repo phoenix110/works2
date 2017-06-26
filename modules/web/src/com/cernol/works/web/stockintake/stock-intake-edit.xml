@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/window.xsd"
+        caption="msg://editorCaption"
+        class="com.cernol.works.web.stockintake.StockIntakeEdit"
+        datasource="stockIntakeDs"
+        focusComponent="fieldGroup"
+        messagesPack="com.cernol.works.web.stockintake">
+    <dsContext>
+        <datasource id="stockIntakeDs"
+                    class="com.cernol.works.entity.StockIntake"
+                    view="stockIntake-view">
+            <collectionDatasource id="stockIntakeItemsDs"
+                                  property="stockIntakeItems"/>
+        </datasource>
+    </dsContext>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="windowActions"
+            spacing="true">
+        <fieldGroup id="fieldGroup"
+                    datasource="stockIntakeDs">
+            <column width="250px">
+                <field property="supplier"/>
+                <field property="documentNo"/>
+                <field property="documentOn"/>
+                <field property="currentStatus"/>
+            </column>
+        </fieldGroup>
+        <groupBox id="stockIntakeItemsBox"
+                  caption="msg://com.cernol.works.entity/StockIntake.stockIntakeItems">
+            <table id="stockIntakeItemsTable"
+                   height="200px"
+                   width="100%">
+                <actions>
+                    <action id="create"/>
+                    <action id="edit"/>
+                    <action id="remove"/>
+                </actions>
+                <columns>
+                    <column id="stockItem"/>
+                    <column id="lineValue"/>
+                </columns>
+                <rows datasource="stockIntakeItemsDs"/>
+                <buttonsPanel>
+                    <button action="stockIntakeItemsTable.create"/>
+                    <button action="stockIntakeItemsTable.edit"/>
+                    <button action="stockIntakeItemsTable.remove"/>
+                </buttonsPanel>
+            </table>
+        </groupBox>
+        <frame id="windowActions"
+               screen="editWindowActions"/>
+    </layout>
+</window>

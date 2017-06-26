@@ -53,4 +53,16 @@
             template="com/cernol/works/web/salesordercontainer/sales-order-container-edit.xml"/>
     <screen id="works$SalesOrderRawMaterial.edit"
             template="com/cernol/works/web/salesorderrawmaterial/sales-order-raw-material-edit.xml"/>
+    <screen id="works$StockCount.browse"
+            template="com/cernol/works/web/stockcount/stock-count-browse.xml"/>
+    <screen id="works$StockCount.edit"
+            template="com/cernol/works/web/stockcount/stock-count-edit.xml"/>
+    <screen id="works$StockCountItem.edit"
+            template="com/cernol/works/web/stockcountitem/stock-count-item-edit.xml"/>
+    <screen id="works$StockIntake.browse"
+            template="com/cernol/works/web/stockintake/stock-intake-browse.xml"/>
+    <screen id="works$StockIntake.edit"
+            template="com/cernol/works/web/stockintake/stock-intake-edit.xml"/>
+    <screen id="works$StockIntakeItem.edit"
+            template="com/cernol/works/web/stockintakeitem/stock-intake-item-edit.xml"/>
 </screen-config>

@@ -97,4 +97,31 @@
         <property name="salesOrderRawMaterials"
                   view="salesOrderRawMaterial-view"/>
     </view>
+    <view class="com.cernol.works.entity.StockCount"
+          extends="_local"
+          name="stockCount-view">
+        <property name="stockCountItems"
+                  view="_local"/>
+    </view>
+    <view class="com.cernol.works.entity.StockCountItem"
+          extends="_local"
+          name="stockCountItem-view">
+        <property name="stockItem"
+                  view="_minimal"/>
+        <property name="adjustedQuantity"/>
+        <property name="adjustedValue"/>
+    </view>
+    <view class="com.cernol.works.entity.StockIntakeItem"
+          extends="_local"
+          name="stockIntakeItem-view">
+        <property name="stockItem"
+                  view="_minimal"/>
+        <property name="lineValue"/>
+    </view>
+    <view class="com.cernol.works.entity.StockIntake"
+          extends="_local"
+          name="stockIntake-view">
+        <property name="stockIntakeItems"
+                  view="stockIntakeItem-view"/>
+    </view>
 </views>

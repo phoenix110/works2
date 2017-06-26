@@ -6,6 +6,9 @@
         <item screen="works$SalesOrder.browse"/>
         <item screen="works$DecantingOrder.browse"/>
         <separator/>
+        <item screen="works$StockIntake.browse"/>
+        <item screen="works$StockCount.browse"/>
+        <separator/>
         <item screen="works$Product.browse"/>
         <item screen="works$RawMaterial.browse"/>
         <item screen="works$Container.browse"/>

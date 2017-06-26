@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/window.xsd"
+        caption="msg://editorCaption"
+        class="com.cernol.works.web.stockintakeitem.StockIntakeItemEdit"
+        datasource="stockIntakeItemDs"
+        focusComponent="fieldGroup"
+        messagesPack="com.cernol.works.web.stockintakeitem">
+    <dsContext>
+        <datasource id="stockIntakeItemDs"
+                    class="com.cernol.works.entity.StockIntakeItem"
+                    view="stockIntakeItem-view"/>
+        <collectionDatasource id="stockItemsDs"
+                              class="com.cernol.works.entity.StockItem"
+                              view="_minimal">
+            <query>
+                <![CDATA[select e from works$StockItem e]]>
+            </query>
+        </collectionDatasource>
+    </dsContext>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="windowActions"
+            spacing="true">
+        <fieldGroup id="fieldGroup"
+                    datasource="stockIntakeItemDs">
+            <column width="250px">
+                <field optionsDatasource="stockItemsDs"
+                       property="stockItem"/>
+                <field property="quantity"/>
+                <field property="unitPrice"/>
+                <field property="lineValue"/>
+            </column>
+        </fieldGroup>
+        <frame id="windowActions"
+               screen="editWindowActions"/>
+    </layout>
+</window>

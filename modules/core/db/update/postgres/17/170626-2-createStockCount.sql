@@ -1,0 +1,1 @@
+create unique index IDX_WORKS_STOCK_COUNT_UK_DOCUMENT_NO on WORKS_STOCK_COUNT (DOCUMENT_NO) where DELETE_TS is null ;

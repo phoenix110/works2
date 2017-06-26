@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/window.xsd"
+        caption="msg://browseCaption"
+        class="com.cernol.works.web.stockintake.StockIntakeBrowse"
+        focusComponent="stockIntakesTable"
+        lookupComponent="stockIntakesTable"
+        messagesPack="com.cernol.works.web.stockintake">
+    <dsContext>
+        <groupDatasource id="stockIntakesDs"
+                         class="com.cernol.works.entity.StockIntake"
+                         view="stockIntake-view">
+            <query>
+                <![CDATA[select e from works$StockIntake e]]>
+            </query>
+        </groupDatasource>
+    </dsContext>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="stockIntakesTable"
+            spacing="true">
+        <filter id="filter"
+                applyTo="stockIntakesTable"
+                datasource="stockIntakesDs">
+            <properties include=".*"/>
+        </filter>
+        <groupTable id="stockIntakesTable"
+                    width="100%">
+            <actions>
+                <action id="create"/>
+                <action id="edit"/>
+                <action id="remove"/>
+            </actions>
+            <columns>
+                <column id="supplier"/>
+                <column id="documentNo"/>
+                <column id="documentOn"/>
+                <column id="currentStatus"/>
+            </columns>
+            <rows datasource="stockIntakesDs"/>
+            <rowsCount/>
+            <buttonsPanel id="buttonsPanel"
+                          alwaysVisible="true">
+                <button id="createBtn"
+                        action="stockIntakesTable.create"/>
+                <button id="editBtn"
+                        action="stockIntakesTable.edit"/>
+                <button id="removeBtn"
+                        action="stockIntakesTable.remove"/>
+            </buttonsPanel>
+        </groupTable>
+    </layout>
+</window>
