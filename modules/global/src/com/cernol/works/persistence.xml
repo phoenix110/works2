@@ -26,5 +26,6 @@
         <class>com.cernol.works.entity.StockCountItem</class>
         <class>com.cernol.works.entity.StockIntake</class>
         <class>com.cernol.works.entity.StockIntakeItem</class>
+        <class>com.cernol.works.entity.SystemKey</class>
     </persistence-unit>
 </persistence>

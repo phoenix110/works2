@@ -23,6 +23,7 @@
                 <field property="documentNo"/>
                 <field property="documentOn"/>
                 <field property="description"/>
+                <field property="currentStatus"/>
             </column>
         </fieldGroup>
         <groupBox id="stockCountItemsBox"
@@ -36,9 +37,12 @@
                     <action id="remove"/>
                 </actions>
                 <columns>
+                    <column id="stockItem"/>
                     <column id="currentValue"/>
                     <column id="countedQuantity"/>
                     <column id="currentQuantity"/>
+                    <column id="adjustedQuantity"/>
+                    <column id="adjustedValue"/>
                 </columns>
                 <rows datasource="stockCountItemsDs"/>
                 <buttonsPanel>

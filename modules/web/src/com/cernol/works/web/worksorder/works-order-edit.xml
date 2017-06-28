@@ -6,7 +6,6 @@
         focusComponent="fieldGroup"
         messagesPack="com.cernol.works.web.worksorder">
     <dsContext>
-
         <datasource id="worksOrderDs"
                     class="com.cernol.works.entity.WorksOrder"
                     view="worksOrder-view">
@@ -17,6 +16,9 @@
             <collectionDatasource id="worksOrderLablesDs"
                                   property="worksOrderLables"/>
         </datasource>
+        <collectionDatasource id="problemListsDs"
+                              class="com.cernol.works.entity.ProblemList"
+                              refreshMode="NEVER"/>
     </dsContext>
     <actions>
         <action id="refreshValues"
@@ -29,38 +31,55 @@
             spacing="true">
         <scrollBox id="scrollBox"
                    spacing="true">
-            <fieldGroup id="fieldGroup"
-                        datasource="worksOrderDs">
-                <column width="250px">
-                    <field property="documentNo"
-                           editable="false"/>
-                    <field property="documentOn"/>
-                    <field property="product"/>
-                    <field property="mixer"/>
-                    <field property="manufacturingKey"/>
-                    <field property="currentStatus"/>
-                </column>
-                <column width="250px">
-                    <field editable="false"
-                           property="unit"/>
-                    <field editable="false"
-                           property="volume"/>
-                    <field editable="false"
-                           property="mass"/>
-                    <field editable="false"
-                           property="batchQuantity"/>
-                    <field editable="false"
-                           property="rawMaterialCost"/>
-                    <field editable="false"
-                           property="containerCost"/>
-                    <field editable="false"
-                           property="lableCost"/>
-                    <field editable="false"
-                           property="overheadCost"/>
-                    <field editable="false"
-                           property="totalCost"/>
-                </column>
-            </fieldGroup>
+            <hbox expand="fieldGroup_groupBox">
+                <groupBox id="fieldGroup_groupBox">
+                    <fieldGroup id="fieldGroup"
+                                datasource="worksOrderDs"
+                                height="100%"
+                                width="100%">
+                        <column width="250px">
+                            <field editable="false"
+                                   property="documentNo"/>
+                            <field property="documentOn"/>
+                            <field property="product"/>
+                            <field property="mixer"/>
+                            <field property="manufacturingKey"/>
+                            <field property="currentStatus"/>
+                        </column>
+                        <column width="250px">
+                            <field editable="false"
+                                   property="unit"/>
+                            <field editable="false"
+                                   property="volume"/>
+                            <field editable="false"
+                                   property="mass"/>
+                            <field editable="false"
+                                   property="batchQuantity"/>
+                            <field editable="false"
+                                   property="rawMaterialCost"/>
+                            <field editable="false"
+                                   property="containerCost"/>
+                            <field editable="false"
+                                   property="lableCost"/>
+                            <field editable="false"
+                                   property="overheadCost"/>
+                            <field editable="false"
+                                   property="totalCost"/>
+                        </column>
+                    </fieldGroup>
+                </groupBox>
+                <groupBox spacing="true"
+                          width="AUTO">
+                    <table id="problemTable"
+                           height="100px"
+                           width="100%">
+                        <columns>
+                            <column id="description"/>
+                        </columns>
+                        <rows datasource="problemListsDs"/>
+                    </table>
+                </groupBox>
+            </hbox>
             <tabSheet>
                 <tab id="worksOrderPackingsTab"
                      caption="msg://com.cernol.works.entity/WorksOrder.worksOrderPackings"

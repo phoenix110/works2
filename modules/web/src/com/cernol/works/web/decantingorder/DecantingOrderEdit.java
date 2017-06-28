@@ -4,6 +4,7 @@ import com.cernol.works.entity.*;
 import com.cernol.works.service.ToolsService;
 import com.haulmont.cuba.gui.components.AbstractEditor;
 import com.haulmont.cuba.gui.components.PickerField;
+import com.haulmont.cuba.gui.components.ValidationErrors;
 import com.haulmont.cuba.gui.data.CollectionDatasource;
 
 import javax.inject.Inject;
@@ -16,6 +17,9 @@ public class DecantingOrderEdit extends AbstractEditor<DecantingOrder> {
 
     @Inject
     private ToolsService toolsService;
+
+    @Inject
+    WorksConfig worksConfig;
 
     @Inject
     private CollectionDatasource<DecantingOrderSource, UUID> decantingOrderSourcesDs;
@@ -48,6 +52,17 @@ public class DecantingOrderEdit extends AbstractEditor<DecantingOrder> {
 
     }
 
+    @Override
+    protected void postValidate(ValidationErrors errors) {
+        super.postValidate(errors);
+
+        if (getItem().getSourceVolume().compareTo(getItem().getTargetVolume())!=0) {
+            errors.add("Source and target volumes should be equal.");
+
+        }
+
+    }
+
     private void productChanged() {
         if (getItem().getProduct() == null) {
             getItem().setDescription("Decanting - No product");
@@ -69,6 +84,7 @@ public class DecantingOrderEdit extends AbstractEditor<DecantingOrder> {
     private void targetsChanged() {
         BigDecimal targetVolume = BigDecimal.ZERO;
         BigDecimal targetCost = BigDecimal.ZERO;
+        BigDecimal overheadCost = BigDecimal.ZERO;
 
         for (DecantingOrderTarget line : decantingOrderTargetsDs.getItems()) {
             targetVolume = targetVolume.add(line.getLineCapacity());
@@ -77,6 +93,10 @@ public class DecantingOrderEdit extends AbstractEditor<DecantingOrder> {
 
         getItem().setTargetVolume(targetVolume);
         getItem().setContainerCost(targetCost);
+        getItem().setOverheadCost(targetCost.
+                multiply(BigDecimal.valueOf(worksConfig.getDecantingOverhead(),0)).
+                divide(BigDecimal.valueOf(100,0)));
+
 
     }
 }

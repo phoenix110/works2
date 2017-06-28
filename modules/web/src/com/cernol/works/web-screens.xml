@@ -65,4 +65,6 @@
             template="com/cernol/works/web/stockintake/stock-intake-edit.xml"/>
     <screen id="works$StockIntakeItem.edit"
             template="com/cernol/works/web/stockintakeitem/stock-intake-item-edit.xml"/>
+    <screen id="works$SystemKey.browse"
+            template="com/cernol/works/web/systemkey/system-key-browse.xml"/>
 </screen-config>

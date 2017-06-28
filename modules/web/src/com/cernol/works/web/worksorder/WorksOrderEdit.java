@@ -22,6 +22,9 @@ public class WorksOrderEdit extends AbstractEditor<WorksOrder> {
     ToolsService toolsService;
 
     @Inject
+    private WorksConfig worksConfig;
+
+    @Inject
     private DataManager dataManager;
 
     @Inject
@@ -96,7 +99,8 @@ public class WorksOrderEdit extends AbstractEditor<WorksOrder> {
             overheadCost = getItem().getContainerCost()
                     .add(getItem().getRawMaterialCost())
                     .add(getItem().getLableCost())
-                    .divide(BigDecimal.valueOf(4),2);
+                    .multiply(BigDecimal.valueOf(worksConfig.getOrderOverhead(),0))
+                    .divide(BigDecimal.valueOf(100),2);
         }
 
         return overheadCost;

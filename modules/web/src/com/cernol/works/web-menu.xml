@@ -15,5 +15,7 @@
         <item screen="works$Lable.browse"/>
         <item screen="works$Mixer.browse"/>
         <item screen="works$Category.browse"/>
+        <separator/>
+        <item screen="works$SystemKey.browse"/>
     </menu>
 </menu-config>

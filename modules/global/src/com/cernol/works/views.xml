@@ -101,7 +101,7 @@
           extends="_local"
           name="stockCount-view">
         <property name="stockCountItems"
-                  view="_local"/>
+                  view="stockCountItem-view"/>
     </view>
     <view class="com.cernol.works.entity.StockCountItem"
           extends="_local"
@@ -123,5 +123,11 @@
           name="stockIntake-view">
         <property name="stockIntakeItems"
                   view="stockIntakeItem-view"/>
+    </view>
+    <view class="com.cernol.works.entity.Formula"
+          extends="_local"
+          name="formula-view_with_product">
+        <property name="product"
+                  view="_minimal"/>
     </view>
 </views>

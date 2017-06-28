@@ -10,11 +10,17 @@ import java.time.ZoneId;
 public class ToolsServiceBean implements ToolsService {
 
 
+
     @Override
     public Instant getNow() {
         LocalDateTime ldt = LocalDateTime.now();
         Instant instant = ldt.atZone(ZoneId.systemDefault()).toInstant();
 
         return instant;
+    }
+
+    @Override
+    public String getSystemKey(String context, String key) {
+        return null;
     }
 }

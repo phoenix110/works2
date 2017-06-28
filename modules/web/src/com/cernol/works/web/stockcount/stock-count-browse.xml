@@ -34,6 +34,7 @@
                 <column id="documentNo"/>
                 <column id="documentOn"/>
                 <column id="description"/>
+                <column id="currentStatus"/>
             </columns>
             <rows datasource="stockCountsDs"/>
             <rowsCount/>

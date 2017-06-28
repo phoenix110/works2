@@ -38,6 +38,8 @@
                 </actions>
                 <columns>
                     <column id="stockItem"/>
+                    <column id="quantity"/>
+                    <column id="unitPrice"/>
                     <column id="lineValue"/>
                 </columns>
                 <rows datasource="stockIntakeItemsDs"/>

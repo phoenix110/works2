@@ -1,13 +1,16 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <metadata xmlns="http://schemas.haulmont.com/cuba/metadata.xsd">
-
-    <metadata-model root-package="com.cernol.works" namespace="works"/>
-<datatypes>
+    <metadata-model namespace="works"
+                    root-package="com.cernol.works">
+        <class>com.cernol.works.entity.ProblemList</class>
+    </metadata-model>
+    <datatypes>
         <datatype class="com.cernol.works.entity.PartsPer100Datatype"
-                  format="#0.0000"
                   decimalSeparator="."
-                  groupingSeparator="'"
+                  format="#0.0000"
+                  groupingSeparator="&apos;"
                   javaType="java.math.BigDecimal"/>
-        <datatype class="com.cernol.works.entity.CurrencyDatatype" javaType="java.math.BigDecimal"/>
+        <datatype class="com.cernol.works.entity.CurrencyDatatype"
+                  javaType="java.math.BigDecimal"/>
     </datatypes>
 </metadata>

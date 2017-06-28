@@ -37,7 +37,7 @@ public class StockIntakeItem extends StandardEntity {
     protected BigDecimal unitPrice;
 
     @Transient
-    @MetaProperty(datatype = CurrencyDatatype.NAME)
+    @MetaProperty(datatype = CurrencyDatatype.NAME, related = {"quantity", "unitPrice"})
     protected BigDecimal lineValue;
 
     public void setStockIntake(StockIntake stockIntake) {
@@ -72,12 +72,9 @@ public class StockIntakeItem extends StandardEntity {
         return unitPrice;
     }
 
-    public void setLineValue(BigDecimal lineValue) {
-        this.lineValue = lineValue;
-    }
-
     public BigDecimal getLineValue() {
-        return lineValue;
+
+        return getUnitPrice().multiply(getQuantity());
     }
 
 

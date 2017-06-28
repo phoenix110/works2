@@ -8,5 +8,7 @@ import java.util.UUID;
 public interface StockItemService {
     String NAME = "works_StockItemService";
 
-    BigDecimal getCurrentCost(UUID stockItemId, Date date);
+    BigDecimal getCurrentCost(UUID stockItemId, Date queryDate);
+
+    BigDecimal getCurrentQuantity(UUID stockItemId, Date queryDate);
 }

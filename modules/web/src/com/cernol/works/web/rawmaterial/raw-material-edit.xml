@@ -9,23 +9,52 @@
         <datasource id="rawMaterialDs"
                     class="com.cernol.works.entity.RawMaterial"
                     view="_local"/>
+        <collectionDatasource id="formulasDs"
+                              class="com.cernol.works.entity.Formula"
+                              view="formula-view_with_product">
+            <query>
+                <![CDATA[select e from works$Formula e
+where e.rawMaterial.id = :ds$rawMaterialDs
+order by e.partsPer100 desc]]>
+            </query>
+        </collectionDatasource>
     </dsContext>
     <dialogMode height="600"
                 width="800"/>
     <layout expand="windowActions"
             spacing="true">
-        <fieldGroup id="fieldGroup"
-                    datasource="rawMaterialDs">
-            <column width="250px">
-                <field property="code"/>
-                <field property="description"/>
-                <field property="reorder"/>
-                <field property="maxStock"/>
-                <field property="unit"/>
-                <field property="currentStatus"/>
-                <field property="cost"/>
-            </column>
-        </fieldGroup>
+        <hbox spacing="true"
+              width="100%">
+            <fieldGroup id="fieldGroup"
+                        datasource="rawMaterialDs">
+                <column width="250px">
+                    <field property="code"/>
+                    <field property="description"/>
+                    <field property="reorder"/>
+                    <field property="maxStock"/>
+                    <field property="unit"/>
+                    <field editable="false"
+                           property="cost"/>
+                    <field property="currentStatus"/>
+                </column>
+                <column/>
+            </fieldGroup>
+            <groupBox spacing="true">
+                <textField id="onHand"
+                           editable="false"/>
+                <textField id="currentPrice"/>
+            </groupBox>
+        </hbox>
+        <groupBox spacing="true">
+            <table height="300px">
+                <columns>
+                    <column id="product"/>
+                    <column id="sequenceNo"/>
+                    <column id="partsPer100"/>
+                </columns>
+                <rows datasource="formulasDs"/>
+            </table>
+        </groupBox>
         <frame id="windowActions"
                screen="editWindowActions"/>
     </layout>

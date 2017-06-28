@@ -28,7 +28,6 @@
                        property="stockItem"/>
                 <field property="quantity"/>
                 <field property="unitPrice"/>
-                <field property="lineValue"/>
             </column>
         </fieldGroup>
         <frame id="windowActions"

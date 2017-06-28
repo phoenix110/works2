@@ -35,6 +35,18 @@ public class StockCount extends StandardEntity {
     @OneToMany(mappedBy = "stockCount")
     protected List<StockCountItem> stockCountItems;
 
+    @Column(name = "CURRENT_STATUS", nullable = false)
+    protected String currentStatus;
+
+    public void setCurrentStatus(DocumentStatus currentStatus) {
+        this.currentStatus = currentStatus == null ? null : currentStatus.getId();
+    }
+
+    public DocumentStatus getCurrentStatus() {
+        return currentStatus == null ? null : DocumentStatus.fromId(currentStatus);
+    }
+
+
     public void setStockCountItems(List<StockCountItem> stockCountItems) {
         this.stockCountItems = stockCountItems;
     }

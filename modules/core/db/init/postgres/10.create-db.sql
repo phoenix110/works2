@@ -311,6 +311,7 @@ create table WORKS_STOCK_COUNT (
     DOCUMENT_NO varchar(255) not null,
     DOCUMENT_ON timestamp not null,
     DESCRIPTION varchar(255),
+    CURRENT_STATUS varchar(50) not null,
     --
     primary key (ID)
 )^
@@ -373,3 +374,21 @@ create table WORKS_STOCK_INTAKE_ITEM (
     primary key (ID)
 )^
 -- end WORKS_STOCK_INTAKE_ITEM
+-- begin WORKS_SYSTEM_KEY
+create table WORKS_SYSTEM_KEY (
+    ID uuid,
+    VERSION integer not null,
+    CREATE_TS timestamp,
+    CREATED_BY varchar(50),
+    UPDATE_TS timestamp,
+    UPDATED_BY varchar(50),
+    DELETE_TS timestamp,
+    DELETED_BY varchar(50),
+    --
+    CONTEXT varchar(255) not null,
+    KEY_ varchar(255) not null,
+    VALUE_ varchar(255),
+    --
+    primary key (ID)
+)^
+-- end WORKS_SYSTEM_KEY
