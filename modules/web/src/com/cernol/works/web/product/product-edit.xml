@@ -19,6 +19,16 @@
                 <![CDATA[select e from works$Category e]]>
             </query>
         </collectionDatasource>
+        <collectionDatasource id="worksOrdersDs"
+                              class="com.cernol.works.entity.WorksOrder"
+                              maxResults="10"
+                              view="_local">
+            <query>
+                <![CDATA[select e from works$WorksOrder e
+where e.product.id = :ds$productDs
+order by e.documentOn desc]]>
+            </query>
+        </collectionDatasource>
     </dsContext>
     <dialogMode height="600"
                 width="800"/>
@@ -26,23 +36,48 @@
             spacing="true">
         <scrollBox id="scrollBox"
                    spacing="true">
-            <fieldGroup id="fieldGroup"
-                        datasource="productDs">
-                <column width="250px">
-                    <field property="code"/>
-                    <field property="description"/>
-                    <field optionsDatasource="categoriesDs"
-                           property="category"/>
-                    <field property="unit"/>
-                    <field property="physicalForm"/>
-                    <field property="specificGravity"/>
-                    <field property="applyOverhead"/>
-                    <field property="isCorrosive"/>
-                    <field property="isFlammable"/>
-                    <field property="isPoisonous"/>
-                    <field property="currentStatus"/>
-                </column>
-            </fieldGroup>
+            <hbox>
+                <groupBox spacing="true">
+                    <fieldGroup id="fieldGroup"
+                                datasource="productDs">
+                        <column width="250px">
+                            <field property="code"/>
+                            <field property="description"/>
+                            <field optionsDatasource="categoriesDs"
+                                   property="category"/>
+                            <field property="unit"/>
+                            <field property="physicalForm"/>
+                            <field property="specificGravity"/>
+                            <field property="applyOverhead"/>
+                            <field property="isCorrosive"/>
+                            <field property="isFlammable"/>
+                            <field property="isPoisonous"/>
+                            <field property="currentStatus"/>
+                        </column>
+                    </fieldGroup>
+                </groupBox>
+                <groupBox spacing="true">
+                    <table id="worksOrderTable"
+                           caption="msg://worksOrderBrowser">
+                        <columns>
+                            <column id="documentNo"/>
+                            <column id="documentOn"/>
+                            <column id="description"/>
+                            <column id="unit"/>
+                            <column id="volume"/>
+                            <column id="mass"/>
+                            <column id="batchQuantity"/>
+                            <column id="manufacturingKey"/>
+                            <column id="rawMaterialCost"/>
+                            <column id="containerCost"/>
+                            <column id="lableCost"/>
+                            <column id="overheadCost"/>
+                            <column id="currentStatus"/>
+                        </columns>
+                        <rows datasource="worksOrdersDs"/>
+                    </table>
+                </groupBox>
+            </hbox>
             <groupBox id="formulaBox"
                       caption="msg://com.cernol.works.entity/Product.formula">
                 <table id="formulaTable"

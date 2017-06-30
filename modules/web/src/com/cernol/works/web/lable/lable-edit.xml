@@ -8,7 +8,7 @@
     <dsContext>
         <datasource id="lableDs"
                     class="com.cernol.works.entity.Lable"
-                    view="_local"/>
+                    view="lable-view"/>
     </dsContext>
     <dialogMode height="600"
                 width="800"/>
@@ -26,6 +26,21 @@
                 <field property="unitCost"/>
             </column>
         </fieldGroup>
+        <groupBox caption="Photo" spacing="true"
+          height="250px" width="250px" expand="embeddedImage">
+    <embedded id="embeddedImage" width="100%"
+              align="MIDDLE_CENTER"/>
+    <hbox align="BOTTOM_LEFT"
+          spacing="true">
+        <upload id="uploadField"/>
+        <button id="downloadImageBtn"
+                caption="Download"
+                invoke="onDownloadImageBtnClick"/>
+        <button id="clearImageBtn"
+                caption="Clear"
+                invoke="onClearImageBtnClick"/>
+    </hbox>
+</groupBox>
         <frame id="windowActions"
                screen="editWindowActions"/>
     </layout>

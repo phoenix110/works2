@@ -50,6 +50,8 @@
                         action="worksOrdersTable.edit"/>
                 <button id="removeBtn"
                         action="worksOrdersTable.remove"/>
+                <button id="printBtn"
+                        icon="icons/reports-print.png"/>
             </buttonsPanel>
         </groupTable>
     </layout>

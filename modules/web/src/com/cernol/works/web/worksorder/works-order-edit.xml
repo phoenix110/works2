@@ -70,9 +70,7 @@
                 </groupBox>
                 <groupBox spacing="true"
                           width="AUTO">
-                    <table id="problemTable"
-                           height="100px"
-                           width="100%">
+                    <table id="problemTable">
                         <columns>
                             <column id="description"/>
                         </columns>

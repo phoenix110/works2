@@ -28,7 +28,9 @@ alter table WORKS_PRODUCT add constraint FK_WORKS_PRODUCT_STOCK_ITEM foreign key
 create index IDX_WORKS_PRODUCT_CATEGORY on WORKS_PRODUCT (CATEGORY_ID)^
 -- end WORKS_PRODUCT
 -- begin WORKS_LABLE
+alter table WORKS_LABLE add constraint FK_WORKS_LABLE_IMAGE_FILE foreign key (IMAGE_FILE_ID) references SYS_FILE(ID)^
 alter table WORKS_LABLE add constraint FK_WORKS_LABLE_STOCK_ITEM foreign key (STOCK_ITEM_ID) references WORKS_STOCK_ITEM(ID)^
+create index IDX_WORKS_LABLE_IMAGE_FILE on WORKS_LABLE (IMAGE_FILE_ID)^
 -- end WORKS_LABLE
 -- begin WORKS_WORKS_ORDER_PACKING
 alter table WORKS_WORKS_ORDER_PACKING add constraint FK_WORKS_ORDER_PACKING_WORKS_ORDER foreign key (WORKS_ORDER_ID) references WORKS_ORDER(ID)^

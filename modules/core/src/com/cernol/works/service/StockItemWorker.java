@@ -27,8 +27,12 @@ public class StockItemWorker {
                 " and " +
                 queryDate.toString());
 
+        //Set earliest possible start date in case we did not count the item yet.
+
         Calendar cal = Calendar.getInstance();
         cal.set(Calendar.YEAR, 2014);
+        cal.set(Calendar.MONTH, 1);
+        cal.set(Calendar.DAY_OF_MONTH, 1);
 
         Date beginDate = cal.getTime();
 
@@ -51,7 +55,11 @@ public class StockItemWorker {
 
             Date sinceDate = startTransaction != null ? startTransaction.getStockCount().getDocumentOn() : beginDate;
 
-            BigDecimal outQuantity = getOutQuantity(stockItemId, sinceDate, queryDate);
+            BigDecimal outQuantity = getOutQuantityRMWO(stockItemId, sinceDate, queryDate)
+                    .add(getOutQuanityRMSO(stockItemId, sinceDate, queryDate))
+                    .add(getOutQuantityCWO(stockItemId, sinceDate, queryDate))
+                    .add(getOutQuantityCDO(stockItemId, sinceDate, queryDate))
+                    .add(getOutQuantityCSO(stockItemId, sinceDate, queryDate));
 
             BigDecimal inQuantity = getInQuantity(stockItemId, sinceDate, queryDate);
 
@@ -59,7 +67,7 @@ public class StockItemWorker {
         }
     }
 
-    public BigDecimal getOutQuantity(final UUID stockItemId, final Date fromDate, final Date toDate) {
+    private BigDecimal getOutQuantityRMWO(final UUID stockItemId, final Date fromDate, final Date toDate) {
 
         try (Transaction tx = persistence.createTransaction()) {
             EntityManager em = persistence.getEntityManager();
@@ -80,7 +88,87 @@ public class StockItemWorker {
 
     }
 
-    public BigDecimal getInQuantity(final UUID stockItemId, final Date fromDate, final Date toDate) {
+    private BigDecimal getOutQuanityRMSO(final UUID stockItemId, final Date fromDate, final Date toDate) {
+
+        try (Transaction tx = persistence.createTransaction()) {
+            EntityManager em = persistence.getEntityManager();
+
+            Query rawMaterialQuery = em.createQuery(
+                    "select sum(i.quantity) from works$SalesOrderRawMaterial i " +
+                            "where i.rawMaterial.id = ?1 " +
+                            "and i.salesOrder.documentOn >= ?2 " +
+                            "and i.salesOrder.documentOn < ?3 "
+            );
+            rawMaterialQuery.setParameter(1, stockItemId);
+            rawMaterialQuery.setParameter(2, fromDate);
+            rawMaterialQuery.setParameter(3, toDate);
+            BigDecimal outQuantity = (BigDecimal) rawMaterialQuery.getSingleResult();
+
+            return outQuantity !=null ? outQuantity : BigDecimal.ZERO;
+        }
+    }
+
+    private BigDecimal getOutQuantityCWO(final UUID stockItemId, final Date fromDate, final Date toDate) {
+
+        try (Transaction tx = persistence.createTransaction()) {
+            EntityManager em = persistence.getEntityManager();
+
+            Query rawMaterialQuery = em.createQuery(
+                    "select sum(i.quantity) from works$WorksOrderPacking i " +
+                            "where i.container.id = ?1 " +
+                            "and i.worksOrder.documentOn >= ?2 " +
+                            "and i.worksOrder.documentOn < ?3 "
+            );
+            rawMaterialQuery.setParameter(1, stockItemId);
+            rawMaterialQuery.setParameter(2, fromDate);
+            rawMaterialQuery.setParameter(3, toDate);
+            BigDecimal outQuantity = (BigDecimal) rawMaterialQuery.getSingleResult();
+
+            return outQuantity !=null ? outQuantity : BigDecimal.ZERO;
+        }
+
+    }
+
+    private BigDecimal getOutQuantityCSO(final UUID stockItemId, final Date fromDate, final Date toDate) {
+
+        try (Transaction tx = persistence.createTransaction()) {
+            EntityManager em = persistence.getEntityManager();
+
+            Query rawMaterialQuery = em.createQuery(
+                    "select sum(i.quantity) from works$SalesOrderContainer i " +
+                            "where i.container.id = ?1 " +
+                            "and i.salesOrder.documentOn >= ?2 " +
+                            "and i.salesOrder.documentOn < ?3 "
+            );
+            rawMaterialQuery.setParameter(1, stockItemId);
+            rawMaterialQuery.setParameter(2, fromDate);
+            rawMaterialQuery.setParameter(3, toDate);
+            BigDecimal outQuantity = (BigDecimal) rawMaterialQuery.getSingleResult();
+
+            return outQuantity !=null ? outQuantity : BigDecimal.ZERO;
+        }
+    }
+
+    private BigDecimal getOutQuantityCDO(final UUID stockItemId, final Date fromDate, final Date toDate) {
+        try (Transaction tx = persistence.createTransaction()) {
+            EntityManager em = persistence.getEntityManager();
+
+            Query rawMaterialQuery = em.createQuery(
+                    "select sum(i.quantity) from works$DecantingOrderTarget i " +
+                            "where i.container.id = ?1 " +
+                            "and i.decantingOrder.documentOn >= ?2 " +
+                            "and i.decantingOrder.documentOn < ?3 "
+            );
+            rawMaterialQuery.setParameter(1, stockItemId);
+            rawMaterialQuery.setParameter(2, fromDate);
+            rawMaterialQuery.setParameter(3, toDate);
+            BigDecimal outQuantity = (BigDecimal) rawMaterialQuery.getSingleResult();
+
+            return outQuantity !=null ? outQuantity : BigDecimal.ZERO;
+        }
+    }
+
+    private BigDecimal getInQuantity(final UUID stockItemId, final Date fromDate, final Date toDate) {
 
         try (Transaction tx = persistence.createTransaction()) {
             EntityManager em = persistence.getEntityManager();

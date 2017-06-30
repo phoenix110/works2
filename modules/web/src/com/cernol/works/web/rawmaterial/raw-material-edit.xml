@@ -37,15 +37,17 @@ order by e.partsPer100 desc]]>
                            property="cost"/>
                     <field property="currentStatus"/>
                 </column>
-                <column/>
             </fieldGroup>
             <groupBox spacing="true">
                 <textField id="onHand"
+                           caption="msg://onhandLable"
                            editable="false"/>
-                <textField id="currentPrice"/>
+                <textField id="currentPrice"
+                           caption="msg://currentPriceLable"/>
             </groupBox>
         </hbox>
-        <groupBox spacing="true">
+        <groupBox caption="msg://formulaeGroupBox"
+                  spacing="true">
             <table height="300px">
                 <columns>
                     <column id="product"/>

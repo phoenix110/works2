@@ -3,13 +3,11 @@
  */
 package com.cernol.works.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
-import javax.persistence.DiscriminatorValue;
-import javax.persistence.PrimaryKeyJoinColumn;
+import javax.persistence.*;
 import java.math.BigDecimal;
-import javax.persistence.Column;
+
 import com.haulmont.chile.core.annotations.MetaProperty;
+import com.haulmont.cuba.core.entity.FileDescriptor;
 
 @PrimaryKeyJoinColumn(name = "STOCK_ITEM_ID", referencedColumnName = "ID")
 @Table(name = "WORKS_LABLE")
@@ -21,6 +19,17 @@ public class Lable extends StockItem {
     @Column(name = "UNIT_COST", nullable = false)
     protected BigDecimal unitCost;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "IMAGE_FILE_ID")
+    protected FileDescriptor imageFile;
+
+    public void setImageFile(FileDescriptor imageFile) {
+        this.imageFile = imageFile;
+    }
+
+    public FileDescriptor getImageFile() {
+        return imageFile;
+    }
     public void setUnitCost(BigDecimal unitCost) {
         this.unitCost = unitCost;
     }

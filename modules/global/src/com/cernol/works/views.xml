@@ -130,4 +130,10 @@
         <property name="product"
                   view="_minimal"/>
     </view>
+    <view class="com.cernol.works.entity.Lable"
+          extends="_local"
+          name="lable-view">
+        <property name="imageFile"
+                  view="_local"/>
+    </view>
 </views>

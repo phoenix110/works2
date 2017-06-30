@@ -1,6 +1,7 @@
 package com.cernol.works.web.worksorder;
 
 import com.cernol.works.entity.*;
+import com.cernol.works.service.StockItemService;
 import com.cernol.works.service.ToolsService;
 import com.haulmont.cuba.core.global.DataManager;
 import com.haulmont.cuba.core.global.LoadContext;
@@ -22,6 +23,9 @@ public class WorksOrderEdit extends AbstractEditor<WorksOrder> {
     ToolsService toolsService;
 
     @Inject
+    private StockItemService stockItemService;
+
+    @Inject
     private WorksConfig worksConfig;
 
     @Inject
@@ -32,6 +36,9 @@ public class WorksOrderEdit extends AbstractEditor<WorksOrder> {
 
     @Inject
     private CollectionDatasource<WorksOrderPacking, UUID> worksOrderPackingsDs;
+
+    @Inject
+    private CollectionDatasource<ProblemList, UUID> problemListsDs;
 
     @Inject
     private Metadata metadata;
@@ -161,6 +168,21 @@ public class WorksOrderEdit extends AbstractEditor<WorksOrder> {
                         .multiply(partsPer100)
                         .divide(BigDecimal.valueOf(100.0), 4, BigDecimal.ROUND_HALF_DOWN));
                 orderIngredient.setKgCost(formula.getRawMaterial().getCost());
+
+                BigDecimal onhandQuantity = stockItemService.
+                        getCurrentQuantity(orderIngredient.getRawMaterial().getId(),getItem().getDocumentOn());
+
+                if (onhandQuantity.compareTo(orderIngredient.getMass()) < 0) {
+                    ProblemList problem = new ProblemList();
+                    problem.setParent(getItem().getId());
+                    problem.setDescription("Not enough stock: " +
+                            orderIngredient.getRawMaterial().getInstanceName() +
+                            "(" +
+                            onhandQuantity +
+                            " left)");
+
+                    problemListsDs.addItem(problem);
+                }
 
                 worksOrderIngredientsDs.addItem(orderIngredient);
 
