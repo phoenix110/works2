@@ -8,6 +8,7 @@
         <separator/>
         <item screen="works$StockIntake.browse"/>
         <item screen="works$StockCount.browse"/>
+        <item screen="works$PriceUpdate.browse"/>
         <separator/>
         <item screen="works$Product.browse"/>
         <item screen="works$RawMaterial.browse"/>
@@ -16,6 +17,5 @@
         <item screen="works$Mixer.browse"/>
         <item screen="works$Category.browse"/>
         <separator/>
-        <item screen="works$SystemKey.browse"/>
     </menu>
 </menu-config>

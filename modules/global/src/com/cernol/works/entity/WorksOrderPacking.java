@@ -104,7 +104,7 @@ public class WorksOrderPacking extends StandardEntity {
         if (getCustomersOwn()) {
             return BigDecimal.ZERO;
         } else {
-            return getContainer().getCostPerUnit().multiply(BigDecimal.valueOf(getQuantity()));
+            return getUnitCost().multiply(BigDecimal.valueOf(getQuantity()));
         }
     }
 

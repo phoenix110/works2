@@ -24,7 +24,6 @@
                 <field property="unit"/>
                 <field property="currentStatus"/>
                 <field property="capacity"/>
-                <field property="costPerUnit"/>
             </column>
         </fieldGroup>
         <frame id="windowActions"

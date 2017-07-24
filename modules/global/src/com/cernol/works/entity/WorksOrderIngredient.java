@@ -11,9 +11,12 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Transient;
 import com.haulmont.cuba.core.entity.StandardEntity;
 import com.haulmont.chile.core.annotations.NamePattern;
+import javax.persistence.UniqueConstraint;
 
 @NamePattern("%s|rawMaterial")
-@Table(name = "WORKS_WORKS_ORDER_INGREDIENT")
+@Table(name = "WORKS_WORKS_ORDER_INGREDIENT", uniqueConstraints = {
+    @UniqueConstraint(name = "IDX_WORKS_WORKS_ORDER_INGREDIENT_UNQ", columnNames = {"WORKS_ORDER_ID", "SEQUENCE_NO"})
+})
 @Entity(name = "works$WorksOrderIngredient")
 public class WorksOrderIngredient extends StandardEntity {
     private static final long serialVersionUID = 2078304513640186093L;

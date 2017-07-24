@@ -20,9 +20,12 @@ import com.haulmont.cuba.core.entity.annotation.Listeners;
 public class DecantingOrder extends Order {
     private static final long serialVersionUID = 4224302202755481439L;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "PRODUCT_ID")
-    protected Product product;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "DECANTED_PRODUCT_ID")
+    protected Product decantedProduct;
+
+    @Column(name = "INFORMATION")
+    protected String information;
 
     @Column(name = "SOURCE_VOLUME")
     protected BigDecimal sourceVolume = BigDecimal.ZERO;
@@ -39,6 +42,25 @@ public class DecantingOrder extends Order {
     @OnDelete(DeletePolicy.CASCADE)
     @OneToMany(mappedBy = "decantingOrder")
     protected List<DecantingOrderTarget> decantingOrderTargets;
+
+
+    public void setInformation(String information) {
+        this.information = information;
+    }
+
+    public String getInformation() {
+        return information;
+    }
+
+
+    public void setDecantedProduct(Product decantedProduct) {
+        this.decantedProduct = decantedProduct;
+    }
+
+    public Product getDecantedProduct() {
+        return decantedProduct;
+    }
+
 
     public void setSourceVolume(BigDecimal sourceVolume) {
         this.sourceVolume = sourceVolume;
@@ -72,14 +94,6 @@ public class DecantingOrder extends Order {
         return decantingOrderTargets;
     }
 
-
-    public void setProduct(Product product) {
-        this.product = product;
-    }
-
-    public Product getProduct() {
-        return product;
-    }
 
 
 }

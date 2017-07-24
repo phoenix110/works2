@@ -3,11 +3,7 @@ buildscript {
     ext.cubaVersion = '6.5.5'
     repositories {
         maven {
-            url 'https://repo.cuba-platform.com/content/groups/premium'
-            credentials {
-                username(rootProject.hasProperty('repoUser') ? rootProject['repoUser'] : '170225000409')
-                password(rootProject.hasProperty('repoPass') ? rootProject['repoPass'] : 'bhoMcxUrlbgC')
-            }
+            url 'https://dl.bintray.com/cuba-platform/main'
         }
         maven {
             url 'https://cuba-platform.bintray.com/premium'

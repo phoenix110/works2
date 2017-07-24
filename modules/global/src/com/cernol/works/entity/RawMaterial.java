@@ -11,6 +11,10 @@ import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Column;
 import java.math.BigDecimal;
 import com.haulmont.chile.core.annotations.MetaProperty;
+import com.haulmont.cuba.core.entity.FileDescriptor;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 @PrimaryKeyJoinColumn(name = "STOCK_ITEM_ID", referencedColumnName = "ID")
 @Table(name = "WORKS_RAW_MATERIAL")
@@ -19,17 +23,21 @@ import com.haulmont.chile.core.annotations.MetaProperty;
 public class RawMaterial extends StockItem {
     private static final long serialVersionUID = -4487387176102137705L;
 
-    @MetaProperty(datatype = CurrencyDatatype.NAME, mandatory = true)
-    @Column(name = "COST", nullable = false)
-    protected BigDecimal cost;
 
-    public BigDecimal getCost() {
-        return cost;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "SPEC_FILE_ID")
+    protected FileDescriptor specFile;
+
+    public void setSpecFile(FileDescriptor specFile) {
+        this.specFile = specFile;
     }
 
-    public void setCost(BigDecimal cost) {
-        this.cost = cost;
+    public FileDescriptor getSpecFile() {
+        return specFile;
     }
+
+
+
 
 
 

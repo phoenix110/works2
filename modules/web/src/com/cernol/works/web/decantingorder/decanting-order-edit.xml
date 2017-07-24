@@ -27,7 +27,8 @@
                     <field editable="false"
                            property="documentNo"/>
                     <field property="documentOn"/>
-                    <field property="product"/>
+                    <field property="decantedProduct"/>
+                    <field property="information"/>
                     <field property="currentStatus"/>
                 </column>
                 <column>
@@ -86,6 +87,8 @@
                             <column id="lineCapacity"/>
                             <column id="unitCost"/>
                             <column id="lineCost"/>
+                            <column id="customersOwn"/>
+                            <column id="additional"/>
                         </columns>
                         <rows datasource="decantingOrderTargetsDs"/>
                         <buttonsPanel>
@@ -97,7 +100,11 @@
                 </groupBox>
             </groupBox>
         </scrollBox>
-        <frame id="windowActions"
-               screen="extendedEditWindowActions"/>
+        <hbox spacing="true">
+            <frame id="windowActions"
+                   screen="extendedEditWindowActions"/>
+            <button id="printBtn"
+                    icon="icons/reports-print.png"/>
+        </hbox>
     </layout>
 </window>

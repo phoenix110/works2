@@ -8,12 +8,16 @@
     <dsContext>
         <groupDatasource id="rawMaterialsDs"
                          class="com.cernol.works.entity.RawMaterial"
-                         view="_local">
+                         view="rawMaterial-view">
             <query>
                 <![CDATA[select e from works$RawMaterial e]]>
             </query>
         </groupDatasource>
     </dsContext>
+    <actions>
+        <action id="runReportAction"
+                invoke="onRunReportAction"/>
+    </actions>
     <dialogMode height="600"
                 width="800"/>
     <layout expand="rawMaterialsTable"
@@ -32,12 +36,15 @@
             </actions>
             <columns>
                 <column id="code"/>
+                <column id="codeNumber"
+                        align="RIGHT"/>
                 <column id="description"/>
-                <column id="reorder"/>
-                <column id="maxStock"/>
+                <column id="reorder"
+                        align="RIGHT"/>
+                <column id="maxStock"
+                        align="RIGHT"/>
                 <column id="unit"/>
                 <column id="currentStatus"/>
-                <column id="cost"/>
             </columns>
             <rows datasource="rawMaterialsDs"/>
             <rowsCount/>
@@ -49,6 +56,8 @@
                         action="rawMaterialsTable.edit"/>
                 <button id="removeBtn"
                         action="rawMaterialsTable.remove"/>
+                <button id="printBtn"
+                        icon="icons/reports-print.png"/>
             </buttonsPanel>
         </groupTable>
     </layout>

@@ -44,7 +44,8 @@ create table WORKS_ORDER (
     INVOICE_NO varchar(255),
     --
     -- from works$DecantingOrder
-    PRODUCT_ID uuid not null,
+    DECANTED_PRODUCT_ID uuid,
+    INFORMATION varchar(255),
     SOURCE_VOLUME decimal(19, 2),
     TARGET_VOLUME decimal(19, 2),
     --
@@ -105,7 +106,6 @@ create table WORKS_CONTAINER (
     STOCK_ITEM_ID uuid,
     --
     CAPACITY decimal(19, 2) not null,
-    COST_PER_UNIT decimal not null,
     --
     primary key (STOCK_ITEM_ID)
 )^
@@ -114,7 +114,7 @@ create table WORKS_CONTAINER (
 create table WORKS_RAW_MATERIAL (
     STOCK_ITEM_ID uuid,
     --
-    COST decimal not null,
+    SPEC_FILE_ID uuid,
     --
     primary key (STOCK_ITEM_ID)
 )^
@@ -130,6 +130,7 @@ create table WORKS_PRODUCT (
     IS_FLAMMABLE boolean,
     IS_POISONOUS boolean,
     PHYSICAL_FORM varchar(50) not null,
+    SPEC_FILE_ID uuid,
     --
     primary key (STOCK_ITEM_ID)
 )^
@@ -256,6 +257,8 @@ create table WORKS_DECANTING_ORDER_TARGET (
     CONTAINER_ID uuid not null,
     UNIT_COST decimal not null,
     QUANTITY integer not null,
+    CUSTOMERS_OWN boolean,
+    ADDITIONAL boolean,
     --
     primary key (ID)
 )^
@@ -331,8 +334,8 @@ create table WORKS_STOCK_COUNT_ITEM (
     STOCK_COUNT_ID uuid not null,
     STOCK_ITEM_ID uuid not null,
     CURRENT_VALUE decimal not null,
-    COUNTED_QUANTITY decimal(19, 2) not null,
-    CURRENT_QUANTITY decimal(19, 2) not null,
+    COUNTED_QUANTITY decimal(19, 4) not null,
+    CURRENT_QUANTITY decimal(19, 4) not null,
     --
     primary key (ID)
 )^
@@ -393,3 +396,56 @@ create table WORKS_SYSTEM_KEY (
     primary key (ID)
 )^
 -- end WORKS_SYSTEM_KEY
+-- begin WORKS_PRODUCT_CONTAINER
+create table WORKS_PRODUCT_CONTAINER (
+    ID uuid,
+    VERSION integer not null,
+    CREATE_TS timestamp,
+    CREATED_BY varchar(50),
+    UPDATE_TS timestamp,
+    UPDATED_BY varchar(50),
+    DELETE_TS timestamp,
+    DELETED_BY varchar(50),
+    --
+    PRODUCT_ID uuid,
+    CONTAINER_ID uuid,
+    --
+    primary key (ID)
+)^
+-- end WORKS_PRODUCT_CONTAINER
+-- begin WORKS_PRICE_UPDATE
+create table WORKS_PRICE_UPDATE (
+    ID uuid,
+    VERSION integer not null,
+    CREATE_TS timestamp,
+    CREATED_BY varchar(50),
+    UPDATE_TS timestamp,
+    UPDATED_BY varchar(50),
+    DELETE_TS timestamp,
+    DELETED_BY varchar(50),
+    --
+    DOCUMENT_NO varchar(255) not null,
+    DOCUMENT_ON timestamp not null,
+    CURRENT_STATUS varchar(50) not null,
+    --
+    primary key (ID)
+)^
+-- end WORKS_PRICE_UPDATE
+-- begin WORKS_PRICE_UPDATE_ITEM
+create table WORKS_PRICE_UPDATE_ITEM (
+    ID uuid,
+    VERSION integer not null,
+    CREATE_TS timestamp,
+    CREATED_BY varchar(50),
+    UPDATE_TS timestamp,
+    UPDATED_BY varchar(50),
+    DELETE_TS timestamp,
+    DELETED_BY varchar(50),
+    --
+    PRICE_UPDATE_ID uuid not null,
+    STOCK_ITEM_ID uuid not null,
+    PRICE decimal not null,
+    --
+    primary key (ID)
+)^
+-- end WORKS_PRICE_UPDATE_ITEM

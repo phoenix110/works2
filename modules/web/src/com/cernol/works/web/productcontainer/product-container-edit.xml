@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/window.xsd"
+        caption="msg://editorCaption"
+        class="com.cernol.works.web.productcontainer.ProductContainerEdit"
+        datasource="productContainerDs"
+        focusComponent="fieldGroup"
+        messagesPack="com.cernol.works.web.productcontainer">
+    <dsContext>
+        <datasource id="productContainerDs"
+                    class="com.cernol.works.entity.ProductContainer"
+                    view="productContainer-view"/>
+        <collectionDatasource id="containersDs"
+                              class="com.cernol.works.entity.Container"
+                              view="_minimal">
+            <query>
+                <![CDATA[select e from works$Container e]]>
+            </query>
+        </collectionDatasource>
+    </dsContext>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="windowActions"
+            spacing="true">
+        <fieldGroup id="fieldGroup"
+                    datasource="productContainerDs">
+            <column width="250px">
+                <field optionsDatasource="containersDs"
+                       property="container"/>
+            </column>
+        </fieldGroup>
+        <frame id="windowActions"
+               screen="editWindowActions"/>
+    </layout>
+</window>

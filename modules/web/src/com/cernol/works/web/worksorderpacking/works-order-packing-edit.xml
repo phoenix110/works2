@@ -9,6 +9,13 @@
         <datasource id="worksOrderPackingDs"
                     class="com.cernol.works.entity.WorksOrderPacking"
                     view="worksOrderPacking-view"/>
+        <collectionDatasource id="containersDs"
+                              class="com.cernol.works.entity.Container"
+                              view="_local">
+            <query>
+                <![CDATA[select e from works$Container e]]>
+            </query>
+        </collectionDatasource>
     </dsContext>
     <dialogMode height="600"
                 width="800"/>
@@ -17,7 +24,8 @@
         <fieldGroup id="fieldGroup"
                     datasource="worksOrderPackingDs">
             <column width="250px">
-                <field property="container"/>
+                <field optionsDatasource="containersDs"
+                       property="container"/>
                 <field property="quantity"/>
                 <field property="unitCost"/>
                 <field property="customersOwn"/>

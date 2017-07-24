@@ -22,7 +22,7 @@ public class StockItem extends StandardEntity {
     protected String code;
 
     @Transient
-    @MetaProperty
+    @MetaProperty(related = "code")
     protected Integer codeNumber;
 
     @Column(name = "DESCRIPTION", length = 100)
@@ -55,8 +55,6 @@ public class StockItem extends StandardEntity {
     public void setCurrentStatus(StockItemStatus currentStatus) {
         this.currentStatus = currentStatus == null ? null : currentStatus.getId();
     }
-
-
 
     public Integer getCodeNumber() {
 

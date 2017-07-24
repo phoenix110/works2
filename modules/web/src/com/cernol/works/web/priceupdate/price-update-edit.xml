@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/window.xsd"
+        caption="msg://editorCaption"
+        class="com.cernol.works.web.priceupdate.PriceUpdateEdit"
+        datasource="priceUpdateDs"
+        focusComponent="fieldGroup"
+        messagesPack="com.cernol.works.web.priceupdate">
+    <dsContext>
+        <datasource id="priceUpdateDs"
+                    class="com.cernol.works.entity.PriceUpdate"
+                    view="priceUpdate-view">
+            <collectionDatasource id="priceUpdateItemsDs"
+                                  property="priceUpdateItems"/>
+        </datasource>
+    </dsContext>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="windowActions"
+            spacing="true">
+        <fieldGroup id="fieldGroup"
+                    datasource="priceUpdateDs">
+            <column width="250px">
+                <field property="documentNo"/>
+                <field property="documentOn"/>
+                <field property="currentStatus"/>
+            </column>
+        </fieldGroup>
+        <groupBox id="priceUpdateItemsBox"
+                  caption="msg://com.cernol.works.entity/PriceUpdate.priceUpdateItems">
+            <table id="priceUpdateItemsTable"
+                   height="200px"
+                   width="100%">
+                <actions>
+                    <action id="create"/>
+                    <action id="edit"/>
+                    <action id="remove"/>
+                </actions>
+                <columns>
+                    <column id="stockItem"/>
+                    <column id="price"
+                            align="RIGHT"/>
+                </columns>
+                <rows datasource="priceUpdateItemsDs"/>
+                <buttonsPanel>
+                    <button action="priceUpdateItemsTable.create"/>
+                    <button action="priceUpdateItemsTable.edit"/>
+                    <button action="priceUpdateItemsTable.remove"/>
+                </buttonsPanel>
+            </table>
+        </groupBox>
+        <frame id="windowActions"
+               screen="editWindowActions"/>
+    </layout>
+</window>

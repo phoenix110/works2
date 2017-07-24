@@ -18,9 +18,11 @@
                     datasource="decantingOrderTargetDs">
             <column width="250px">
                 <field property="container"/>
-                <field property="unitCost"
-                editable="false"/>
+                <field editable="false"
+                       property="unitCost"/>
                 <field property="quantity"/>
+                <field property="customersOwn"/>
+                <field property="additional"/>
             </column>
         </fieldGroup>
         <frame id="windowActions"

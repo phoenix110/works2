@@ -7,14 +7,18 @@ import com.haulmont.cuba.core.global.DataManager;
 import com.haulmont.cuba.core.global.LoadContext;
 import com.haulmont.cuba.core.global.Metadata;
 import com.haulmont.cuba.gui.components.AbstractEditor;
+import com.haulmont.cuba.gui.components.Button;
+import com.haulmont.cuba.gui.components.LookupField;
 import com.haulmont.cuba.gui.components.PickerField;
 import com.haulmont.cuba.gui.data.CollectionDatasource;
+import com.haulmont.reports.gui.actions.EditorPrintFormAction;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Map;
 import java.util.UUID;
 
 public class WorksOrderEdit extends AbstractEditor<WorksOrder> {
@@ -43,9 +47,21 @@ public class WorksOrderEdit extends AbstractEditor<WorksOrder> {
     @Inject
     private Metadata metadata;
 
+    @Inject
+    private Button instructionReportBtn;
+
     @Named("fieldGroup.product")
     protected PickerField productPicker;
 
+    @Named("fieldGroup.currentStatus")
+    private LookupField currentStatusField;
+
+    @Override
+    public void init(Map<String, Object> params) {
+        super.init(params);
+
+        instructionReportBtn.setAction(new EditorPrintFormAction(this, null));
+    }
 
     @Override
     protected void initNewItem(WorksOrder item) {
@@ -63,6 +79,8 @@ public class WorksOrderEdit extends AbstractEditor<WorksOrder> {
         super.postInit();
 
         productPicker.addValueChangeListener(e -> productChanged());
+
+        currentStatusField.addValueChangeListener(e -> statusChanged());
 
         worksOrderPackingsDs.addCollectionChangeListener(e -> packingChanged());
     }
@@ -87,6 +105,19 @@ public class WorksOrderEdit extends AbstractEditor<WorksOrder> {
         getItem().setOverheadCost(calculateOverhead());
     }
 
+    private void statusChanged() {
+        if (getItem().getCurrentStatus() == DocumentStatus.Cancelled) {
+            BigDecimal zeroVal = BigDecimal.ZERO;
+
+            getItem().setRawMaterialCost(zeroVal);
+            getItem().setContainerCost(zeroVal);
+            getItem().setOverheadCost(zeroVal);
+        } else {
+            packingChanged();
+        }
+
+    }
+
     private void productChanged() {
 
         if (getItem().getProduct() != null) {
@@ -106,8 +137,8 @@ public class WorksOrderEdit extends AbstractEditor<WorksOrder> {
             overheadCost = getItem().getContainerCost()
                     .add(getItem().getRawMaterialCost())
                     .add(getItem().getLableCost())
-                    .multiply(BigDecimal.valueOf(worksConfig.getOrderOverhead(),0))
-                    .divide(BigDecimal.valueOf(100),2);
+                    .multiply(BigDecimal.valueOf(worksConfig.getOrderOverhead(), 0))
+                    .divide(BigDecimal.valueOf(100), 2);
         }
 
         return overheadCost;
@@ -132,8 +163,8 @@ public class WorksOrderEdit extends AbstractEditor<WorksOrder> {
             if (volume.compareTo(BigDecimal.valueOf(getItem().getMixer().getMaxLoad())) < 0) {
                 batches = 1;
             } else {
-                bdBatches = volume.divide(BigDecimal.valueOf(getItem().getMixer().getMaxLoad()),BigDecimal.ROUND_DOWN);
-                batches = bdBatches.intValue()+1;
+                bdBatches = volume.divide(BigDecimal.valueOf(getItem().getMixer().getMaxLoad()), BigDecimal.ROUND_DOWN);
+                batches = bdBatches.intValue() + 1;
             }
 
         }
@@ -167,10 +198,16 @@ public class WorksOrderEdit extends AbstractEditor<WorksOrder> {
                 orderIngredient.setMass(getItem().getMass()
                         .multiply(partsPer100)
                         .divide(BigDecimal.valueOf(100.0), 4, BigDecimal.ROUND_HALF_DOWN));
-                orderIngredient.setKgCost(formula.getRawMaterial().getCost());
+
+
+                BigDecimal currentCost = stockItemService.getPointInTimeCost(
+                        orderIngredient.getRawMaterial().getId(),
+                        getItem().getDocumentOn());
+
+                orderIngredient.setKgCost(currentCost);
 
                 BigDecimal onhandQuantity = stockItemService.
-                        getCurrentQuantity(orderIngredient.getRawMaterial().getId(),getItem().getDocumentOn());
+                        getPointInTimeQuantity(orderIngredient.getRawMaterial().getId(), getItem().getDocumentOn());
 
                 if (onhandQuantity.compareTo(orderIngredient.getMass()) < 0) {
                     ProblemList problem = new ProblemList();

@@ -13,6 +13,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Transient;
 import com.haulmont.cuba.core.entity.StandardEntity;
 import com.haulmont.chile.core.annotations.NamePattern;
+import javax.validation.constraints.NotNull;
 
 @NamePattern("%s|stockItem")
 @Table(name = "WORKS_STOCK_INTAKE_ITEM")
@@ -32,6 +33,7 @@ public class StockIntakeItem extends StandardEntity {
     @Column(name = "QUANTITY", nullable = false)
     protected BigDecimal quantity;
 
+    @NotNull
     @MetaProperty(datatype = CurrencyDatatype.NAME, mandatory = true)
     @Column(name = "UNIT_PRICE", nullable = false)
     protected BigDecimal unitPrice;

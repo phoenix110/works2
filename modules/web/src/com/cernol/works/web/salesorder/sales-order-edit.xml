@@ -89,7 +89,10 @@
                 </table>
             </groupBox>
         </scrollBox>
-        <frame id="windowActions"
-               screen="extendedEditWindowActions"/>
+        <hbox spacing="true">
+            <frame id="windowActions"
+                   screen="extendedEditWindowActions"/>
+            <button id="printBtn"/>
+        </hbox>
     </layout>
 </window>

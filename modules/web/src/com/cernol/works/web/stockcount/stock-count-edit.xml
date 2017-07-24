@@ -29,7 +29,7 @@
         <groupBox id="stockCountItemsBox"
                   caption="msg://com.cernol.works.entity/StockCount.stockCountItems">
             <table id="stockCountItemsTable"
-                   height="200px"
+                   height="500px"
                    width="100%">
                 <actions>
                     <action id="create"/>

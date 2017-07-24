@@ -8,7 +8,7 @@
     <dsContext>
         <datasource id="rawMaterialDs"
                     class="com.cernol.works.entity.RawMaterial"
-                    view="_local"/>
+                    view="rawMaterial-view"/>
         <collectionDatasource id="formulasDs"
                               class="com.cernol.works.entity.Formula"
                               view="formula-view_with_product">
@@ -21,7 +21,7 @@ order by e.partsPer100 desc]]>
     </dsContext>
     <dialogMode height="600"
                 width="800"/>
-    <layout expand="windowActions"
+    <layout expand="windowActions_hbox"
             spacing="true">
         <hbox spacing="true"
               width="100%">
@@ -33,20 +33,28 @@ order by e.partsPer100 desc]]>
                     <field property="reorder"/>
                     <field property="maxStock"/>
                     <field property="unit"/>
-                    <field editable="false"
-                           property="cost"/>
                     <field property="currentStatus"/>
+                    <field property="specFile"/>
                 </column>
             </fieldGroup>
-            <groupBox spacing="true">
+            <groupBox id="summaryGroupBox"
+                      spacing="true">
                 <textField id="onHand"
                            caption="msg://onhandLable"
+                           datatype="partsPer100"
                            editable="false"/>
                 <textField id="currentPrice"
-                           caption="msg://currentPriceLable"/>
+                           caption="msg://currentPriceLable"
+                           datatype="currency"
+                           editable="false"/>
+                <textField id="currentUsage"
+                           caption="msg://Current Usage"
+                           datatype="partsPer100"
+                           editable="false"/>
             </groupBox>
         </hbox>
-        <groupBox caption="msg://formulaeGroupBox"
+        <groupBox id="formulaeGroupBox"
+                  caption="msg://formulaeGroupBox"
                   spacing="true">
             <table height="300px">
                 <columns>
@@ -57,7 +65,14 @@ order by e.partsPer100 desc]]>
                 <rows datasource="formulasDs"/>
             </table>
         </groupBox>
-        <frame id="windowActions"
-               screen="editWindowActions"/>
+        <hbox id="windowActions_hbox"
+              expand="windowActions"
+              spacing="true">
+            <frame id="windowActions"
+                   height="100%"
+                   screen="editWindowActions"/>
+            <button id="printBtn"
+                    icon="icons/reports-print.png"/>
+        </hbox>
     </layout>
 </window>

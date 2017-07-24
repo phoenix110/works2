@@ -3,14 +3,17 @@ package com.cernol.works.web.decantingorder;
 import com.cernol.works.entity.*;
 import com.cernol.works.service.ToolsService;
 import com.haulmont.cuba.gui.components.AbstractEditor;
+import com.haulmont.cuba.gui.components.Button;
 import com.haulmont.cuba.gui.components.PickerField;
 import com.haulmont.cuba.gui.components.ValidationErrors;
 import com.haulmont.cuba.gui.data.CollectionDatasource;
+import com.haulmont.reports.gui.actions.EditorPrintFormAction;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.Map;
 import java.util.UUID;
 
 public class DecantingOrderEdit extends AbstractEditor<DecantingOrder> {
@@ -27,8 +30,18 @@ public class DecantingOrderEdit extends AbstractEditor<DecantingOrder> {
     @Inject
     private CollectionDatasource<DecantingOrderTarget, UUID> decantingOrderTargetsDs;
 
-    @Named("fieldGroup.product")
-    private PickerField productField;
+    @Named("fieldGroup.decantedProduct")
+    private PickerField decantedProductField;
+
+    @Inject
+    private Button printBtn;
+
+    @Override
+    public void init(Map<String, Object> params) {
+        super.init(params);
+
+        printBtn.setAction(new EditorPrintFormAction(this,null));
+    }
 
     @Override
     protected void initNewItem(DecantingOrder item) {
@@ -44,7 +57,7 @@ public class DecantingOrderEdit extends AbstractEditor<DecantingOrder> {
     protected void postInit() {
         super.postInit();
 
-        productField.addValueChangeListener(e -> productChanged());
+        decantedProductField.addValueChangeListener(e -> productChanged());
 
         decantingOrderSourcesDs.addCollectionChangeListener(e -> sourceChanged());
 
@@ -64,10 +77,10 @@ public class DecantingOrderEdit extends AbstractEditor<DecantingOrder> {
     }
 
     private void productChanged() {
-        if (getItem().getProduct() == null) {
+        if (getItem().getDecantedProduct() == null) {
             getItem().setDescription("Decanting - No product");
         } else {
-            getItem().setDescription("Decanting - " + getItem().getProduct().toString());
+            getItem().setDescription("Decanting - " + getItem().getDecantedProduct().getCode());
         }
     }
 

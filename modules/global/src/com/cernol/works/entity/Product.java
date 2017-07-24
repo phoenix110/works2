@@ -19,10 +19,11 @@ import com.haulmont.chile.core.annotations.Composition;
 import com.haulmont.cuba.core.entity.annotation.OnDelete;
 import com.haulmont.cuba.core.global.DeletePolicy;
 import java.util.List;
+import com.haulmont.cuba.core.entity.FileDescriptor;
 
 @PrimaryKeyJoinColumn(name = "STOCK_ITEM_ID", referencedColumnName = "ID")
 @Table(name = "WORKS_PRODUCT")
-@NamePattern("%s %s|code,description")
+@NamePattern("%s|code")
 @Entity(name = "works$Product")
 public class Product extends StockItem {
     private static final long serialVersionUID = 7981031785286293876L;
@@ -57,6 +58,33 @@ public class Product extends StockItem {
     @Size(min = 1)
     @Valid
     protected List<Formula> formula;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "SPEC_FILE_ID")
+    protected FileDescriptor specFile;
+
+    @Composition
+    @OnDelete(DeletePolicy.CASCADE)
+    @OneToMany(mappedBy = "product")
+    protected List<ProductContainer> containers;
+
+    public void setContainers(List<ProductContainer> containers) {
+        this.containers = containers;
+    }
+
+    public List<ProductContainer> getContainers() {
+        return containers;
+    }
+
+
+    public void setSpecFile(FileDescriptor specFile) {
+        this.specFile = specFile;
+    }
+
+    public FileDescriptor getSpecFile() {
+        return specFile;
+    }
+
+
     public PhysicalForm getPhysicalForm() {
         return physicalForm == null ? null : PhysicalForm.fromId(physicalForm);
     }

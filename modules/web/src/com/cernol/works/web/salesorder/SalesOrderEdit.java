@@ -3,13 +3,16 @@ package com.cernol.works.web.salesorder;
 import com.cernol.works.entity.*;
 import com.cernol.works.service.ToolsService;
 import com.haulmont.cuba.gui.components.AbstractEditor;
+import com.haulmont.cuba.gui.components.Button;
 import com.haulmont.cuba.gui.components.TextField;
 import com.haulmont.cuba.gui.data.CollectionDatasource;
+import com.haulmont.reports.gui.actions.EditorPrintFormAction;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.Map;
 import java.util.UUID;
 
 public class SalesOrderEdit extends AbstractEditor<SalesOrder> {
@@ -17,6 +20,16 @@ public class SalesOrderEdit extends AbstractEditor<SalesOrder> {
     @Inject
     ToolsService toolsService;
 
+    @Inject
+    private Button printBtn;
+
+    @Override
+    public void init(Map<String, Object> params) {
+        super.init(params);
+
+        printBtn.setAction(new EditorPrintFormAction(this,null));
+        
+    }
 
     @Inject
     private CollectionDatasource<SalesOrderContainer, UUID> salesOrderContainersDs;

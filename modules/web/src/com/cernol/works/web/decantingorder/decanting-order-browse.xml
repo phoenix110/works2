@@ -33,12 +33,13 @@
             <columns>
                 <column id="documentNo"/>
                 <column id="documentOn"/>
-                <column id="product"/>
+                <column id="decantedProduct"/>
                 <column id="containerCost"/>
                 <column id="overheadCost"/>
                 <column id="totalCost"/>
                 <column id="targetVolume"/>
                 <column id="currentStatus"/>
+                <column id="information"/>
             </columns>
             <rows datasource="decantingOrdersDs"/>
             <rowsCount/>

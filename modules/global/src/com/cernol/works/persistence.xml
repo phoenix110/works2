@@ -3,6 +3,7 @@
              version="2.0">
     <persistence-unit name="works2"
                       transaction-type="RESOURCE_LOCAL">
+
         <class>com.cernol.works.entity.Category</class>
         <class>com.cernol.works.entity.Order</class>
         <class>com.cernol.works.entity.WorksOrder</class>
@@ -27,5 +28,12 @@
         <class>com.cernol.works.entity.StockIntake</class>
         <class>com.cernol.works.entity.StockIntakeItem</class>
         <class>com.cernol.works.entity.SystemKey</class>
+        <class>com.cernol.works.entity.ProductContainer</class>
+        <class>com.cernol.works.entity.PriceUpdate</class>
+        <class>com.cernol.works.entity.PriceUpdateItem</class>
+        <properties>
+            <property name="eclipselink.logging.level" value="FINE"/>
+            <property name="eclipselink.logging.parameters" value="true"/>
+        </properties>
     </persistence-unit>
 </persistence>

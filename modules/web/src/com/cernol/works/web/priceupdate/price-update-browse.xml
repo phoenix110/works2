@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/window.xsd"
+        caption="msg://browseCaption"
+        class="com.cernol.works.web.priceupdate.PriceUpdateBrowse"
+        focusComponent="priceUpdatesTable"
+        lookupComponent="priceUpdatesTable"
+        messagesPack="com.cernol.works.web.priceupdate">
+    <dsContext>
+        <groupDatasource id="priceUpdatesDs"
+                         class="com.cernol.works.entity.PriceUpdate"
+                         view="priceUpdate-view">
+            <query>
+                <![CDATA[select e from works$PriceUpdate e]]>
+            </query>
+        </groupDatasource>
+    </dsContext>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="priceUpdatesTable"
+            spacing="true">
+        <filter id="filter"
+                applyTo="priceUpdatesTable"
+                datasource="priceUpdatesDs">
+            <properties include=".*"/>
+        </filter>
+        <groupTable id="priceUpdatesTable"
+                    width="100%">
+            <actions>
+                <action id="create"/>
+                <action id="edit"/>
+                <action id="remove"/>
+            </actions>
+            <columns>
+                <column id="documentNo"/>
+                <column id="documentOn"/>
+                <column id="currentStatus"/>
+            </columns>
+            <rows datasource="priceUpdatesDs"/>
+            <rowsCount/>
+            <buttonsPanel id="buttonsPanel"
+                          alwaysVisible="true">
+                <button id="createBtn"
+                        action="priceUpdatesTable.create"/>
+                <button id="editBtn"
+                        action="priceUpdatesTable.edit"/>
+                <button id="removeBtn"
+                        action="priceUpdatesTable.remove"/>
+            </buttonsPanel>
+        </groupTable>
+    </layout>
+</window>

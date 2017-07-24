@@ -11,7 +11,7 @@ import javax.persistence.OneToMany;
 import com.haulmont.cuba.core.entity.annotation.Listeners;
 
 @Listeners("works_SalesOrderEntityListener")
-@NamePattern("%s|description")
+@NamePattern("%s %s|documentNo,description")
 @Entity(name = "works$SalesOrder")
 public class SalesOrder extends Order {
     private static final long serialVersionUID = 4697506411283964946L;

@@ -65,6 +65,12 @@
             template="com/cernol/works/web/stockintake/stock-intake-edit.xml"/>
     <screen id="works$StockIntakeItem.edit"
             template="com/cernol/works/web/stockintakeitem/stock-intake-item-edit.xml"/>
-    <screen id="works$SystemKey.browse"
-            template="com/cernol/works/web/systemkey/system-key-browse.xml"/>
+    <screen id="works$ProductContainer.edit"
+            template="com/cernol/works/web/productcontainer/product-container-edit.xml"/>
+    <screen id="works$PriceUpdateItem.edit"
+            template="com/cernol/works/web/priceupdateitem/price-update-item-edit.xml"/>
+    <screen id="works$PriceUpdate.browse"
+            template="com/cernol/works/web/priceupdate/price-update-browse.xml"/>
+    <screen id="works$PriceUpdate.edit"
+            template="com/cernol/works/web/priceupdate/price-update-edit.xml"/>
 </screen-config>

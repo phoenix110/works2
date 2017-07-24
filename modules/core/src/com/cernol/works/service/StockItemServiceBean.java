@@ -23,16 +23,21 @@ public class StockItemServiceBean implements StockItemService {
     private StockItemWorker stockItemWorker;
 
     @Override
-    public BigDecimal getCurrentCost(UUID stockItemId, Date queryDate) {
+    public BigDecimal getPointInTimeCost(UUID stockItemId, Date queryDate) {
 
-        return stockItemWorker.getCurrentCost(stockItemId, queryDate);
+        return stockItemWorker.getPointInTimeCost(stockItemId, queryDate);
     }
 
     @Override
-    public BigDecimal getCurrentQuantity(UUID stockItemId, Date queryDate) {
+    public BigDecimal getPointInTimeQuantity(UUID stockItemId, Date queryDate) {
 
-        return stockItemWorker.getCurrentQuantity(stockItemId, queryDate);
+        return stockItemWorker.getPointInTimeQuantity(stockItemId, queryDate);
 
+    }
+
+    @Override
+    public BigDecimal getPeriodUsage(UUID stockItemId, Date queryDate) {
+        return stockItemWorker.getPeriodUsage(stockItemId, queryDate);
     }
 
 

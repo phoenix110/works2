@@ -11,6 +11,8 @@
                     view="product-view">
             <collectionDatasource id="formulaDs"
                                   property="formula"/>
+            <collectionDatasource id="containersDs"
+                                  property="containers"/>
         </datasource>
         <collectionDatasource id="categoriesDs"
                               class="com.cernol.works.entity.Category"
@@ -37,7 +39,8 @@ order by e.documentOn desc]]>
         <scrollBox id="scrollBox"
                    spacing="true">
             <hbox>
-                <groupBox spacing="true">
+                <groupBox id="fieldGroupBox"
+                          spacing="true">
                     <fieldGroup id="fieldGroup"
                                 datasource="productDs">
                         <column width="250px">
@@ -48,22 +51,24 @@ order by e.documentOn desc]]>
                             <field property="unit"/>
                             <field property="physicalForm"/>
                             <field property="specificGravity"/>
+                        </column>
+                        <column>
                             <field property="applyOverhead"/>
                             <field property="isCorrosive"/>
                             <field property="isFlammable"/>
                             <field property="isPoisonous"/>
                             <field property="currentStatus"/>
+                            <field property="specFile"/>
                         </column>
                     </fieldGroup>
                 </groupBox>
-                <groupBox spacing="true">
+                <groupBox id="tableGroupBox"
+                          spacing="true">
                     <table id="worksOrderTable"
                            caption="msg://worksOrderBrowser">
                         <columns>
                             <column id="documentNo"/>
                             <column id="documentOn"/>
-                            <column id="description"/>
-                            <column id="unit"/>
                             <column id="volume"/>
                             <column id="mass"/>
                             <column id="batchQuantity"/>
@@ -78,29 +83,50 @@ order by e.documentOn desc]]>
                     </table>
                 </groupBox>
             </hbox>
-            <groupBox id="formulaBox"
-                      caption="msg://com.cernol.works.entity/Product.formula">
-                <table id="formulaTable"
-                       height="200px"
-                       width="100%">
-                    <actions>
-                        <action id="create"/>
-                        <action id="edit"/>
-                        <action id="remove"/>
-                    </actions>
-                    <columns>
-                        <column id="sequenceNo"/>
-                        <column id="rawMaterial"/>
-                        <column id="partsPer100"/>
-                    </columns>
-                    <rows datasource="formulaDs"/>
-                    <buttonsPanel>
-                        <button action="formulaTable.create"/>
-                        <button action="formulaTable.edit"/>
-                        <button action="formulaTable.remove"/>
-                    </buttonsPanel>
-                </table>
-            </groupBox>
+            <vbox>
+                <groupBox id="formulaBox"
+                          caption="msg://com.cernol.works.entity/Product.formula">
+                    <table id="formulaTable"
+                           height="200px"
+                           width="100%">
+                        <actions>
+                            <action id="create"/>
+                            <action id="edit"/>
+                            <action id="remove"/>
+                        </actions>
+                        <columns>
+                            <column id="sequenceNo"/>
+                            <column id="rawMaterial"/>
+                            <column id="partsPer100"/>
+                        </columns>
+                        <rows datasource="formulaDs"/>
+                        <buttonsPanel>
+                            <button action="formulaTable.create"/>
+                            <button action="formulaTable.edit"/>
+                            <button action="formulaTable.remove"/>
+                        </buttonsPanel>
+                    </table>
+                </groupBox>
+                <groupBox id="containersBox"
+                          caption="msg://com.cernol.works.entity/Product.containers">
+                    <table id="containersTable"
+                           height="200px"
+                           width="100%">
+                        <actions>
+                            <action id="create"/>
+                            <action id="edit"/>
+                            <action id="remove"/>
+                        </actions>
+                        <columns/>
+                        <rows datasource="containersDs"/>
+                        <buttonsPanel>
+                            <button action="containersTable.create"/>
+                            <button action="containersTable.edit"/>
+                            <button action="containersTable.remove"/>
+                        </buttonsPanel>
+                    </table>
+                </groupBox>
+            </vbox>
         </scrollBox>
         <frame id="windowActions"
                screen="editWindowActions"/>
