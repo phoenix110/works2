@@ -42,13 +42,36 @@ public class DecantingOrderTarget extends StandardEntity {
     @Column(name = "ADDITIONAL")
     protected Boolean additional = Boolean.FALSE;
 
-    @Transient
-    @MetaProperty(related = {"quantity", "container"})
+    @Column(name = "LINE_CAPACITY")
     protected BigDecimal lineCapacity;
 
-    @Transient
-    @MetaProperty(datatype = CurrencyDatatype.NAME, related = {"quantity", "unitCost"})
+    @MetaProperty(datatype = CurrencyDatatype.NAME)
+    @Column(name = "LINE_COST")
     protected BigDecimal lineCost;
+
+    public BigDecimal getLineCapacity() {
+        if (getContainer() == null) {
+            return BigDecimal.ZERO;
+        }
+
+        if (getAdditional()) {
+            return BigDecimal.ZERO;
+        } else {
+            return getContainer().getCapacity().multiply(BigDecimal.valueOf(getQuantity()));
+        }
+    }
+
+    public BigDecimal getLineCost() {
+        if (getContainer() == null) {
+            return BigDecimal.ZERO;
+        }
+
+        if (getCustomersOwn()) {
+            return BigDecimal.ZERO;
+        } else {
+            return getUnitCost().multiply(BigDecimal.valueOf(getQuantity()));
+        }
+    }
 
     public void setCustomersOwn(Boolean customersOwn) {
         this.customersOwn = customersOwn;
@@ -66,40 +89,12 @@ public class DecantingOrderTarget extends StandardEntity {
         return additional;
     }
 
-
-    public BigDecimal getLineCapacity() {
-        if (getContainer() == null) {
-            return BigDecimal.ZERO;
-        }
-        if (getAdditional()) {
-            return BigDecimal.ZERO;
-        } else {
-
-            return getContainer().getCapacity().multiply(BigDecimal.valueOf(getQuantity()));
-        }
-    }
-
-
     public void setUnitCost(BigDecimal unitCost) {
         this.unitCost = unitCost;
     }
 
     public BigDecimal getUnitCost() {
         return unitCost;
-    }
-
-    public BigDecimal getLineCost() {
-
-        if (getContainer() == null) {
-            return BigDecimal.ZERO;
-        }
-
-        if (getCustomersOwn()) {
-            return BigDecimal.ZERO;
-        } else {
-
-            return getUnitCost().multiply(BigDecimal.valueOf(getQuantity()));
-        }
     }
 
 

@@ -259,6 +259,8 @@ create table WORKS_DECANTING_ORDER_TARGET (
     QUANTITY integer not null,
     CUSTOMERS_OWN boolean,
     ADDITIONAL boolean,
+    LINE_CAPACITY decimal(19, 2),
+    LINE_COST decimal,
     --
     primary key (ID)
 )^
