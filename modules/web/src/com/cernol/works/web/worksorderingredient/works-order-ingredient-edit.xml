@@ -21,6 +21,7 @@
                 <field property="rawMaterial"/>
                 <field property="mass"/>
                 <field property="kgCost"/>
+                <field property="partsPer100"/>
             </column>
         </fieldGroup>
         <frame id="windowActions"

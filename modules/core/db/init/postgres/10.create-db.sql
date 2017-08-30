@@ -131,6 +131,7 @@ create table WORKS_PRODUCT (
     IS_POISONOUS boolean,
     PHYSICAL_FORM varchar(50) not null,
     SPEC_FILE_ID uuid,
+    IS_FINAL boolean,
     --
     primary key (STOCK_ITEM_ID)
 )^
@@ -182,6 +183,7 @@ create table WORKS_WORKS_ORDER_INGREDIENT (
     RAW_MATERIAL_ID uuid not null,
     MASS decimal not null,
     KG_COST decimal not null,
+    PARTS_PER100 decimal,
     --
     primary key (ID)
 )^

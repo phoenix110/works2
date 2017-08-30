@@ -30,6 +30,7 @@ public class StockIntakeItem extends StandardEntity {
     @JoinColumn(name = "STOCK_ITEM_ID")
     protected StockItem stockItem;
 
+    @MetaProperty(datatype = PartsPer100Datatype.NAME, mandatory = true)
     @Column(name = "QUANTITY", nullable = false)
     protected BigDecimal quantity;
 

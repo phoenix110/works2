@@ -18,7 +18,6 @@ import com.haulmont.cuba.core.entity.annotation.Listeners;
 import com.haulmont.chile.core.annotations.NamePattern;
 
 @NamePattern("%s %s|documentNo,description")
-@Listeners("works_WorksOrderEntityListener")
 @Entity(name = "works$WorksOrder")
 public class WorksOrder extends Order {
     private static final long serialVersionUID = 705235975323362925L;

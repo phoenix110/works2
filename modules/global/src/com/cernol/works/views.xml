@@ -21,11 +21,6 @@
                   view="_local"/>
         <property name="lineCost"/>
         <property name="lineCapacity"/>
-        <property name="worksOrder"
-                  view="_minimal">
-            <property name="product"
-                      view="_minimal"/>
-        </property>
     </view>
     <view class="com.cernol.works.entity.WorksOrder"
           extends="_local"

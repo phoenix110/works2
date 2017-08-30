@@ -23,10 +23,10 @@ public class StockItemWorker {
     private Persistence persistence;
 
     public BigDecimal getPointInTimeQuantity(final UUID stockItemId, final Date queryDate) {
-        System.out.println("Entering StockItemWorker.getPointInTimeQuantity() with " +
+/*        System.out.println("Entering StockItemWorker.getPointInTimeQuantity() with " +
                 stockItemId.toString() +
                 " and " +
-                queryDate.toString());
+                queryDate.toString());*/
 
         //Set earliest possible start date in case we did not count the item yet.
 
@@ -70,9 +70,9 @@ public class StockItemWorker {
 
             BigDecimal inQuantity = getInQuantity(stockItemId, sinceDate, queryDate);
 
-            System.out.println(" ---> Start:" + startQuantity.toPlainString() +
+/*            System.out.println(" ---> Start:" + startQuantity.toPlainString() +
             " In: " + inQuantity.toPlainString() +
-            " Out: " + outQuantity.toPlainString());
+            " Out: " + outQuantity.toPlainString());*/
 
             return startQuantity.add(inQuantity).subtract(outQuantity);
         }
@@ -216,10 +216,10 @@ public class StockItemWorker {
 
 
     public BigDecimal getPointInTimeCost(final UUID stockItemId, final Date queryDate) {
-        System.out.println("Entering StockItemWorker.getPointInTimeCost() with " +
+/*        System.out.println("Entering StockItemWorker.getPointInTimeCost() with " +
                 stockItemId.toString() +
                 " and " +
-                queryDate.toString());
+                queryDate.toString());*/
         try (Transaction tx = persistence.createTransaction()) {
             EntityManager em = persistence.getEntityManager();
 

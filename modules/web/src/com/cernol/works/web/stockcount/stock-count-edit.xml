@@ -35,6 +35,7 @@
                     <action id="create"/>
                     <action id="edit"/>
                     <action id="remove"/>
+                    <action id="excel"/>
                 </actions>
                 <columns>
                     <column id="stockItem"/>
@@ -49,6 +50,7 @@
                     <button action="stockCountItemsTable.create"/>
                     <button action="stockCountItemsTable.edit"/>
                     <button action="stockCountItemsTable.remove"/>
+                    <button action="stockCountItemsTable.excel"/>
                 </buttonsPanel>
             </table>
         </groupBox>

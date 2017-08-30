@@ -67,6 +67,18 @@ public class Product extends StockItem {
     @OneToMany(mappedBy = "product")
     protected List<ProductContainer> containers;
 
+    @Column(name = "IS_FINAL")
+    protected Boolean isFinal;
+
+    public void setIsFinal(Boolean isFinal) {
+        this.isFinal = isFinal;
+    }
+
+    public Boolean getIsFinal() {
+        return isFinal;
+    }
+
+
     public void setContainers(List<ProductContainer> containers) {
         this.containers = containers;
     }

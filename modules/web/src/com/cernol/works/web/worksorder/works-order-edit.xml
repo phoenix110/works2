@@ -54,7 +54,6 @@
                                    property="volume"/>
                             <field editable="false"
                                    property="mass"/>
-                            
                             <field editable="false"
                                    property="rawMaterialCost"/>
                             <field editable="false"
@@ -124,6 +123,7 @@
                             <column id="mass"/>
                             <column id="kgCost"/>
                             <column id="lineCost"/>
+                            <column id="partsPer100"/>
                         </columns>
                         <rows datasource="worksOrderIngredientsDs"/>
                         <buttonsPanel>

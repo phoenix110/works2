@@ -17,6 +17,7 @@ import javax.persistence.Inheritance;
 import javax.persistence.DiscriminatorColumn;
 import com.haulmont.cuba.core.entity.annotation.Listeners;
 
+@Listeners("works_OrderEntityListener")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "DTYPE", discriminatorType = DiscriminatorType.STRING)
 @NamePattern("%s %s|documentNo,description")

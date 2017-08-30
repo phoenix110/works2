@@ -34,10 +34,12 @@ public class StockCountItem extends StandardEntity {
     @Column(name = "CURRENT_VALUE", nullable = false)
     protected BigDecimal currentValue = BigDecimal.ZERO;
 
-    @Column(name = "COUNTED_QUANTITY", nullable = false, precision = 19, scale = 4)
+    @MetaProperty(datatype = PartsPer100Datatype.NAME, mandatory = true)
+    @Column(name = "COUNTED_QUANTITY", nullable = false)
     protected BigDecimal countedQuantity = BigDecimal.ZERO;
 
-    @Column(name = "CURRENT_QUANTITY", nullable = false, precision = 19, scale = 4)
+    @MetaProperty(datatype = PartsPer100Datatype.NAME, mandatory = true)
+    @Column(name = "CURRENT_QUANTITY", nullable = false)
     protected BigDecimal currentQuantity = BigDecimal.ZERO;
 
     @Transient

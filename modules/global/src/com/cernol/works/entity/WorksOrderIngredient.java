@@ -40,9 +40,22 @@ public class WorksOrderIngredient extends StandardEntity {
     @Column(name = "KG_COST", nullable = false)
     protected BigDecimal kgCost = BigDecimal.ZERO;
 
+    @MetaProperty(datatype = PartsPer100Datatype.NAME)
+    @Column(name = "PARTS_PER100")
+    protected BigDecimal partsPer100;
+
     @Transient
     @MetaProperty(datatype = CurrencyDatatype.NAME, related = {"mass", "kgCost"})
     protected BigDecimal lineCost;
+
+    public void setPartsPer100(BigDecimal partsPer100) {
+        this.partsPer100 = partsPer100;
+    }
+
+    public BigDecimal getPartsPer100() {
+        return partsPer100;
+    }
+
 
     public void setWorksOrder(WorksOrder worksOrder) {
         this.worksOrder = worksOrder;

@@ -56,6 +56,7 @@ public class DecantingOrderTarget extends StandardEntity {
 
         if (getAdditional()) {
             return BigDecimal.ZERO;
+
         } else {
             return getContainer().getCapacity().multiply(BigDecimal.valueOf(getQuantity()));
         }

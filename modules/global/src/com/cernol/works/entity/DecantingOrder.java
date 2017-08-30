@@ -14,7 +14,6 @@ import javax.persistence.Column;
 import javax.persistence.OneToMany;
 import com.haulmont.cuba.core.entity.annotation.Listeners;
 
-@Listeners("works_DecantingOrderEntityListener")
 @NamePattern("%s %s|documentNo,description")
 @Entity(name = "works$DecantingOrder")
 public class DecantingOrder extends Order {

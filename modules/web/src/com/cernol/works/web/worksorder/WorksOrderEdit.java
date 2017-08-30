@@ -3,15 +3,15 @@ package com.cernol.works.web.worksorder;
 import com.cernol.works.entity.*;
 import com.cernol.works.service.StockItemService;
 import com.cernol.works.service.ToolsService;
+import com.haulmont.cuba.core.entity.Entity;
 import com.haulmont.cuba.core.global.DataManager;
 import com.haulmont.cuba.core.global.LoadContext;
 import com.haulmont.cuba.core.global.Metadata;
-import com.haulmont.cuba.gui.components.AbstractEditor;
-import com.haulmont.cuba.gui.components.Button;
-import com.haulmont.cuba.gui.components.LookupField;
-import com.haulmont.cuba.gui.components.PickerField;
+import com.haulmont.cuba.gui.components.*;
 import com.haulmont.cuba.gui.data.CollectionDatasource;
 import com.haulmont.reports.gui.actions.EditorPrintFormAction;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -22,6 +22,8 @@ import java.util.Map;
 import java.util.UUID;
 
 public class WorksOrderEdit extends AbstractEditor<WorksOrder> {
+
+    private Logger log = LoggerFactory.getLogger(WorksOrderEdit.class);
 
     @Inject
     ToolsService toolsService;
@@ -53,18 +55,64 @@ public class WorksOrderEdit extends AbstractEditor<WorksOrder> {
     @Named("fieldGroup.product")
     protected PickerField productPicker;
 
+    @Named("fieldGroup.mass")
+    private TextField massField;
+
+    @Named("fieldGroup.volume")
+    private TextField volumeField;
+
     @Named("fieldGroup.currentStatus")
     private LookupField currentStatusField;
 
+    @Named("fieldGroup.containerCost")
+    private TextField containerCostField;
+
+    @Named("fieldGroup.rawMaterialCost")
+    private TextField rawMaterialCostField;
+
+    @Override
+    protected boolean postCommit(boolean committed, boolean close) {
+        log.info("postCommit().committed: " + committed);
+
+        return super.postCommit(committed, close);
+
+
+
+    }
+
     @Override
     public void init(Map<String, Object> params) {
+        log.info("init()");
+
         super.init(params);
 
         instructionReportBtn.setAction(new EditorPrintFormAction(this, null));
+
+//        worksOrderIngredientsDs.addCollectionChangeListener(e -> packingChanged());
+
+        volumeField.addValueChangeListener(e -> volumeChanged());
+
+        massField.addValueChangeListener(e -> massChanged());
+
+
+    }
+
+    @Override
+    public void setItem(Entity item) {
+
+        log.info("setItem()");
+
+        super.setItem(item);
+
+
+
     }
 
     @Override
     protected void initNewItem(WorksOrder item) {
+
+        log.info("initNewItem()");
+
         super.initNewItem(item);
 
         item.setDocumentOn(Date.from(toolsService.getNow()));
@@ -74,19 +122,38 @@ public class WorksOrderEdit extends AbstractEditor<WorksOrder> {
         item.setCurrentStatus(DocumentStatus.New);
     }
 
+
+
     @Override
     protected void postInit() {
+        log.info("postInit()");
         super.postInit();
 
         productPicker.addValueChangeListener(e -> productChanged());
 
+        containerCostField.addValueChangeListener(e -> containerCostChanged());
+
+        rawMaterialCostField.addValueChangeListener(e -> rawMaterialCostChanged());
+
         currentStatusField.addValueChangeListener(e -> statusChanged());
 
         worksOrderPackingsDs.addCollectionChangeListener(e -> packingChanged());
+
+        worksOrderIngredientsDs.addCollectionChangeListener(e -> ingredientsChanged());
+    }
+
+    @Override
+    protected boolean preCommit() {
+
+        log.info("preCommit()");
+
+        return super.preCommit();
+
+
     }
 
     private void packingChanged() {
-
+        log.info("packingChanged()");
         BigDecimal volume = BigDecimal.ZERO;
 
         BigDecimal containerCost = BigDecimal.ZERO;
@@ -98,39 +165,86 @@ public class WorksOrderEdit extends AbstractEditor<WorksOrder> {
         }
 
         getItem().setVolume(volume);
-        getItem().setMass(calculateMass(volume));
-        getItem().setBatchQuantity(calculateBatches(volume));
         getItem().setContainerCost(containerCost);
-        resetIngredients();
+
+        if (getItem().getProduct() != null) {
+//            getItem().setMass(calculateMass(volume));
+//            getItem().setBatchQuantity(calculateBatches(volume));
+//            resetIngredients();
+//            getItem().setOverheadCost(calculateOverhead());
+        }
+    }
+
+    private void ingredientsChanged() {
+        BigDecimal rawMaterialCost = BigDecimal.ZERO;
+
+        for (WorksOrderIngredient line : worksOrderIngredientsDs.getItems()) {
+            rawMaterialCost = rawMaterialCost.add(line.getLineCost());
+        }
+
+        getItem().setRawMaterialCost(rawMaterialCost);
+    }
+
+    private void volumeChanged() {
+        log.info("volumeChanged()");
+
+        if (getItem().getProduct() != null) {
+            getItem().setMass(calculateMass(getItem().getVolume()));
+            getItem().setBatchQuantity(calculateBatches(getItem().getVolume()));
+
+        }
+
+    }
+
+    private void massChanged() {
+        log.info("massChanged()");
+
+        resetIngredientQuantities(getItem().getMass());
+
+    }
+
+    private void containerCostChanged() {
+        log.info("containerCostChanged()");
+        getItem().setOverheadCost(calculateOverhead());
+    }
+
+    private void rawMaterialCostChanged() {
+        log.info("rawMaterialCostChanged()");
         getItem().setOverheadCost(calculateOverhead());
     }
 
     private void statusChanged() {
+
+        log.info("statusChanged()");
+
         if (getItem().getCurrentStatus() == DocumentStatus.Cancelled) {
             BigDecimal zeroVal = BigDecimal.ZERO;
 
-            getItem().setRawMaterialCost(zeroVal);
+            getItem().setMass(zeroVal);
+            //getItem().setRawMaterialCost(zeroVal);
             getItem().setContainerCost(zeroVal);
-            getItem().setOverheadCost(zeroVal);
+            //getItem().setOverheadCost(zeroVal);
         } else {
-            packingChanged();
+              volumeChanged();
         }
 
     }
 
     private void productChanged() {
-
+        log.info("productChanged()");
         if (getItem().getProduct() != null) {
 
             getItem().setDescription(getItem().getProduct().getCode());
-            getItem().setMass(calculateMass(getItem().getVolume()));
+            //getItem().setMass(calculateMass(getItem().getVolume()));
             getItem().setUnit(getItem().getProduct().getUnit());
             resetIngredients();
-            getItem().setOverheadCost(calculateOverhead());
+            resetIngredientQuantities(getItem().getMass());
+            //getItem().setOverheadCost(calculateOverhead());
         }
     }
 
     private BigDecimal calculateOverhead() {
+        log.info("calculateOverhead()");
         BigDecimal overheadCost = BigDecimal.ZERO;
 
         if (getItem().getProduct().getApplyOverhead()) {
@@ -145,6 +259,7 @@ public class WorksOrderEdit extends AbstractEditor<WorksOrder> {
     }
 
     private BigDecimal calculateMass(BigDecimal volume) {
+        log.info("calculateMass()");
         BigDecimal mass = BigDecimal.ZERO;
 
         mass = volume.multiply(getItem().getProduct().getSpecificGravity());
@@ -153,7 +268,7 @@ public class WorksOrderEdit extends AbstractEditor<WorksOrder> {
     }
 
     private Integer calculateBatches(BigDecimal volume) {
-
+        log.info("calculateBatches()");
         Integer batches = 0;
         BigDecimal bdBatches = BigDecimal.ZERO;
 
@@ -173,7 +288,7 @@ public class WorksOrderEdit extends AbstractEditor<WorksOrder> {
     }
 
     public void resetIngredients() {
-
+        log.info("resetIngredients()");
         BigDecimal ingredientCost = BigDecimal.ZERO;
 
         removeAllIngredients();
@@ -186,18 +301,17 @@ public class WorksOrderEdit extends AbstractEditor<WorksOrder> {
 
             Product myProduct = dataManager.load(loadContext);
 
-            for (Formula formula : myProduct.getFormula()) {
+            for (Formula formula : myProduct != null ? myProduct.getFormula() : null) {
 
                 WorksOrderIngredient orderIngredient = metadata.create(WorksOrderIngredient.class);
 
-                BigDecimal partsPer100 = formula.getPartsPer100();
-
                 orderIngredient.setWorksOrder(getItem());
+                orderIngredient.setPartsPer100(formula.getPartsPer100());
                 orderIngredient.setSequenceNo(formula.getSequenceNo());
                 orderIngredient.setRawMaterial(formula.getRawMaterial());
-                orderIngredient.setMass(getItem().getMass()
-                        .multiply(partsPer100)
-                        .divide(BigDecimal.valueOf(100.0), 4, BigDecimal.ROUND_HALF_DOWN));
+/*                orderIngredient.setMass(getItem().getMass()
+                        .multiply(formula.getPartsPer100())
+                        .divide(BigDecimal.valueOf(100.0), 4, BigDecimal.ROUND_HALF_DOWN));*/
 
 
                 BigDecimal currentCost = stockItemService.getPointInTimeCost(
@@ -222,17 +336,42 @@ public class WorksOrderEdit extends AbstractEditor<WorksOrder> {
                 }
 
                 worksOrderIngredientsDs.addItem(orderIngredient);
+                //               worksOrderIngredientsDs.includeItem(orderIngredient);
 
                 ingredientCost = ingredientCost.add(orderIngredient.getLineCost());
             }
         }
 
         getItem().setRawMaterialCost(ingredientCost);
+
     }
 
     private void removeAllIngredients() {
         for (WorksOrderIngredient worksOrderIngredient : new ArrayList<>(worksOrderIngredientsDs.getItems())) {
             worksOrderIngredientsDs.removeItem(worksOrderIngredient);
         }
+    }
+
+    private void resetIngredientQuantities(BigDecimal mass) {
+        log.info("resetIngredientQuantities()");
+
+        for (WorksOrderIngredient worksOrderIngredient : new ArrayList<>(worksOrderIngredientsDs.getItems())) {
+            worksOrderIngredient.setMass(mass.
+                    multiply(worksOrderIngredient.getPartsPer100()).
+                    divide(BigDecimal.valueOf(100.0), 4, BigDecimal.ROUND_HALF_DOWN));
+            worksOrderIngredientsDs.updateItem(worksOrderIngredient);
+        }
+    }
+
+    private void resetIngredientPrices() {
+        log.info("resetIngredientPrices()");
+        for (WorksOrderIngredient worksOrderIngredient : new ArrayList<>(worksOrderIngredientsDs.getItems())) {
+            BigDecimal currentCost = stockItemService.getPointInTimeCost(
+                    worksOrderIngredient.getRawMaterial().getId(),
+                    getItem().getDocumentOn());
+            worksOrderIngredient.setKgCost(currentCost);
+            worksOrderIngredientsDs.updateItem(worksOrderIngredient);
+        }
+
     }
 }

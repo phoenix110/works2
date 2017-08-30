@@ -51,14 +51,17 @@ order by e.documentOn desc]]>
                             <field property="unit"/>
                             <field property="physicalForm"/>
                             <field property="specificGravity"/>
+                            <field property="specFile"/>
+                            
                         </column>
                         <column>
                             <field property="applyOverhead"/>
                             <field property="isCorrosive"/>
                             <field property="isFlammable"/>
                             <field property="isPoisonous"/>
+                            <field property="isFinal"/>
                             <field property="currentStatus"/>
-                            <field property="specFile"/>
+                            
                         </column>
                     </fieldGroup>
                 </groupBox>
