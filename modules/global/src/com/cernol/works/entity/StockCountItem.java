@@ -43,11 +43,11 @@ public class StockCountItem extends StandardEntity {
     protected BigDecimal currentQuantity = BigDecimal.ZERO;
 
     @Transient
-    @MetaProperty(datatype = PartsPer100Datatype.NAME)
+    @MetaProperty(datatype = PartsPer100Datatype.NAME, related = {"countedQuantity", "currentQuantity"})
     protected BigDecimal adjustedQuantity;
 
     @Transient
-    @MetaProperty(datatype = CurrencyDatatype.NAME, mandatory = true)
+    @MetaProperty(datatype = CurrencyDatatype.NAME, related = {"adjustedQuantity", "currentValue"})
     protected BigDecimal adjustedValue;
 
 
@@ -93,7 +93,8 @@ public class StockCountItem extends StandardEntity {
     }
 
     public BigDecimal getAdjustedQuantity() {
-        return adjustedQuantity;
+
+        return (getCountedQuantity().subtract(getCurrentQuantity()));
     }
 
     public void setAdjustedValue(BigDecimal adjustedValue) {
@@ -101,8 +102,8 @@ public class StockCountItem extends StandardEntity {
     }
 
     public BigDecimal getAdjustedValue() {
-        return adjustedValue;
-    }
 
+        return (getAdjustedQuantity().multiply(getCurrentValue()));
+    }
 
 }

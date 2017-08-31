@@ -129,6 +129,7 @@ create table WORKS_PRODUCT (
     IS_CORROSIVE boolean,
     IS_FLAMMABLE boolean,
     IS_POISONOUS boolean,
+    KEEP_AWAY boolean,
     PHYSICAL_FORM varchar(50) not null,
     SPEC_FILE_ID uuid,
     IS_FINAL boolean,

@@ -10,12 +10,23 @@
                     class="com.cernol.works.entity.RawMaterial"
                     view="rawMaterial-view"/>
         <collectionDatasource id="formulasDs"
+                              allowCommit="false"
                               class="com.cernol.works.entity.Formula"
                               view="formula-view_with_product">
             <query>
                 <![CDATA[select e from works$Formula e
 where e.rawMaterial.id = :ds$rawMaterialDs
 order by e.partsPer100 desc]]>
+            </query>
+        </collectionDatasource>
+        <collectionDatasource id="priceUpdateItemsDs"
+                              allowCommit="false"
+                              class="com.cernol.works.entity.PriceUpdateItem"
+                              view="priceUpdateItem-view">
+            <query>
+                <![CDATA[select e from works$PriceUpdateItem e
+where e.stockItem.id = :ds$rawMaterialDs
+order by e.priceUpdate.documentOn desc]]>
             </query>
         </collectionDatasource>
     </dsContext>
@@ -53,18 +64,33 @@ order by e.partsPer100 desc]]>
                            editable="false"/>
             </groupBox>
         </hbox>
-        <groupBox id="formulaeGroupBox"
-                  caption="msg://formulaeGroupBox"
-                  spacing="true">
-            <table height="300px">
-                <columns>
-                    <column id="product"/>
-                    <column id="sequenceNo"/>
-                    <column id="partsPer100"/>
-                </columns>
-                <rows datasource="formulasDs"/>
-            </table>
-        </groupBox>
+        <hbox width="100%">
+            <groupBox id="formulaeGroupBox"
+                      caption="msg://formulaeGroupBox"
+                      spacing="true">
+                <table id="tableFormulae"
+                       height="300px">
+                    <columns>
+                        <column id="product"/>
+                        <column id="sequenceNo"/>
+                        <column id="partsPer100"/>
+                    </columns>
+                    <rows datasource="formulasDs"/>
+                </table>
+            </groupBox>
+            <groupBox id="priceChangeHistoryGroupBox"
+                      caption="msg://Price History"
+                      spacing="true">
+                <table id="tablePriceChangeHistory"
+                       height="300px">
+                    <columns>
+                        <column id="priceUpdate"/>
+                        <column id="price"/>
+                    </columns>
+                    <rows datasource="priceUpdateItemsDs"/>
+                </table>
+            </groupBox>
+        </hbox>
         <hbox id="windowActions_hbox"
               expand="windowActions"
               spacing="true">

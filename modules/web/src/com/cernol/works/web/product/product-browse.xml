@@ -43,7 +43,7 @@
                 <column id="isCorrosive"/>
                 <column id="isFlammable"/>
                 <column id="isPoisonous"/>
-                <column id="physicalForm"/>
+                <column id="keepAway"/>
             </columns>
             <rows datasource="productsDs"/>
             <rowsCount/>

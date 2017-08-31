@@ -32,11 +32,7 @@
                 <field editable="false"
                        property="currentQuantity"/>
                 <field editable="false"
-                       property="adjustedQuantity"/>
-                <field editable="false"
                        property="currentValue"/>
-                <field editable="false"
-                       property="adjustedValue"/>
             </column>
         </fieldGroup>
         <frame id="windowActions"

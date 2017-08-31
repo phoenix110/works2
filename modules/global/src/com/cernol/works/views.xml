@@ -172,6 +172,8 @@
           name="priceUpdateItem-view">
         <property name="stockItem"
                   view="_minimal"/>
+        <property name="priceUpdate"
+                  view="_local"/>
     </view>
     <view class="com.cernol.works.entity.PriceUpdate"
           extends="_local"

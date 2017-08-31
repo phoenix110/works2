@@ -52,16 +52,15 @@ order by e.documentOn desc]]>
                             <field property="physicalForm"/>
                             <field property="specificGravity"/>
                             <field property="specFile"/>
-                            
                         </column>
                         <column>
                             <field property="applyOverhead"/>
                             <field property="isCorrosive"/>
                             <field property="isFlammable"/>
                             <field property="isPoisonous"/>
+                            <field property="keepAway"/>
                             <field property="isFinal"/>
                             <field property="currentStatus"/>
-                            
                         </column>
                     </fieldGroup>
                 </groupBox>
@@ -86,9 +85,11 @@ order by e.documentOn desc]]>
                     </table>
                 </groupBox>
             </hbox>
-            <vbox>
-                <groupBox id="formulaBox"
-                          caption="msg://com.cernol.works.entity/Product.formula">
+            <tabSheet id="tabSheet">
+                <tab id="tabFormula"
+                     caption="msg://com.cernol.works.entity/Product.formula"
+                     margin="true,false,false,false"
+                     spacing="true">
                     <table id="formulaTable"
                            height="200px"
                            width="100%">
@@ -109,9 +110,11 @@ order by e.documentOn desc]]>
                             <button action="formulaTable.remove"/>
                         </buttonsPanel>
                     </table>
-                </groupBox>
-                <groupBox id="containersBox"
-                          caption="msg://com.cernol.works.entity/Product.containers">
+                </tab>
+                <tab id="tabContainers"
+                     caption="msg://com.cernol.works.entity/Product.containers"
+                     margin="true,false,false,false"
+                     spacing="true">
                     <table id="containersTable"
                            height="200px"
                            width="100%">
@@ -128,8 +131,8 @@ order by e.documentOn desc]]>
                             <button action="containersTable.remove"/>
                         </buttonsPanel>
                     </table>
-                </groupBox>
-            </vbox>
+                </tab>
+            </tabSheet>
         </scrollBox>
         <frame id="windowActions"
                screen="editWindowActions"/>

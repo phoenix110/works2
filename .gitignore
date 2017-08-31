@@ -3,7 +3,6 @@
 *.ipr
 *.iml
 *.iws
-
 dataSources/
 .ideaDataSources/
 out

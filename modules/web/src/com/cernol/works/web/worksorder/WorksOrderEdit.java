@@ -176,6 +176,9 @@ public class WorksOrderEdit extends AbstractEditor<WorksOrder> {
     }
 
     private void ingredientsChanged() {
+
+        log.info("ingredientsChanged()");
+
         BigDecimal rawMaterialCost = BigDecimal.ZERO;
 
         for (WorksOrderIngredient line : worksOrderIngredientsDs.getItems()) {
@@ -225,7 +228,8 @@ public class WorksOrderEdit extends AbstractEditor<WorksOrder> {
             getItem().setContainerCost(zeroVal);
             //getItem().setOverheadCost(zeroVal);
         } else {
-              volumeChanged();
+              packingChanged();
+
         }
 
     }
@@ -309,9 +313,9 @@ public class WorksOrderEdit extends AbstractEditor<WorksOrder> {
                 orderIngredient.setPartsPer100(formula.getPartsPer100());
                 orderIngredient.setSequenceNo(formula.getSequenceNo());
                 orderIngredient.setRawMaterial(formula.getRawMaterial());
-/*                orderIngredient.setMass(getItem().getMass()
+                orderIngredient.setMass(getItem().getMass()
                         .multiply(formula.getPartsPer100())
-                        .divide(BigDecimal.valueOf(100.0), 4, BigDecimal.ROUND_HALF_DOWN));*/
+                        .divide(BigDecimal.valueOf(100.0), 4, BigDecimal.ROUND_HALF_DOWN));
 
 
                 BigDecimal currentCost = stockItemService.getPointInTimeCost(

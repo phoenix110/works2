@@ -48,6 +48,9 @@ public class Product extends StockItem {
     @Column(name = "IS_POISONOUS")
     protected Boolean isPoisonous;
 
+    @Column(name = "KEEP_AWAY")
+    protected Boolean keepAway;
+
     @Column(name = "PHYSICAL_FORM", nullable = false)
     protected String physicalForm;
 
@@ -69,6 +72,15 @@ public class Product extends StockItem {
 
     @Column(name = "IS_FINAL")
     protected Boolean isFinal;
+
+    public void setKeepAway(Boolean keepAway) {
+        this.keepAway = keepAway;
+    }
+
+    public Boolean getKeepAway() {
+        return keepAway;
+    }
+
 
     public void setIsFinal(Boolean isFinal) {
         this.isFinal = isFinal;
