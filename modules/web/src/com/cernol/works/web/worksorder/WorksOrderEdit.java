@@ -168,7 +168,7 @@ public class WorksOrderEdit extends AbstractEditor<WorksOrder> {
         getItem().setContainerCost(containerCost);
 
         if (getItem().getProduct() != null) {
-//            getItem().setMass(calculateMass(volume));
+            getItem().setMass(calculateMass(volume));
 //            getItem().setBatchQuantity(calculateBatches(volume));
 //            resetIngredients();
 //            getItem().setOverheadCost(calculateOverhead());

@@ -53,7 +53,7 @@ order by e.documentOn desc]]>
                             <field property="specificGravity"/>
                             <field property="specFile"/>
                         </column>
-                        <column>
+                        <column width="250px">
                             <field property="applyOverhead"/>
                             <field property="isCorrosive"/>
                             <field property="isFlammable"/>
@@ -91,12 +91,12 @@ order by e.documentOn desc]]>
                      margin="true,false,false,false"
                      spacing="true">
                     <table id="formulaTable"
-                           height="200px"
                            width="100%">
                         <actions>
                             <action id="create"/>
                             <action id="edit"/>
                             <action id="remove"/>
+                            <action id="excel"/>
                         </actions>
                         <columns>
                             <column id="sequenceNo"/>
@@ -108,6 +108,7 @@ order by e.documentOn desc]]>
                             <button action="formulaTable.create"/>
                             <button action="formulaTable.edit"/>
                             <button action="formulaTable.remove"/>
+                            <button action="formulaTable.excel"/>
                         </buttonsPanel>
                     </table>
                 </tab>
@@ -116,7 +117,6 @@ order by e.documentOn desc]]>
                      margin="true,false,false,false"
                      spacing="true">
                     <table id="containersTable"
-                           height="200px"
                            width="100%">
                         <actions>
                             <action id="create"/>

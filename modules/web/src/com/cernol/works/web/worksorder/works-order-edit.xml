@@ -82,7 +82,6 @@
                      caption="msg://com.cernol.works.entity/WorksOrder.worksOrderPackings"
                      margin="true,false,false,false">
                     <table id="worksOrderPackingsTable"
-                           height="300px"
                            width="100%">
                         <actions>
                             <action id="create"/>
@@ -110,7 +109,6 @@
                      margin="true,false,false,false"
                      spacing="true">
                     <table id="worksOrderIngredientsTable"
-                           height="300px"
                            width="100%">
                         <actions>
                             <action id="create"/>
@@ -137,7 +135,6 @@
                      margin="true,false,false,false"
                      spacing="true">
                     <table id="worksOrderLablesTable"
-                           height="300px"
                            width="100%">
                         <actions>
                             <action id="create"/>
