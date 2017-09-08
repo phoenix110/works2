@@ -184,4 +184,10 @@
     <view class="com.cernol.works.entity.Container"
           extends="_local"
           name="container-view"/>
+    <view class="com.cernol.works.entity.WorksOrderPacking"
+          extends="_local"
+          name="worksOrderPacking-view_1">
+        <property name="worksOrder"
+                  view="_minimal"/>
+    </view>
 </views>

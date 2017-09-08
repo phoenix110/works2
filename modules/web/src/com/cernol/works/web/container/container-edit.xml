@@ -9,24 +9,90 @@
         <datasource id="containerDs"
                     class="com.cernol.works.entity.Container"
                     view="_local"/>
+        <collectionDatasource id="priceUpdateItemsDs"
+                              class="com.cernol.works.entity.PriceUpdateItem"
+                              maxResults="10"
+                              view="priceUpdateItem-view">
+            <query>
+                <![CDATA[select e from works$PriceUpdateItem e
+where e.stockItem.id = :ds$containerDs
+order by e.priceUpdate.documentOn desc
+]]>
+            </query>
+        </collectionDatasource>
+        <collectionDatasource id="worksOrderPackingsDs"
+                              class="com.cernol.works.entity.WorksOrderPacking"
+                              maxResults="10"
+                              view="worksOrderPacking-view_1">
+            <query>
+                <![CDATA[select e from works$WorksOrderPacking e
+where e.container.id = :ds$containerDs
+order by e.worksOrder.documentOn desc
+]]>
+            </query>
+        </collectionDatasource>
     </dsContext>
     <dialogMode height="600"
                 width="800"/>
-    <layout expand="windowActions"
-            spacing="true">
-        <fieldGroup id="fieldGroup"
-                    datasource="containerDs">
-            <column width="250px">
-                <field property="code"/>
-                <field property="description"/>
-                <field property="reorder"/>
-                <field property="maxStock"/>
-                <field property="unit"/>
-                <field property="currentStatus"/>
-                <field property="capacity"/>
-            </column>
-        </fieldGroup>
-        <frame id="windowActions"
-               screen="editWindowActions"/>
+    <layout spacing="true">
+        <vbox height="100%"
+              spacing="true">
+            <hbox width="100%">
+                <fieldGroup id="fieldGroup"
+                            datasource="containerDs">
+                    <column width="250px">
+                        <field property="code"/>
+                        <field property="description"/>
+                        <field property="reorder"/>
+                        <field property="maxStock"/>
+                        <field property="capacity"/>
+                        <field property="unit"/>
+                        <field property="currentStatus"/>
+                    </column>
+                </fieldGroup>
+                <groupBox id="summaryGroupBox"
+                          spacing="true">
+                    <textField id="onHand"
+                               caption="msg://onhandLable"
+                               datatype="partsPer100"
+                               editable="false"/>
+                    <textField id="currentPrice"
+                               caption="msg://currentPriceLable"
+                               datatype="currency"
+                               editable="false"/>
+                    <textField id="currentUsage"
+                               caption="msg://Current Usage"
+                               datatype="partsPer100"
+                               editable="false"/>
+                </groupBox>
+            </hbox>
+            <hbox spacing="true"
+                  width="100%">
+                <groupBox spacing="true">
+                    <table id="worksOrderTable">
+                        <columns>
+                            <column id="worksOrder"/>
+                            <column id="quantity"/>
+                            <column id="unitCost"/>
+                            <column id="customersOwn"/>
+                            <column id="additional"/>
+                        </columns>
+                        <rows datasource="worksOrderPackingsDs"/>
+                    </table>
+                </groupBox>
+                <groupBox spacing="true">
+                    <table id="priceUpdateTable">
+                        <columns>
+                            <column id="priceUpdate"/>
+                            <column id="price"/>
+                        </columns>
+                        <rows datasource="priceUpdateItemsDs"/>
+                    </table>
+                </groupBox>
+            </hbox>
+            <frame id="windowActions"
+                   height="100%"
+                   screen="editWindowActions"/>
+        </vbox>
     </layout>
 </window>

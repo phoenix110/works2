@@ -6,12 +6,12 @@ import com.haulmont.cuba.gui.components.AbstractEditor;
 import com.cernol.works.entity.PriceUpdate;
 
 import javax.inject.Inject;
-import java.util.Date;
+import java.sql.Date;
 
 public class PriceUpdateEdit extends AbstractEditor<PriceUpdate> {
 
     @Inject
-    private ToolsService toolsService;
+    ToolsService toolsService;
 
     @Override
     protected void initNewItem(PriceUpdate item) {
@@ -19,5 +19,6 @@ public class PriceUpdateEdit extends AbstractEditor<PriceUpdate> {
 
         item.setDocumentOn(Date.from(toolsService.getNow()));
         item.setCurrentStatus(DocumentStatus.New);
+
     }
 }

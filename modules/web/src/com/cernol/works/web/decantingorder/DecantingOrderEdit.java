@@ -97,18 +97,24 @@ public class DecantingOrderEdit extends AbstractEditor<DecantingOrder> {
     private void targetsChanged() {
         BigDecimal targetVolume = BigDecimal.ZERO;
         BigDecimal targetCost = BigDecimal.ZERO;
-        BigDecimal overheadCost = BigDecimal.ZERO;
+        BigDecimal overheadCost;
 
         for (DecantingOrderTarget line : decantingOrderTargetsDs.getItems()) {
             targetVolume = targetVolume.add(line.getLineCapacity());
             targetCost = targetCost.add(line.getLineCost());
         }
 
+        if (getItem().getDecantedProduct().getApplyOverhead()) {
+            overheadCost = BigDecimal.ZERO;
+        }
+        else {
+            overheadCost = targetCost.multiply(BigDecimal.valueOf(worksConfig.getDecantingOverhead(),0)).
+                    divide(BigDecimal.valueOf(100,0));
+        }
+
         getItem().setTargetVolume(targetVolume);
         getItem().setContainerCost(targetCost);
-        getItem().setOverheadCost(targetCost.
-                multiply(BigDecimal.valueOf(worksConfig.getDecantingOverhead(),0)).
-                divide(BigDecimal.valueOf(100,0)));
+        getItem().setOverheadCost(overheadCost);
 
 
     }

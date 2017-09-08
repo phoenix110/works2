@@ -69,7 +69,8 @@
                 </groupBox>
                 <groupBox spacing="true"
                           width="AUTO">
-                    <table id="problemTable">
+                    <table id="problemTable"
+                           height="300px">
                         <columns>
                             <column id="description"/>
                         </columns>

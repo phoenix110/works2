@@ -17,18 +17,20 @@
                 width="800"/>
     <layout expand="windowActions"
             spacing="true">
-        <fieldGroup id="fieldGroup"
-                    datasource="priceUpdateDs">
-            <column width="250px">
-                <field property="documentNo"/>
-                <field property="documentOn"/>
-                <field property="currentStatus"/>
-            </column>
-        </fieldGroup>
+        <hbox>
+            <fieldGroup id="fieldGroup"
+                        datasource="priceUpdateDs">
+                <column width="250px">
+                    <field property="documentNo"/>
+                    <field property="documentOn"/>
+                    <field property="currentStatus"/>
+                </column>
+            </fieldGroup>
+        </hbox>
         <groupBox id="priceUpdateItemsBox"
                   caption="msg://com.cernol.works.entity/PriceUpdate.priceUpdateItems">
             <table id="priceUpdateItemsTable"
-                   height="200px"
+                   height="500px"
                    width="100%">
                 <actions>
                     <action id="create"/>
@@ -37,8 +39,7 @@
                 </actions>
                 <columns>
                     <column id="stockItem"/>
-                    <column id="price"
-                            align="RIGHT"/>
+                    <column id="priceUpdate"/>
                 </columns>
                 <rows datasource="priceUpdateItemsDs"/>
                 <buttonsPanel>

@@ -21,14 +21,22 @@
                 width="800"/>
     <layout expand="windowActions"
             spacing="true">
-        <fieldGroup id="fieldGroup"
-                    datasource="priceUpdateItemDs">
-            <column width="250px">
-                <field optionsDatasource="stockItemsDs"
-                       property="stockItem"/>
-                <field property="price"/>
-            </column>
-        </fieldGroup>
+        <hbox spacing="true">
+            <fieldGroup id="fieldGroup"
+                        datasource="priceUpdateItemDs">
+                <column width="250px">
+                    <field optionsDatasource="stockItemsDs"
+                           property="stockItem"/>
+                    <field property="price"/>
+                </column>
+            </fieldGroup>
+            <groupBox id="infoGroupBox"
+                      spacing="true">
+                <textField id="currentPriceTextField"
+                           caption="msg://Current Price"
+                           editable="false"/>
+            </groupBox>
+        </hbox>
         <frame id="windowActions"
                screen="editWindowActions"/>
     </layout>
