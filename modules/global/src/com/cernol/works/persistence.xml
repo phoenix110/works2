@@ -17,7 +17,6 @@
         <class>com.cernol.works.entity.WorksOrderLable</class>
         <class>com.cernol.works.entity.Formula</class>
         <class>com.cernol.works.entity.DecantingOrder</class>
-        <class>com.cernol.works.entity.DecantingOrderSource</class>
         <class>com.cernol.works.entity.DecantingOrderTarget</class>
         <class>com.cernol.works.entity.SalesOrder</class>
         <class>com.cernol.works.entity.SalesOrderContainer</class>

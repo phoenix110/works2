@@ -39,7 +39,7 @@
                 </actions>
                 <columns>
                     <column id="stockItem"/>
-                    <column id="priceUpdate"/>
+                    <column id="price"/>
                 </columns>
                 <rows datasource="priceUpdateItemsDs"/>
                 <buttonsPanel>

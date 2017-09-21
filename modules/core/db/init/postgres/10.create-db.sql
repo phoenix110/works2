@@ -46,7 +46,6 @@ create table WORKS_ORDER (
     -- from works$DecantingOrder
     DECANTED_PRODUCT_ID uuid,
     INFORMATION varchar(255),
-    SOURCE_VOLUME decimal(19, 2),
     TARGET_VOLUME decimal(19, 2),
     --
     -- from works$WorksOrder
@@ -227,24 +226,7 @@ create table WORKS_FORMULA (
     primary key (ID)
 )^
 -- end WORKS_FORMULA
--- begin WORKS_DECANTING_ORDER_SOURCE
-create table WORKS_DECANTING_ORDER_SOURCE (
-    ID uuid,
-    VERSION integer not null,
-    CREATE_TS timestamp,
-    CREATED_BY varchar(50),
-    UPDATE_TS timestamp,
-    UPDATED_BY varchar(50),
-    DELETE_TS timestamp,
-    DELETED_BY varchar(50),
-    --
-    DECANTING_ORDER_ID uuid not null,
-    CONTAINER_ID uuid not null,
-    QUANTITY integer not null,
-    --
-    primary key (ID)
-)^
--- end WORKS_DECANTING_ORDER_SOURCE
+
 -- begin WORKS_DECANTING_ORDER_TARGET
 create table WORKS_DECANTING_ORDER_TARGET (
     ID uuid,

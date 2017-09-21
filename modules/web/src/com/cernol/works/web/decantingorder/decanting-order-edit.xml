@@ -9,8 +9,6 @@
         <datasource id="decantingOrderDs"
                     class="com.cernol.works.entity.DecantingOrder"
                     view="decantingOrder-view">
-            <collectionDatasource id="decantingOrderSourcesDs"
-                                  property="decantingOrderSources"/>
             <collectionDatasource id="decantingOrderTargetsDs"
                                   property="decantingOrderTargets"/>
         </datasource>
@@ -33,8 +31,6 @@
                 </column>
                 <column>
                     <field editable="false"
-                           property="sourceVolume"/>
-                    <field editable="false"
                            property="targetVolume"/>
                     <field editable="false"
                            property="containerCost"/>
@@ -46,31 +42,6 @@
             </fieldGroup>
             <groupBox orientation="horizontal"
                       width="100%">
-                <groupBox id="decantingOrderSourcesBox"
-                          caption="msg://com.cernol.works.entity/DecantingOrder.decantingOrderSources"
-                          orientation="horizontal"
-                          width="100%">
-                    <table id="decantingOrderSourcesTable"
-                           height="300px"
-                           width="100%">
-                        <actions>
-                            <action id="create"/>
-                            <action id="edit"/>
-                            <action id="remove"/>
-                        </actions>
-                        <columns>
-                            <column id="container"/>
-                            <column id="quantity"/>
-                            <column id="lineCapacity"/>
-                        </columns>
-                        <rows datasource="decantingOrderSourcesDs"/>
-                        <buttonsPanel>
-                            <button action="decantingOrderSourcesTable.create"/>
-                            <button action="decantingOrderSourcesTable.edit"/>
-                            <button action="decantingOrderSourcesTable.remove"/>
-                        </buttonsPanel>
-                    </table>
-                </groupBox>
                 <groupBox id="decantingOrderTargetsBox"
                           caption="msg://com.cernol.works.entity/DecantingOrder.decantingOrderTargets">
                     <table id="decantingOrderTargetsTable"

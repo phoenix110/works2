@@ -29,7 +29,6 @@
         <groupBox id="stockIntakeItemsBox"
                   caption="msg://com.cernol.works.entity/StockIntake.stockIntakeItems">
             <table id="stockIntakeItemsTable"
-                   height="200px"
                    width="100%">
                 <actions>
                     <action id="create"/>

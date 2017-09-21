@@ -24,8 +24,6 @@ public class DecantingOrderEdit extends AbstractEditor<DecantingOrder> {
     @Inject
     WorksConfig worksConfig;
 
-    @Inject
-    private CollectionDatasource<DecantingOrderSource, UUID> decantingOrderSourcesDs;
 
     @Inject
     private CollectionDatasource<DecantingOrderTarget, UUID> decantingOrderTargetsDs;
@@ -59,20 +57,7 @@ public class DecantingOrderEdit extends AbstractEditor<DecantingOrder> {
 
         decantedProductField.addValueChangeListener(e -> productChanged());
 
-        decantingOrderSourcesDs.addCollectionChangeListener(e -> sourceChanged());
-
         decantingOrderTargetsDs.addCollectionChangeListener(e -> targetsChanged());
-
-    }
-
-    @Override
-    protected void postValidate(ValidationErrors errors) {
-        super.postValidate(errors);
-
-        if (getItem().getSourceVolume().compareTo(getItem().getTargetVolume())!=0) {
-            errors.add("Source and target volumes should be equal.");
-
-        }
 
     }
 
@@ -82,16 +67,6 @@ public class DecantingOrderEdit extends AbstractEditor<DecantingOrder> {
         } else {
             getItem().setDescription("Decanting - " + getItem().getDecantedProduct().getCode());
         }
-    }
-
-    private void sourceChanged() {
-        BigDecimal sourceVolume = BigDecimal.ZERO;
-
-        for (DecantingOrderSource line : decantingOrderSourcesDs.getItems()) {
-            sourceVolume = sourceVolume.add(line.getLineCapacity());
-        }
-
-        getItem().setSourceVolume(sourceVolume);
     }
 
     private void targetsChanged() {

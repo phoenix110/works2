@@ -41,8 +41,6 @@
             template="com/cernol/works/web/decantingorder/decanting-order-browse.xml"/>
     <screen id="works$DecantingOrder.edit"
             template="com/cernol/works/web/decantingorder/decanting-order-edit.xml"/>
-    <screen id="works$DecantingOrderSource.edit"
-            template="com/cernol/works/web/decantingordersource/decanting-order-source-edit.xml"/>
     <screen id="works$DecantingOrderTarget.edit"
             template="com/cernol/works/web/decantingordertarget/decanting-order-target-edit.xml"/>
     <screen id="works$SalesOrder.browse"
@@ -73,4 +71,6 @@
             template="com/cernol/works/web/priceupdate/price-update-browse.xml"/>
     <screen id="works$PriceUpdate.edit"
             template="com/cernol/works/web/priceupdate/price-update-edit.xml"/>
+    <screen id="mainWindow"
+            template="com/cernol/works/web/screens/ext-mainwindow.xml"/>
 </screen-config>

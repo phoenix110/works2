@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/window.xsd"
+        class="com.cernol.works.web.screens.ExtAppMainWindow"
+        extends="/com/haulmont/cuba/web/app/mainwindow/mainwindow.xml"
+        messagesPack="com.cernol.works.web.screens"
+        xmlns:chart="http://schemas.haulmont.com/charts/charts.xsd"
+        xmlns:main="http://schemas.haulmont.com/cuba/mainwindow.xsd">
+    <dsContext>
+        <valueCollectionDatasource id="orderDs">
+            <query>
+                <![CDATA[select e.documentOn, sum(e.rawMaterialCost) from works$Order e
+group by e.documentOn
+order by e.documentOn]]>
+            </query>
+            <properties>
+                <property name="orderDate"
+                          datatype="date"/>
+                <property datatype="currency"
+                          name="sum"/>
+            </properties>
+        </valueCollectionDatasource>
+    </dsContext>
+    <dialogMode height="600"
+                width="800"/>
+    <layout>
+        <split id="foldersSplit">
+            <main:workArea id="workArea">
+                <main:initialLayout>
+                    <vbox responsive="true">
+                        <hbox responsive="true"
+                              spacing="true">
+                            <chart:serialChart id="Graph1"
+                                               angle="30"
+                                               categoryField="orderDate"
+                                               datasource="orderDs"
+                                               depth3D="60"
+                                               height="100%"
+                                               plotAreaFillAlphas="0.1"
+                                               startDuration="1"
+                                               width="100%">
+                                <chart:categoryAxis gridPosition="START"/>
+                                <chart:valueAxes>
+                                    <chart:axis position="LEFT"
+                                                stackType="BOX_3D"
+                                                title="Raw Material Value"/>
+                                </chart:valueAxes>
+                                <chart:graphs>
+                                    <chart:graph id="RawMaterialSum"
+                                                 type="COLUMN"
+                                                 valueField="sum"/>
+                                </chart:graphs>
+                            </chart:serialChart>
+                            <chart:stockChart id="Graph2"/>
+                        </hbox>
+                        <hbox responsive="true"
+                              spacing="true">
+                            <chart:stockChart id="Graph3"/>
+                            <chart:stockChart id="Graph4"/>
+                        </hbox>
+                    </vbox>
+                </main:initialLayout>
+            </main:workArea>
+        </split>
+    </layout>
+</window>

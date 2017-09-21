@@ -63,18 +63,9 @@
         <property name="lineCapacity"/>
         <property name="lineCost"/>
     </view>
-    <view class="com.cernol.works.entity.DecantingOrderSource"
-          extends="_local"
-          name="decantingOrderSource-view">
-        <property name="container"
-                  view="_local"/>
-        <property name="lineCapacity"/>
-    </view>
     <view class="com.cernol.works.entity.DecantingOrder"
           extends="_local"
           name="decantingOrder-view">
-        <property name="decantingOrderSources"
-                  view="decantingOrderSource-view"/>
         <property name="decantingOrderTargets"
                   view="decantingOrderTarget-view"/>
         <property name="decantedProduct"

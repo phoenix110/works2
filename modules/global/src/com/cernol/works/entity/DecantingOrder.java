@@ -26,16 +26,10 @@ public class DecantingOrder extends Order {
     @Column(name = "INFORMATION")
     protected String information;
 
-    @Column(name = "SOURCE_VOLUME")
-    protected BigDecimal sourceVolume = BigDecimal.ZERO;
 
     @Column(name = "TARGET_VOLUME")
     protected BigDecimal targetVolume = BigDecimal.ZERO;
 
-    @Composition
-    @OnDelete(DeletePolicy.CASCADE)
-    @OneToMany(mappedBy = "decantingOrder")
-    protected List<DecantingOrderSource> decantingOrderSources;
 
     @Composition
     @OnDelete(DeletePolicy.CASCADE)
@@ -61,13 +55,7 @@ public class DecantingOrder extends Order {
     }
 
 
-    public void setSourceVolume(BigDecimal sourceVolume) {
-        this.sourceVolume = sourceVolume;
-    }
 
-    public BigDecimal getSourceVolume() {
-        return sourceVolume;
-    }
 
     public void setTargetVolume(BigDecimal targetVolume) {
         this.targetVolume = targetVolume;
@@ -77,13 +65,7 @@ public class DecantingOrder extends Order {
         return targetVolume;
     }
 
-    public void setDecantingOrderSources(List<DecantingOrderSource> decantingOrderSources) {
-        this.decantingOrderSources = decantingOrderSources;
-    }
 
-    public List<DecantingOrderSource> getDecantingOrderSources() {
-        return decantingOrderSources;
-    }
 
     public void setDecantingOrderTargets(List<DecantingOrderTarget> decantingOrderTargets) {
         this.decantingOrderTargets = decantingOrderTargets;
