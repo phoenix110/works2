@@ -70,6 +70,7 @@ create table WORKS_STOCK_ITEM (
     DTYPE varchar(31),
     --
     CODE varchar(30) not null,
+    CODE_NUMBER integer,
     DESCRIPTION varchar(100),
     REORDER decimal(19, 2) not null,
     MAX_STOCK decimal(19, 2) not null,

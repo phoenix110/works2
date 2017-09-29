@@ -97,16 +97,7 @@ public class WorksOrderEdit extends AbstractEditor<WorksOrder> {
 
     }
 
-    @Override
-    public void setItem(Entity item) {
 
-        log.info("setItem()");
-
-        super.setItem(item);
-
-
-
-    }
 
     @Override
     protected void initNewItem(WorksOrder item) {
@@ -142,15 +133,7 @@ public class WorksOrderEdit extends AbstractEditor<WorksOrder> {
         worksOrderIngredientsDs.addCollectionChangeListener(e -> ingredientsChanged());
     }
 
-    @Override
-    protected boolean preCommit() {
 
-        log.info("preCommit()");
-
-        return super.preCommit();
-
-
-    }
 
     private void packingChanged() {
         log.info("packingChanged()");

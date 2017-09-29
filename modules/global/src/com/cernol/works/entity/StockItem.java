@@ -21,7 +21,7 @@ public class StockItem extends StandardEntity {
     @Column(name = "CODE", nullable = false, unique = true, length = 30)
     protected String code;
 
-    @Transient
+    @Column(name = "CODE_NUMBER")
     @MetaProperty(related = "code")
     protected Integer codeNumber;
 
