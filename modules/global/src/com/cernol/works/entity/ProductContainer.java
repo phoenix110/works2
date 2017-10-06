@@ -9,6 +9,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import com.haulmont.cuba.core.entity.StandardEntity;
 import com.haulmont.chile.core.annotations.NamePattern;
+import javax.validation.constraints.NotNull;
 
 @NamePattern("%s %s|product,container")
 @Table(name = "WORKS_PRODUCT_CONTAINER")
@@ -16,12 +17,14 @@ import com.haulmont.chile.core.annotations.NamePattern;
 public class ProductContainer extends StandardEntity {
     private static final long serialVersionUID = -5418068874391332316L;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @NotNull
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "PRODUCT_ID")
     protected Product product;
 
+    @NotNull
     @Lookup(type = LookupType.DROPDOWN, actions = {"lookup"})
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "CONTAINER_ID")
     protected Container container;
 

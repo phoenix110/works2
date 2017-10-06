@@ -179,6 +179,27 @@
           extends="_local"
           name="worksOrderPacking-view_1">
         <property name="worksOrder"
+                  view="_minimal">
+            <property name="product"
+                      view="_minimal"/>
+        </property>
+        <property name="container"
+                  view="_minimal">
+            <property name="capacity"/>
+        </property>
+    </view>
+    <view class="com.cernol.works.entity.ProductContainer"
+          extends="_local"
+          name="productContainer-view_1">
+        <property name="product"
+                  view="_minimal"/>
+        <property name="container"
+                  view="_minimal"/>
+    </view>
+    <view class="com.cernol.works.entity.Container"
+          extends="_minimal"
+          name="container-view_1">
+        <property name="productContainers"
                   view="_minimal"/>
     </view>
 </views>

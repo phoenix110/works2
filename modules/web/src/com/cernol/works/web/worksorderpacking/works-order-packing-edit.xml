@@ -8,12 +8,13 @@
     <dsContext>
         <datasource id="worksOrderPackingDs"
                     class="com.cernol.works.entity.WorksOrderPacking"
-                    view="worksOrderPacking-view"/>
+                    view="worksOrderPacking-view_1"/>
         <collectionDatasource id="containersDs"
                               class="com.cernol.works.entity.Container"
-                              view="_local">
+                              view="_minimal">
             <query>
-                <![CDATA[select e from works$Container e]]>
+                <![CDATA[select e.container from works$ProductContainer e
+where e.product.id = :ds$worksOrderPackingDs.worksOrder.product]]>
             </query>
         </collectionDatasource>
     </dsContext>

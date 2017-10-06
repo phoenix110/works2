@@ -395,8 +395,8 @@ create table WORKS_PRODUCT_CONTAINER (
     DELETE_TS timestamp,
     DELETED_BY varchar(50),
     --
-    PRODUCT_ID uuid,
-    CONTAINER_ID uuid,
+    PRODUCT_ID uuid not null,
+    CONTAINER_ID uuid not null,
     --
     primary key (ID)
 )^
