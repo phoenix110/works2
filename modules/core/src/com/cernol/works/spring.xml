@@ -8,4 +8,15 @@
     <!-- Annotation-based beans -->
     <context:component-scan base-package="com.cernol.works"/>
 
+    <bean id="works_MBeanExporter" lazy-init="false"
+          class="com.haulmont.cuba.core.sys.jmx.MBeanExporter">
+        <property name="beans">
+            <map>
+                <entry key="${cuba.webContextName}.works:type=Usages"
+                       value-ref="works_UsagesMBean"/>
+                <entry key="${cuba.webContextName}.works:type=Calendars"
+                       value-ref="works_CalendarsMBean"/>
+            </map>
+        </property>
+    </bean>
 </beans>

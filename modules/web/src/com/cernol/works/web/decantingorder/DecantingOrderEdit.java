@@ -79,14 +79,17 @@ public class DecantingOrderEdit extends AbstractEditor<DecantingOrder> {
             targetCost = targetCost.add(line.getLineCost());
         }
 
-        if (getItem().getDecantedProduct().getApplyOverhead()) {
+        if (getItem().getDecantedProduct() == null) {
             overheadCost = BigDecimal.ZERO;
-        }
-        else {
-            overheadCost = targetCost.multiply(BigDecimal.valueOf(worksConfig.getDecantingOverhead(),0)).
-                    divide(BigDecimal.valueOf(100,0));
-        }
+        } else {
 
+            if (getItem().getDecantedProduct().getApplyOverhead()) {
+                overheadCost = BigDecimal.ZERO;
+            } else {
+                overheadCost = targetCost.multiply(BigDecimal.valueOf(worksConfig.getDecantingOverhead(), 0)).
+                        divide(BigDecimal.valueOf(100, 0));
+            }
+        }
         getItem().setTargetVolume(targetVolume);
         getItem().setContainerCost(targetCost);
         getItem().setOverheadCost(overheadCost);

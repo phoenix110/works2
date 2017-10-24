@@ -13,4 +13,5 @@ public interface StockItemService {
     BigDecimal getPointInTimeQuantity(UUID stockItemId, Date queryDate);
 
     BigDecimal getPeriodUsage(UUID stockItemId, Date queryDate);
+    
 }

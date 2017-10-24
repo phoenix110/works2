@@ -237,8 +237,8 @@ public class WorksOrderEdit extends AbstractEditor<WorksOrder> {
         if (getItem().getProduct().getApplyOverhead()) {
             overheadCost = getItem().getContainerCost()
                     .add(getItem().getRawMaterialCost())
-                    .add(getItem().getLableCost())
                     .multiply(BigDecimal.valueOf(worksConfig.getOrderOverhead(), 0))
+                    .add(getItem().getLableCost())
                     .divide(BigDecimal.valueOf(100), 2);
         }
 

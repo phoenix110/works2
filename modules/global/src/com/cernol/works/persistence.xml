@@ -35,5 +35,8 @@
             <property name="eclipselink.logging.parameters"
                       value="true"/>
         </properties>
+        <class>com.cernol.works.entity.StockUsage</class>
+        <class>com.cernol.works.entity.PriceList</class>
+        <class>com.cernol.works.entity.Calendar</class>
     </persistence-unit>
 </persistence>

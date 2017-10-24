@@ -201,5 +201,6 @@
           name="container-view_1">
         <property name="productContainers"
                   view="_minimal"/>
+        <property name="capacity"/>
     </view>
 </views>

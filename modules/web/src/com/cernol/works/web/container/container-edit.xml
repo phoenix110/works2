@@ -90,9 +90,14 @@ order by e.worksOrder.documentOn desc
                     </table>
                 </groupBox>
             </hbox>
-            <frame id="windowActions"
-                   height="100%"
-                   screen="editWindowActions"/>
+            <hbox id="windowActionsHBox"
+                  spacing="true">
+                <frame id="windowActions"
+                       height="100%"
+                       screen="editWindowActions"/>
+                <button id="printBtn"
+                        icon="icons/reports-print.png"/>
+            </hbox>
         </vbox>
     </layout>
 </window>

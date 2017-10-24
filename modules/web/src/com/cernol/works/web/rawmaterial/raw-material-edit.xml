@@ -4,7 +4,8 @@
         class="com.cernol.works.web.rawmaterial.RawMaterialEdit"
         datasource="rawMaterialDs"
         focusComponent="fieldGroup"
-        messagesPack="com.cernol.works.web.rawmaterial">
+        messagesPack="com.cernol.works.web.rawmaterial"
+        xmlns:chart="http://schemas.haulmont.com/charts/charts.xsd">
     <dsContext>
         <datasource id="rawMaterialDs"
                     class="com.cernol.works.entity.RawMaterial"
@@ -29,6 +30,15 @@ where e.stockItem.id = :ds$rawMaterialDs
 order by e.priceUpdate.documentOn desc]]>
             </query>
         </collectionDatasource>
+        <collectionDatasource id="stockUsagesDs"
+                              class="com.cernol.works.entity.StockUsage">
+            <query>
+                <![CDATA[select e from works$StockUsage e
+where e.stockItem.id = :ds$rawMaterialDs 
+order by e.usedOn
+]]>
+            </query>
+        </collectionDatasource>
     </dsContext>
     <dialogMode height="600"
                 width="800"/>
@@ -49,7 +59,8 @@ order by e.priceUpdate.documentOn desc]]>
                 </column>
             </fieldGroup>
             <groupBox id="summaryGroupBox"
-                      spacing="true">
+                      spacing="true"
+                      width="AUTO">
                 <textField id="onHand"
                            caption="msg://onhandLable"
                            datatype="partsPer100"
@@ -63,8 +74,6 @@ order by e.priceUpdate.documentOn desc]]>
                            datatype="partsPer100"
                            editable="false"/>
             </groupBox>
-        </hbox>
-        <hbox width="100%">
             <groupBox id="formulaeGroupBox"
                       caption="msg://formulaeGroupBox"
                       spacing="true">
@@ -91,6 +100,81 @@ order by e.priceUpdate.documentOn desc]]>
                 </table>
             </groupBox>
         </hbox>
+        <groupBox>
+            <chart:serialChart id="serialChart"
+                               categoryField="usedOn"
+                               datasource="stockUsagesDs"
+                               height="300px"
+                               theme="LIGHT"
+                               visible="false"
+                               width="100%">
+                <chart:valueAxes>
+                    <chart:axis axisAlpha="0"
+                                position="LEFT"/>
+                </chart:valueAxes>
+                <chart:graphs>
+                    <chart:graph title="Quantity"
+                                 type="COLUMN"
+                                 valueField="quantity"/>
+                </chart:graphs>
+                <chart:categoryAxis axisAlpha="0"
+                                    equalSpacing="true"
+                                    gridPosition="START"
+                                    tickLength="0"/>
+            </chart:serialChart>
+            <chart:stockChart id="stockChart"
+                              height="300px"
+                              mainDataSet="dataSet1"
+                              theme="LIGHT"
+                              width="100%">
+                <chart:dataSets>
+                    <chart:dataSet id="dataSet1"
+                                   categoryField="usedOn"
+                                   compared="false"
+                                   datasource="stockUsagesDs"
+                                   title="Usage data set">
+                        <chart:fieldMappings>
+                            <chart:fieldMapping fromField="quantity"
+                                                toField="quantity"/>
+                        </chart:fieldMappings>
+                    </chart:dataSet>
+                </chart:dataSets>
+                <chart:panels>
+                    <chart:panel showCategoryAxis="false"
+                                 title="Usage">
+                        <chart:stockGraphs>
+                            <chart:stockGraph id="g1"
+                                              fillAlphas="1"
+                                              title="Quantity"
+                                              type="COLUMN"
+                                              valueField="quantity"/>
+                        </chart:stockGraphs>
+                    </chart:panel>
+
+                </chart:panels>
+                <chart:categoryAxesSettings equalSpacing="true"/>
+
+                <chart:chartScrollbarSettings graph="g1"/>
+                <chart:periodSelector position="LEFT">
+                    <chart:periods>
+                        <chart:period period="DAYS"
+                                      count="10"
+                                      label="10 days"/>
+                        <chart:period period="MONTHS"
+                                      count="1"
+                                      label="1 month"/>
+                        <chart:period period="YEARS"
+                                      count="1"
+                                      selected="true"
+                                      label="1 year"/>
+                        <chart:period period="YTD"
+                                      label="YTD"/>
+                        <chart:period period="MAX"
+                                      label="MAX"/>
+                    </chart:periods>
+                </chart:periodSelector>
+            </chart:stockChart>
+        </groupBox>
         <hbox id="windowActions_hbox"
               expand="windowActions"
               spacing="true">
