@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/window.xsd"
+        caption="msg://browseCaption"
+        class="com.cernol.works.web.pricelist.PriceListBrowse"
+        focusComponent="priceListsTable"
+        lookupComponent="priceListsTable"
+        messagesPack="com.cernol.works.web.pricelist">
+    <dsContext>
+        <groupDatasource id="priceListsDs"
+                         class="com.cernol.works.entity.PriceList"
+                         view="priceList-view">
+            <query>
+                <![CDATA[select e from works$PriceList e]]>
+            </query>
+        </groupDatasource>
+    </dsContext>
+    <actions>
+        <action id="excel"/>
+    </actions>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="priceListsTable"
+            spacing="true">
+        <filter id="filter"
+                applyTo="priceListsTable"
+                datasource="priceListsDs">
+            <properties include=".*"/>
+        </filter>
+        <groupTable id="priceListsTable"
+                    width="100%">
+            <actions>
+                <action id="create"/>
+                <action id="edit"/>
+                <action id="remove"/>
+                <action id="excel"/>
+            </actions>
+            <columns>
+                <column id="product"/>
+                <column id="container"/>
+                <column id="priceOn"/>
+                <column id="price"
+                        align="RIGHT"/>
+            </columns>
+            <rows datasource="priceListsDs"/>
+            <rowsCount/>
+            <buttonsPanel id="buttonsPanel"
+                          alwaysVisible="true">
+                <button id="createBtn"
+                        action="priceListsTable.create"/>
+                <button id="editBtn"
+                        action="priceListsTable.edit"/>
+                <button id="removeBtn"
+                        action="priceListsTable.remove"/>
+                <button id="excelBtn"
+                        action="priceListsTable.excel"/>
+            </buttonsPanel>
+        </groupTable>
+    </layout>
+</window>

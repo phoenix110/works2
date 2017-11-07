@@ -3,7 +3,6 @@ package com.cernol.works.web.worksorder;
 import com.cernol.works.entity.*;
 import com.cernol.works.service.StockItemService;
 import com.cernol.works.service.ToolsService;
-import com.haulmont.cuba.core.entity.Entity;
 import com.haulmont.cuba.core.global.DataManager;
 import com.haulmont.cuba.core.global.LoadContext;
 import com.haulmont.cuba.core.global.Metadata;
@@ -16,10 +15,7 @@ import org.slf4j.LoggerFactory;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 public class WorksOrderEdit extends AbstractEditor<WorksOrder> {
 
@@ -42,6 +38,9 @@ public class WorksOrderEdit extends AbstractEditor<WorksOrder> {
 
     @Inject
     private CollectionDatasource<WorksOrderPacking, UUID> worksOrderPackingsDs;
+
+    @Inject
+    private CollectionDatasource<WorksOrderLable, UUID> worksOrderLablesDs;
 
     @Inject
     private CollectionDatasource<ProblemList, UUID> problemListsDs;
@@ -72,7 +71,7 @@ public class WorksOrderEdit extends AbstractEditor<WorksOrder> {
 
     @Override
     protected boolean postCommit(boolean committed, boolean close) {
-        log.info("postCommit().committed: " + committed);
+        log.debug("postCommit().committed: " + committed);
 
         return super.postCommit(committed, close);
 
@@ -82,7 +81,7 @@ public class WorksOrderEdit extends AbstractEditor<WorksOrder> {
 
     @Override
     public void init(Map<String, Object> params) {
-        log.info("init()");
+        log.debug("init()");
 
         super.init(params);
 
@@ -102,7 +101,7 @@ public class WorksOrderEdit extends AbstractEditor<WorksOrder> {
     @Override
     protected void initNewItem(WorksOrder item) {
 
-        log.info("initNewItem()");
+        log.debug("initNewItem()");
 
         super.initNewItem(item);
 
@@ -117,7 +116,7 @@ public class WorksOrderEdit extends AbstractEditor<WorksOrder> {
 
     @Override
     protected void postInit() {
-        log.info("postInit()");
+        log.debug("postInit()");
         super.postInit();
 
         productPicker.addValueChangeListener(e -> productChanged());
@@ -136,7 +135,7 @@ public class WorksOrderEdit extends AbstractEditor<WorksOrder> {
 
 
     private void packingChanged() {
-        log.info("packingChanged()");
+        log.debug("packingChanged()");
         BigDecimal volume = BigDecimal.ZERO;
 
         BigDecimal containerCost = BigDecimal.ZERO;
@@ -177,6 +176,7 @@ public class WorksOrderEdit extends AbstractEditor<WorksOrder> {
         if (getItem().getProduct() != null) {
             getItem().setMass(calculateMass(getItem().getVolume()));
             getItem().setBatchQuantity(calculateBatches(getItem().getVolume()));
+            resetLabels();
 
         }
 
@@ -210,7 +210,23 @@ public class WorksOrderEdit extends AbstractEditor<WorksOrder> {
             //getItem().setRawMaterialCost(zeroVal);
             getItem().setContainerCost(zeroVal);
             //getItem().setOverheadCost(zeroVal);
+            if (getItem().getProduct() != null) {
+                getItem().setDescription("Cancelled: " + getItem().getProduct().getCode());
+            }
+            else
+            {
+                getItem().setDescription("Cancelled: No product");
+
+            }
+
         } else {
+            if (getItem().getProduct() != null) {
+
+                getItem().setDescription(getItem().getProduct().getCode());
+            } else
+            {
+                getItem().setDescription("Works Order - No product");
+            }
               packingChanged();
 
         }
@@ -235,10 +251,10 @@ public class WorksOrderEdit extends AbstractEditor<WorksOrder> {
         BigDecimal overheadCost = BigDecimal.ZERO;
 
         if (getItem().getProduct().getApplyOverhead()) {
-            overheadCost = getItem().getContainerCost()
-                    .add(getItem().getRawMaterialCost())
+            overheadCost = (getItem().getContainerCost()
+                    .add(getItem().getRawMaterialCost()))
                     .multiply(BigDecimal.valueOf(worksConfig.getOrderOverhead(), 0))
-                    .add(getItem().getLableCost())
+
                     .divide(BigDecimal.valueOf(100), 2);
         }
 
@@ -247,9 +263,8 @@ public class WorksOrderEdit extends AbstractEditor<WorksOrder> {
 
     private BigDecimal calculateMass(BigDecimal volume) {
         log.info("calculateMass()");
-        BigDecimal mass = BigDecimal.ZERO;
 
-        mass = volume.multiply(getItem().getProduct().getSpecificGravity());
+        BigDecimal mass = volume.multiply(getItem().getProduct().getSpecificGravity());
 
         return mass;
     }
@@ -274,8 +289,8 @@ public class WorksOrderEdit extends AbstractEditor<WorksOrder> {
         return batches;
     }
 
-    public void resetIngredients() {
-        log.info("resetIngredients()");
+    private void resetIngredients() {
+        log.debug("resetIngredients()");
         BigDecimal ingredientCost = BigDecimal.ZERO;
 
         removeAllIngredients();
@@ -350,15 +365,180 @@ public class WorksOrderEdit extends AbstractEditor<WorksOrder> {
         }
     }
 
-    private void resetIngredientPrices() {
-        log.info("resetIngredientPrices()");
-        for (WorksOrderIngredient worksOrderIngredient : new ArrayList<>(worksOrderIngredientsDs.getItems())) {
-            BigDecimal currentCost = stockItemService.getPointInTimeCost(
-                    worksOrderIngredient.getRawMaterial().getId(),
-                    getItem().getDocumentOn());
-            worksOrderIngredient.setKgCost(currentCost);
-            worksOrderIngredientsDs.updateItem(worksOrderIngredient);
+    private void resetLabels() {
+        log.debug("resetLabels()");
+        BigDecimal labelCost = BigDecimal.ZERO;
+
+        List<WorksOrderPacking> worksOrderPackingList;
+        List<ProductContainer> productContainerList;
+        List<WorksOrderLable> worksOrderLableList;
+
+        removeAllLabels();
+
+        LoadContext<Product> loadContext = LoadContext.create(Product.class)
+                .setId(getItem().getProduct().getId())
+                .setView("product-view");
+
+        Product myProduct = dataManager.load(loadContext);
+
+        if (myProduct != null) {
+            worksOrderPackingList = getItem().getWorksOrderPackings();
+            if (worksOrderPackingList.size() > 0) {
+
+                productContainerList = myProduct.getContainers();
+                for (WorksOrderPacking worksOrderPacking : worksOrderPackingList) {
+                    for (ProductContainer productContainer : productContainerList) {
+                        if (productContainer.getContainer().getId().equals(worksOrderPacking.getContainer().getId())) {
+                            if (productContainer.getProductLabel() != null) {
+                                Boolean newItem = Boolean.TRUE;
+                                for (WorksOrderLable worksOrderLable : worksOrderLablesDs.getItems()) {
+                                    if (worksOrderLable.getLable() == productContainer.getProductLabel()) {
+                                        worksOrderLable.setQuantity(worksOrderLable.getQuantity() +
+                                                worksOrderPacking.getQuantity());
+                                        worksOrderLable.setUnitCost(
+                                                stockItemService.getPointInTimeCost(
+                                                        productContainer.getProductLabel().getId(),
+                                                        getItem().getDocumentOn()));
+                                        newItem = Boolean.FALSE;
+                                    }
+                                }
+                                if (newItem) {
+                                    WorksOrderLable worksOrderLable = metadata.create(WorksOrderLable.class);
+                                    worksOrderLable.setWorksOrder(getItem());
+                                    worksOrderLable.setLable(productContainer.getProductLabel());
+                                    worksOrderLable.setQuantity(worksOrderPacking.getQuantity());
+                                    worksOrderLable.setUnitCost(
+                                            stockItemService.getPointInTimeCost(
+                                                    productContainer.getProductLabel().getId(),
+                                                    getItem().getDocumentOn()));
+                                    worksOrderLablesDs.addItem(worksOrderLable);
+                                }
+                            }
+                            
+                            if (productContainer.getCorrosiveLabel() != null) {
+                                Boolean newItem = Boolean.TRUE;
+                                for (WorksOrderLable worksOrderLable : worksOrderLablesDs.getItems()) {
+                                    if (worksOrderLable.getLable() == productContainer.getCorrosiveLabel()) {
+                                        worksOrderLable.setQuantity(worksOrderLable.getQuantity() +
+                                                worksOrderPacking.getQuantity());
+                                        worksOrderLable.setUnitCost(
+                                                stockItemService.getPointInTimeCost(
+                                                        productContainer.getCorrosiveLabel().getId(),
+                                                        getItem().getDocumentOn()));
+                                        newItem = Boolean.FALSE;
+                                    }
+                                }
+                                if (newItem) {
+                                    WorksOrderLable worksOrderLable = metadata.create(WorksOrderLable.class);
+                                    worksOrderLable.setWorksOrder(getItem());
+                                    worksOrderLable.setLable(productContainer.getCorrosiveLabel());
+                                    worksOrderLable.setQuantity(worksOrderPacking.getQuantity());
+                                    worksOrderLable.setUnitCost(
+                                            stockItemService.getPointInTimeCost(
+                                                    productContainer.getCorrosiveLabel().getId(),
+                                                    getItem().getDocumentOn()));
+                                    worksOrderLablesDs.addItem(worksOrderLable);
+                                }
+                            }
+
+                            if (productContainer.getPoisonousLabel() != null) {
+                                Boolean newItem = Boolean.TRUE;
+                                for (WorksOrderLable worksOrderLable : worksOrderLablesDs.getItems()) {
+                                    if (worksOrderLable.getLable() == productContainer.getPoisonousLabel()) {
+                                        worksOrderLable.setQuantity(worksOrderLable.getQuantity() +
+                                                worksOrderPacking.getQuantity());
+                                        worksOrderLable.setUnitCost(
+                                                stockItemService.getPointInTimeCost(
+                                                        productContainer.getPoisonousLabel().getId(),
+                                                        getItem().getDocumentOn()));
+                                        newItem = Boolean.FALSE;
+                                    }
+                                }
+                                if (newItem) {
+                                    WorksOrderLable worksOrderLable = metadata.create(WorksOrderLable.class);
+                                    worksOrderLable.setWorksOrder(getItem());
+                                    worksOrderLable.setLable(productContainer.getPoisonousLabel());
+                                    worksOrderLable.setQuantity(worksOrderPacking.getQuantity());
+                                    worksOrderLable.setUnitCost(
+                                            stockItemService.getPointInTimeCost(
+                                                    productContainer.getPoisonousLabel().getId(),
+                                                    getItem().getDocumentOn()));
+                                    worksOrderLablesDs.addItem(worksOrderLable);
+                                }
+                            }
+
+                            if (productContainer.getFlammableLabel() != null) {
+                                Boolean newItem = Boolean.TRUE;
+                                for (WorksOrderLable worksOrderLable : worksOrderLablesDs.getItems()) {
+                                    if (worksOrderLable.getLable() == productContainer.getFlammableLabel()) {
+                                        worksOrderLable.setQuantity(worksOrderLable.getQuantity() +
+                                                worksOrderPacking.getQuantity());
+                                        worksOrderLable.setUnitCost(
+                                                stockItemService.getPointInTimeCost(
+                                                        productContainer.getFlammableLabel().getId(),
+                                                        getItem().getDocumentOn()));
+                                        newItem = Boolean.FALSE;
+                                    }
+                                }
+                                if (newItem) {
+                                    WorksOrderLable worksOrderLable = metadata.create(WorksOrderLable.class);
+                                    worksOrderLable.setWorksOrder(getItem());
+                                    worksOrderLable.setLable(productContainer.getFlammableLabel());
+                                    worksOrderLable.setQuantity(worksOrderPacking.getQuantity());
+                                    worksOrderLable.setUnitCost(
+                                            stockItemService.getPointInTimeCost(
+                                                    productContainer.getFlammableLabel().getId(),
+                                                    getItem().getDocumentOn()));
+                                    worksOrderLablesDs.addItem(worksOrderLable);
+                                }
+                            }
+
+                            if (productContainer.getKeepAwayLabel() != null) {
+                                Boolean newItem = Boolean.TRUE;
+                                for (WorksOrderLable worksOrderLable : worksOrderLablesDs.getItems()) {
+                                    if (worksOrderLable.getLable() == productContainer.getKeepAwayLabel()) {
+                                        worksOrderLable.setQuantity(worksOrderLable.getQuantity() +
+                                                worksOrderPacking.getQuantity());
+                                        worksOrderLable.setUnitCost(
+                                                stockItemService.getPointInTimeCost(
+                                                        productContainer.getKeepAwayLabel().getId(),
+                                                        getItem().getDocumentOn()));
+                                        newItem = Boolean.FALSE;
+                                    }
+                                }
+                                if (newItem) {
+                                    WorksOrderLable worksOrderLable = metadata.create(WorksOrderLable.class);
+                                    worksOrderLable.setWorksOrder(getItem());
+                                    worksOrderLable.setLable(productContainer.getKeepAwayLabel());
+                                    worksOrderLable.setQuantity(worksOrderPacking.getQuantity());
+                                    worksOrderLable.setUnitCost(
+                                            stockItemService.getPointInTimeCost(
+                                                    productContainer.getKeepAwayLabel().getId(),
+                                                    getItem().getDocumentOn()));
+                                    worksOrderLablesDs.addItem(worksOrderLable);
+                                }
+                            }
+                        }
+                    }
+                }
+
+                for (WorksOrderLable worksOrderLable : worksOrderLablesDs.getItems()) {
+                    labelCost = labelCost.add(worksOrderLable.getLineCost());
+
+                }
+            }
         }
+
+        getItem().setLableCost(labelCost);
+    }
+
+    private void removeAllLabels() {
+        for (WorksOrderLable worksOrderLabel : new ArrayList<>(worksOrderLablesDs.getItems())) {
+            worksOrderLablesDs.removeItem(worksOrderLabel);
+        }
+    }
+
+    private void resetLabelQuantitities() {
 
     }
 }

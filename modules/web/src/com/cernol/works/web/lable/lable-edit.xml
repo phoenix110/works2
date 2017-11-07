@@ -23,24 +23,29 @@
                 <field property="maxStock"/>
                 <field property="unit"/>
                 <field property="currentStatus"/>
-                <field property="unitCost"/>
+                <field property="sizeX"/>
+                <field property="sizeY"/>
             </column>
         </fieldGroup>
-        <groupBox caption="Photo" spacing="true"
-          height="250px" width="250px" expand="embeddedImage">
-    <embedded id="embeddedImage" width="100%"
-              align="MIDDLE_CENTER"/>
-    <hbox align="BOTTOM_LEFT"
-          spacing="true">
-        <upload id="uploadField"/>
-        <button id="downloadImageBtn"
-                caption="Download"
-                invoke="onDownloadImageBtnClick"/>
-        <button id="clearImageBtn"
-                caption="Clear"
-                invoke="onClearImageBtnClick"/>
-    </hbox>
-</groupBox>
+        <groupBox caption="Photo"
+                  expand="embeddedImage"
+                  height="250px"
+                  spacing="true"
+                  width="250px">
+            <embedded id="embeddedImage"
+                      align="MIDDLE_CENTER"
+                      width="100%"/>
+            <hbox align="BOTTOM_LEFT"
+                  spacing="true">
+                <upload id="uploadField"/>
+                <button id="downloadImageBtn"
+                        caption="Download"
+                        invoke="onDownloadImageBtnClick"/>
+                <button id="clearImageBtn"
+                        caption="Clear"
+                        invoke="onClearImageBtnClick"/>
+            </hbox>
+        </groupBox>
         <frame id="windowActions"
                screen="editWindowActions"/>
     </layout>

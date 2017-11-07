@@ -71,4 +71,8 @@
             template="com/cernol/works/web/priceupdate/price-update-browse.xml"/>
     <screen id="works$PriceUpdate.edit"
             template="com/cernol/works/web/priceupdate/price-update-edit.xml"/>
+    <screen id="works$PriceList.browse"
+            template="com/cernol/works/web/pricelist/price-list-browse.xml"/>
+    <screen id="works$PriceList.edit"
+            template="com/cernol/works/web/pricelist/price-list-edit.xml"/>
 </screen-config>

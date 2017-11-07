@@ -16,6 +16,10 @@
                        value-ref="works_UsagesMBean"/>
                 <entry key="${cuba.webContextName}.works:type=Calendars"
                        value-ref="works_CalendarsMBean"/>
+                <entry key="${cuba.webContextName}.works:type=PriceLists"
+                       value-ref="works_PriceListsMBean"/>
+                <entry key="${cuba.webContextName}.works:type=OneTime"
+                       value-ref="works_OneTimeMBean"/>
             </map>
         </property>
     </bean>

@@ -35,6 +35,8 @@
                   view="_local"/>
         <property name="worksOrderLables"
                   view="worksOrderLable-view"/>
+        <property name="worksOrderKeys"
+                  view="_local"/>
     </view>
     <view class="com.cernol.works.entity.Product"
           extends="_local"
@@ -60,8 +62,6 @@
           name="decantingOrderTarget-view">
         <property name="container"
                   view="_local"/>
-        <property name="lineCapacity"/>
-        <property name="lineCost"/>
     </view>
     <view class="com.cernol.works.entity.DecantingOrder"
           extends="_local"
@@ -69,7 +69,9 @@
         <property name="decantingOrderTargets"
                   view="decantingOrderTarget-view"/>
         <property name="decantedProduct"
-                  view="_minimal"/>
+                  view="_minimal">
+            <property name="applyOverhead"/>
+        </property>
     </view>
     <view class="com.cernol.works.entity.SalesOrderRawMaterial"
           extends="_local"
@@ -157,6 +159,16 @@
         <property name="container"
                   view="_local">
         </property>
+        <property name="productLabel"
+                  view="_minimal"/>
+        <property name="keepAwayLabel"
+                  view="_minimal"/>
+        <property name="poisonousLabel"
+                  view="_minimal"/>
+        <property name="flammableLabel"
+                  view="_minimal"/>
+        <property name="corrosiveLabel"
+                  view="_minimal"/>
     </view>
     <view class="com.cernol.works.entity.PriceUpdateItem"
           extends="_local"
@@ -202,5 +214,13 @@
         <property name="productContainers"
                   view="_minimal"/>
         <property name="capacity"/>
+    </view>
+    <view class="com.cernol.works.entity.PriceList"
+          extends="_local"
+          name="priceList-view">
+        <property name="product"
+                  view="_minimal"/>
+        <property name="container"
+                  view="_minimal"/>
     </view>
 </views>

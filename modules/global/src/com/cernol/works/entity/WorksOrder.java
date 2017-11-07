@@ -41,6 +41,11 @@ public class WorksOrder extends Order {
     @Composition
     @OnDelete(DeletePolicy.CASCADE)
     @OneToMany(mappedBy = "worksOrder")
+    protected List<WorksOrderKey> worksOrderKeys;
+
+    @Composition
+    @OnDelete(DeletePolicy.CASCADE)
+    @OneToMany(mappedBy = "worksOrder")
     protected List<WorksOrderPacking> worksOrderPackings;
 
     @OrderBy("sequenceNo")
@@ -53,6 +58,15 @@ public class WorksOrder extends Order {
     @OnDelete(DeletePolicy.CASCADE)
     @OneToMany(mappedBy = "worksOrder")
     protected List<WorksOrderLable> worksOrderLables;
+
+    public void setWorksOrderKeys(List<WorksOrderKey> worksOrderKeys) {
+        this.worksOrderKeys = worksOrderKeys;
+    }
+
+    public List<WorksOrderKey> getWorksOrderKeys() {
+        return worksOrderKeys;
+    }
+
 
     public void setWorksOrderLables(List<WorksOrderLable> worksOrderLables) {
         this.worksOrderLables = worksOrderLables;

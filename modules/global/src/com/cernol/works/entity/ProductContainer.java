@@ -28,6 +28,67 @@ public class ProductContainer extends StandardEntity {
     @JoinColumn(name = "CONTAINER_ID")
     protected Container container;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "CORROSIVE_LABEL_ID")
+    protected Lable corrosiveLabel;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "FLAMMABLE_LABEL_ID")
+    protected Lable flammableLabel;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "POISONOUS_LABEL_ID")
+    protected Lable poisonousLabel;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "KEEP_AWAY_LABEL_ID")
+    protected Lable keepAwayLabel;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "PRODUCT_LABEL_ID")
+    protected Lable productLabel;
+
+    public void setCorrosiveLabel(Lable corrosiveLabel) {
+        this.corrosiveLabel = corrosiveLabel;
+    }
+
+    public Lable getCorrosiveLabel() {
+        return corrosiveLabel;
+    }
+
+    public void setFlammableLabel(Lable flammableLabel) {
+        this.flammableLabel = flammableLabel;
+    }
+
+    public Lable getFlammableLabel() {
+        return flammableLabel;
+    }
+
+    public void setPoisonousLabel(Lable poisonousLabel) {
+        this.poisonousLabel = poisonousLabel;
+    }
+
+    public Lable getPoisonousLabel() {
+        return poisonousLabel;
+    }
+
+    public void setKeepAwayLabel(Lable keepAwayLabel) {
+        this.keepAwayLabel = keepAwayLabel;
+    }
+
+    public Lable getKeepAwayLabel() {
+        return keepAwayLabel;
+    }
+
+    public void setProductLabel(Lable productLabel) {
+        this.productLabel = productLabel;
+    }
+
+    public Lable getProductLabel() {
+        return productLabel;
+    }
+
+
     public void setProduct(Product product) {
         this.product = product;
     }

@@ -26,6 +26,11 @@
             <column width="250px">
                 <field optionsDatasource="containersDs"
                        property="container"/>
+                <field property="corrosiveLabel"/>
+                <field property="flammableLabel"/>
+                <field property="poisonousLabel"/>
+                <field property="keepAwayLabel"/>
+                <field property="productLabel"/>
             </column>
         </fieldGroup>
         <frame id="windowActions"

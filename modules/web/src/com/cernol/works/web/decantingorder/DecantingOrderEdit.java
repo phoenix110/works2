@@ -2,10 +2,7 @@ package com.cernol.works.web.decantingorder;
 
 import com.cernol.works.entity.*;
 import com.cernol.works.service.ToolsService;
-import com.haulmont.cuba.gui.components.AbstractEditor;
-import com.haulmont.cuba.gui.components.Button;
-import com.haulmont.cuba.gui.components.PickerField;
-import com.haulmont.cuba.gui.components.ValidationErrors;
+import com.haulmont.cuba.gui.components.*;
 import com.haulmont.cuba.gui.data.CollectionDatasource;
 import com.haulmont.reports.gui.actions.EditorPrintFormAction;
 
@@ -30,6 +27,9 @@ public class DecantingOrderEdit extends AbstractEditor<DecantingOrder> {
 
     @Named("fieldGroup.decantedProduct")
     private PickerField decantedProductField;
+
+    @Named("fieldGroup.currentStatus")
+    private LookupField currentStatusField;
 
     @Inject
     private Button printBtn;
@@ -59,6 +59,8 @@ public class DecantingOrderEdit extends AbstractEditor<DecantingOrder> {
 
         decantingOrderTargetsDs.addCollectionChangeListener(e -> targetsChanged());
 
+        currentStatusField.addValueChangeListener(e -> statusChanged());
+
     }
 
     private void productChanged() {
@@ -67,6 +69,27 @@ public class DecantingOrderEdit extends AbstractEditor<DecantingOrder> {
         } else {
             getItem().setDescription("Decanting - " + getItem().getDecantedProduct().getCode());
         }
+    }
+
+    private void statusChanged() {
+        if (getItem().getCurrentStatus() == DocumentStatus.Cancelled) {
+            BigDecimal zeroVal = BigDecimal.ZERO;
+
+            getItem().setMass(zeroVal);
+            getItem().setContainerCost(zeroVal);
+            getItem().setOverheadCost(zeroVal);
+            
+            if (getItem().getDecantedProduct() == null) {
+                getItem().setDescription("Cancelled: Decanting - No product");
+            } else {
+                getItem().setDescription("Cancelled: Decanting - " + getItem().getDecantedProduct().getCode());
+            }
+        } else
+        {
+            productChanged();
+            targetsChanged();
+        }
+
     }
 
     private void targetsChanged() {

@@ -141,7 +141,8 @@ create table WORKS_PRODUCT (
 create table WORKS_LABLE (
     STOCK_ITEM_ID uuid,
     --
-    UNIT_COST decimal not null,
+    SIZE_X integer,
+    SIZE_Y integer,
     IMAGE_FILE_ID uuid,
     --
     primary key (STOCK_ITEM_ID)
@@ -397,6 +398,11 @@ create table WORKS_PRODUCT_CONTAINER (
     --
     PRODUCT_ID uuid not null,
     CONTAINER_ID uuid not null,
+    CORROSIVE_LABEL_ID uuid,
+    FLAMMABLE_LABEL_ID uuid,
+    POISONOUS_LABEL_ID uuid,
+    KEEP_AWAY_LABEL_ID uuid,
+    PRODUCT_LABEL_ID uuid,
     --
     primary key (ID)
 )^
@@ -469,6 +475,10 @@ create table WORKS_PRICE_LIST (
     PRODUCT_ID uuid not null,
     CONTAINER_ID uuid not null,
     PRICE_ON date not null,
+    RAW_MATERIAL_COST decimal not null,
+    CONTAINER_COST decimal not null,
+    OVERHEAD_COST decimal not null,
+    LABEL_COST decimal not null,
     PRICE decimal not null,
     --
     primary key (ID)
@@ -498,3 +508,20 @@ create table WORKS_CALENDAR (
     primary key (ID)
 )^
 -- end WORKS_CALENDAR
+-- begin WORKS_WORKS_ORDER_KEY
+create table WORKS_WORKS_ORDER_KEY (
+    ID uuid,
+    VERSION integer not null,
+    CREATE_TS timestamp,
+    CREATED_BY varchar(50),
+    UPDATE_TS timestamp,
+    UPDATED_BY varchar(50),
+    DELETE_TS timestamp,
+    DELETED_BY varchar(50),
+    --
+    WORKS_ORDER_ID uuid not null,
+    MANUFACTURING_KEY varchar(50) not null,
+    --
+    primary key (ID)
+)^
+-- end WORKS_WORKS_ORDER_KEY

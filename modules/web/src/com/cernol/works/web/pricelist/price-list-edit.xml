@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/window.xsd"
+        caption="msg://editorCaption"
+        class="com.cernol.works.web.pricelist.PriceListEdit"
+        datasource="priceListDs"
+        focusComponent="fieldGroup"
+        messagesPack="com.cernol.works.web.pricelist">
+    <dsContext>
+        <datasource id="priceListDs"
+                    class="com.cernol.works.entity.PriceList"
+                    view="priceList-view"/>
+    </dsContext>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="windowActions"
+            spacing="true">
+        <fieldGroup id="fieldGroup"
+                    datasource="priceListDs">
+            <column width="250px">
+                <field property="product"/>
+                <field property="container"/>
+                <field property="priceOn"/>
+                <field property="price"/>
+                <field property="rawMaterialCost"/>
+                <field property="containerCost"/>
+                <field property="overheadCost"/>
+                <field property="labelCost"/>
+            </column>
+        </fieldGroup>
+        <frame id="windowActions"
+               screen="editWindowActions"/>
+    </layout>
+</window>

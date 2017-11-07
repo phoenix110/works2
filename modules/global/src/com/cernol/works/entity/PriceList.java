@@ -13,6 +13,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import com.haulmont.cuba.core.entity.StandardEntity;
 import com.haulmont.chile.core.annotations.NamePattern;
+import javax.validation.constraints.NotNull;
 
 @NamePattern("%s %s %s|product,container,priceOn")
 @Table(name = "WORKS_PRICE_LIST")
@@ -32,9 +33,62 @@ public class PriceList extends StandardEntity {
     @Column(name = "PRICE_ON", nullable = false)
     protected Date priceOn;
 
+    @NotNull
+    @MetaProperty(datatype = CurrencyDatatype.NAME, mandatory = true)
+    @Column(name = "RAW_MATERIAL_COST", nullable = false)
+    protected BigDecimal rawMaterialCost;
+
+    @NotNull
+    @MetaProperty(datatype = CurrencyDatatype.NAME, mandatory = true)
+    @Column(name = "CONTAINER_COST", nullable = false)
+    protected BigDecimal containerCost;
+
+    @NotNull
+    @MetaProperty(datatype = CurrencyDatatype.NAME, mandatory = true)
+    @Column(name = "OVERHEAD_COST", nullable = false)
+    protected BigDecimal overheadCost;
+
+    @NotNull
+    @MetaProperty(datatype = CurrencyDatatype.NAME, mandatory = true)
+    @Column(name = "LABEL_COST", nullable = false)
+    protected BigDecimal labelCost;
+
     @MetaProperty(datatype = CurrencyDatatype.NAME, mandatory = true)
     @Column(name = "PRICE", nullable = false)
     protected BigDecimal price;
+
+    public void setRawMaterialCost(BigDecimal rawMaterialCost) {
+        this.rawMaterialCost = rawMaterialCost;
+    }
+
+    public BigDecimal getRawMaterialCost() {
+        return rawMaterialCost;
+    }
+
+    public void setContainerCost(BigDecimal containerCost) {
+        this.containerCost = containerCost;
+    }
+
+    public BigDecimal getContainerCost() {
+        return containerCost;
+    }
+
+    public void setOverheadCost(BigDecimal overheadCost) {
+        this.overheadCost = overheadCost;
+    }
+
+    public BigDecimal getOverheadCost() {
+        return overheadCost;
+    }
+
+    public void setLabelCost(BigDecimal labelCost) {
+        this.labelCost = labelCost;
+    }
+
+    public BigDecimal getLabelCost() {
+        return labelCost;
+    }
+
 
     public void setProduct(Product product) {
         this.product = product;

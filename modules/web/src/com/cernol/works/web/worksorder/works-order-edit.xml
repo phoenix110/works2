@@ -15,6 +15,8 @@
                                   property="worksOrderIngredients"/>
             <collectionDatasource id="worksOrderLablesDs"
                                   property="worksOrderLables"/>
+            <collectionDatasource id="worksOrderKeysDs"
+                                  property="worksOrderKeys"/>
         </datasource>
         <collectionDatasource id="problemListsDs"
                               class="com.cernol.works.entity.ProblemList"
@@ -31,46 +33,58 @@
             spacing="true">
         <scrollBox id="scrollBox"
                    spacing="true">
-            <hbox expand="fieldGroup_groupBox">
-                <groupBox id="fieldGroup_groupBox">
-                    <fieldGroup id="fieldGroup"
-                                datasource="worksOrderDs"
-                                height="100%"
-                                width="100%">
-                        <column width="250px">
-                            <field editable="false"
-                                   property="documentNo"/>
-                            <field property="documentOn"/>
-                            <field property="product"/>
-                            <field property="mixer"/>
-                            <field property="batchQuantity"/>
-                            <field property="manufacturingKey"/>
-                            <field property="currentStatus"/>
-                        </column>
-                        <column width="250px">
-                            <field editable="false"
-                                   property="unit"/>
-                            <field editable="false"
-                                   property="volume"/>
-                            <field editable="false"
-                                   property="mass"/>
-                            <field editable="false"
-                                   property="rawMaterialCost"/>
-                            <field editable="false"
-                                   property="containerCost"/>
-                            <field editable="false"
-                                   property="lableCost"/>
-                            <field editable="false"
-                                   property="overheadCost"/>
-                            <field editable="false"
-                                   property="totalCost"/>
-                        </column>
-                    </fieldGroup>
+            <hbox expand="fieldGroup_hBox_groupBox"
+                  width="100%">
+                <groupBox id="fieldGroup_hBox_groupBox">
+                    <hbox id="fieldGroup_hBox"
+                          height="100%"
+                          width="100%">
+                        <fieldGroup id="fieldGroup"
+                                    datasource="worksOrderDs">
+                            <column width="250px">
+                                <field editable="false"
+                                       property="documentNo"/>
+                                <field property="documentOn"/>
+                                <field property="product"/>
+                                <field property="mixer"/>
+                                <field property="batchQuantity"/>
+                                <field property="currentStatus"/>
+                            </column>
+                            <column width="250px">
+                                <field editable="false"
+                                       property="unit"/>
+                                <field editable="false"
+                                       property="volume"/>
+                                <field editable="false"
+                                       property="mass"/>
+                                <field editable="false"
+                                       property="rawMaterialCost"/>
+                                <field editable="false"
+                                       property="containerCost"/>
+                                <field editable="false"
+                                       property="lableCost"/>
+                                <field editable="false"
+                                       property="overheadCost"/>
+                                <field editable="false"
+                                       property="totalCost"/>
+                            </column>
+                        </fieldGroup>
+                        <groupBox id="ogManufacturingKey_groupBox"
+                                  width="AUTO">
+                            <optionsGroup id="ogManufacturingKey"
+                                          datasource="worksOrderDs"
+                                          multiselect="true"
+                                          optionsEnum="com.cernol.works.entity.ManufacturingKey"
+                                          property="manufacturingKey"/>
+                        </groupBox>
+                    </hbox>
                 </groupBox>
-                <groupBox spacing="true"
+                <groupBox id="problemTable_groupBox"
+                          spacing="true"
                           width="AUTO">
                     <table id="problemTable"
-                           height="300px">
+                           height="300px"
+                           width="250px">
                         <columns>
                             <column id="description"/>
                         </columns>
@@ -144,6 +158,9 @@
                         </actions>
                         <columns>
                             <column id="lable"/>
+                            <column id="quantity"/>
+                            <column id="unitCost"/>
+                            <column id="lineCost"/>
                         </columns>
                         <rows datasource="worksOrderLablesDs"/>
                         <buttonsPanel>
@@ -158,7 +175,8 @@
         <hbox id="windowActionsBox"
               spacing="true">
             <frame id="windowActions"
-                   screen="extendedEditWindowActions"/>
+                   screen="extendedEditWindowActions"
+                   width="AUTO"/>
             <button id="instructionReportBtn"/>
         </hbox>
     </layout>

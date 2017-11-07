@@ -122,7 +122,7 @@ public class Usages implements UsagesMBean {
 
     }
 
-    public void createOrUpdateStockUsage(StockItem stockItem, Date usageDate, BigDecimal quantity) {
+    private void createOrUpdateStockUsage(StockItem stockItem, Date usageDate, BigDecimal quantity) {
         try (Transaction tx = persistence.createTransaction()){
             TypedQuery<StockUsage> query = persistence.getEntityManager().createQuery(
                     "select e from works$StockUsage e " +

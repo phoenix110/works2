@@ -34,7 +34,7 @@ public class WorksOrderLable extends StandardEntity {
     protected BigDecimal unitCost;
 
     @Transient
-    @MetaProperty(datatype = CurrencyDatatype.NAME)
+    @MetaProperty(datatype = CurrencyDatatype.NAME, related = {"quantity", "unitCost"})
     protected BigDecimal lineCost;
 
     public void setWorksOrder(WorksOrder worksOrder) {
@@ -69,12 +69,8 @@ public class WorksOrderLable extends StandardEntity {
         return unitCost;
     }
 
-    public void setLineCost(BigDecimal lineCost) {
-        this.lineCost = lineCost;
-    }
-
     public BigDecimal getLineCost() {
-        return lineCost;
+        return getUnitCost().multiply(BigDecimal.valueOf(getQuantity()));
     }
 
 

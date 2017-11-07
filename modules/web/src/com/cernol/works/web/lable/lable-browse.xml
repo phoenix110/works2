@@ -37,7 +37,8 @@
                 <column id="maxStock"/>
                 <column id="unit"/>
                 <column id="currentStatus"/>
-                <column id="unitCost"/>
+                <column id="sizeX"/>
+                <column id="sizeY"/>
             </columns>
             <rows datasource="lablesDs"/>
             <rowsCount/>

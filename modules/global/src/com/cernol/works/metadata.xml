@@ -5,12 +5,14 @@
         <class>com.cernol.works.entity.ProblemList</class>
     </metadata-model>
     <datatypes>
-        <datatype class="com.cernol.works.entity.PartsPer100Datatype"
+        <datatype id="partsPer100"
+                  class="com.cernol.works.entity.PartsPer100Datatype"
                   decimalSeparator="."
                   format="#0.0000"
                   groupingSeparator="&apos;"
                   javaType="java.math.BigDecimal"/>
-        <datatype class="com.cernol.works.entity.CurrencyDatatype"
+        <datatype id="currency"
+                  class="com.cernol.works.entity.CurrencyDatatype"
                   javaType="java.math.BigDecimal"/>
     </datatypes>
 </metadata>

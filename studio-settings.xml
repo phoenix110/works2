@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<studio>
+    <screenDesigner>
+        <screen layoutAnalysisDisabled="true"
+                module="web"
+                reference="com/cernol/works/web/worksorder/works-order-edit.xml"/>
+    </screenDesigner>
+</studio>
