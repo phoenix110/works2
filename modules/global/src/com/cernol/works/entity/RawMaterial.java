@@ -4,13 +4,9 @@
 package com.cernol.works.entity;
 
 import javax.persistence.Entity;
-import javax.persistence.DiscriminatorValue;
 import com.haulmont.chile.core.annotations.NamePattern;
 import javax.persistence.Table;
 import javax.persistence.PrimaryKeyJoinColumn;
-import javax.persistence.Column;
-import java.math.BigDecimal;
-import com.haulmont.chile.core.annotations.MetaProperty;
 import com.haulmont.cuba.core.entity.FileDescriptor;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;

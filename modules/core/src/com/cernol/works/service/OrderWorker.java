@@ -1,7 +1,6 @@
 package com.cernol.works.service;
 
 import com.cernol.works.entity.DocumentStatus;
-import com.cernol.works.entity.WorksOrder;
 import com.haulmont.cuba.core.*;
 
 import javax.inject.Inject;

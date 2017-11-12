@@ -150,27 +150,25 @@ order by e.usedOn
                                               valueField="quantity"/>
                         </chart:stockGraphs>
                     </chart:panel>
-
                 </chart:panels>
                 <chart:categoryAxesSettings equalSpacing="true"/>
-
                 <chart:chartScrollbarSettings graph="g1"/>
                 <chart:periodSelector position="LEFT">
                     <chart:periods>
-                        <chart:period period="DAYS"
-                                      count="10"
-                                      label="10 days"/>
-                        <chart:period period="MONTHS"
-                                      count="1"
-                                      label="1 month"/>
-                        <chart:period period="YEARS"
-                                      count="1"
-                                      selected="true"
-                                      label="1 year"/>
-                        <chart:period period="YTD"
-                                      label="YTD"/>
-                        <chart:period period="MAX"
-                                      label="MAX"/>
+                        <chart:period count="10"
+                                      label="10 days"
+                                      period="DAYS"/>
+                        <chart:period count="1"
+                                      label="1 month"
+                                      period="MONTHS"/>
+                        <chart:period count="1"
+                                      label="1 year"
+                                      period="YEARS"
+                                      selected="true"/>
+                        <chart:period label="YTD"
+                                      period="YTD"/>
+                        <chart:period label="MAX"
+                                      period="MAX"/>
                     </chart:periods>
                 </chart:periodSelector>
             </chart:stockChart>

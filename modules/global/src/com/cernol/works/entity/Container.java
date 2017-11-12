@@ -4,13 +4,11 @@
 package com.cernol.works.entity;
 
 import javax.persistence.Entity;
-import javax.persistence.DiscriminatorValue;
 import java.math.BigDecimal;
 import javax.persistence.Column;
 import com.haulmont.chile.core.annotations.NamePattern;
 import javax.persistence.Table;
 import javax.persistence.PrimaryKeyJoinColumn;
-import com.haulmont.chile.core.annotations.MetaProperty;
 import java.util.List;
 import javax.persistence.OneToMany;
 

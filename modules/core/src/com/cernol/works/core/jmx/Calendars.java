@@ -6,7 +6,6 @@ import com.haulmont.cuba.core.Persistence;
 import com.haulmont.cuba.core.Transaction;
 import com.haulmont.cuba.core.TypedQuery;
 import com.haulmont.cuba.core.global.Metadata;
-import com.haulmont.cuba.core.global.TimeSource;
 import com.haulmont.cuba.security.app.Authenticated;
 import org.apache.commons.lang.exception.ExceptionUtils;
 import org.slf4j.Logger;

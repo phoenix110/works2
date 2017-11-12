@@ -33,9 +33,10 @@
             spacing="true">
         <scrollBox id="scrollBox"
                    spacing="true">
-            <hbox expand="fieldGroup_hBox_groupBox"
+            <hbox expand="problemTable_groupBox"
                   width="100%">
-                <groupBox id="fieldGroup_hBox_groupBox">
+                <groupBox id="fieldGroup_hBox_groupBox"
+                          width="AUTO">
                     <hbox id="fieldGroup_hBox"
                           height="100%"
                           width="100%">
@@ -80,11 +81,9 @@
                     </hbox>
                 </groupBox>
                 <groupBox id="problemTable_groupBox"
-                          spacing="true"
-                          width="AUTO">
+                          spacing="true">
                     <table id="problemTable"
-                           height="300px"
-                           width="250px">
+                           height="300px">
                         <columns>
                             <column id="description"/>
                         </columns>

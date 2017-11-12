@@ -4,9 +4,6 @@
 package com.cernol.works.entity;
 
 import javax.persistence.*;
-import java.math.BigDecimal;
-
-import com.haulmont.chile.core.annotations.MetaProperty;
 import com.haulmont.cuba.core.entity.FileDescriptor;
 import com.haulmont.chile.core.annotations.NamePattern;
 

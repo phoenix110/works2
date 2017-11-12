@@ -1,13 +1,5 @@
 package com.cernol.works.service;
 
-import com.cernol.works.entity.StockIntakeItem;
-import com.cernol.works.entity.StockItem;
-import com.haulmont.cuba.core.EntityManager;
-import com.haulmont.cuba.core.Persistence;
-import com.haulmont.cuba.core.Transaction;
-import com.haulmont.cuba.core.TypedQuery;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import javax.inject.Inject;

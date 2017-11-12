@@ -12,7 +12,6 @@ import java.math.BigDecimal;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.OneToMany;
-import com.haulmont.cuba.core.entity.annotation.Listeners;
 
 @NamePattern("%s %s|documentNo,description")
 @Entity(name = "works$DecantingOrder")

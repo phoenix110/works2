@@ -13,8 +13,6 @@ import com.haulmont.chile.core.annotations.Composition;
 import java.util.List;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
-import javax.validation.constraints.NotNull;
-import com.haulmont.cuba.core.entity.annotation.Listeners;
 import com.haulmont.chile.core.annotations.NamePattern;
 
 @NamePattern("%s %s|documentNo,description")

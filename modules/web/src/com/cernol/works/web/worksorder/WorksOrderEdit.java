@@ -8,9 +8,11 @@ import com.haulmont.cuba.core.global.LoadContext;
 import com.haulmont.cuba.core.global.Metadata;
 import com.haulmont.cuba.gui.components.*;
 import com.haulmont.cuba.gui.data.CollectionDatasource;
+import com.haulmont.cuba.gui.data.Datasource;
 import com.haulmont.reports.gui.actions.EditorPrintFormAction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.parsing.Problem;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -34,6 +36,9 @@ public class WorksOrderEdit extends AbstractEditor<WorksOrder> {
     private DataManager dataManager;
 
     @Inject
+    private Datasource<WorksOrder> worksOrderDs;
+
+    @Inject
     private CollectionDatasource<WorksOrderIngredient, UUID> worksOrderIngredientsDs;
 
     @Inject
@@ -50,6 +55,13 @@ public class WorksOrderEdit extends AbstractEditor<WorksOrder> {
 
     @Inject
     private Button instructionReportBtn;
+
+    @Inject
+    private Button windowCommit;
+
+    @Inject
+    private Button windowCommitAndClose;
+
 
     @Named("fieldGroup.product")
     protected PickerField productPicker;
@@ -69,15 +81,6 @@ public class WorksOrderEdit extends AbstractEditor<WorksOrder> {
     @Named("fieldGroup.rawMaterialCost")
     private TextField rawMaterialCostField;
 
-    @Override
-    protected boolean postCommit(boolean committed, boolean close) {
-        log.debug("postCommit().committed: " + committed);
-
-        return super.postCommit(committed, close);
-
-
-
-    }
 
     @Override
     public void init(Map<String, Object> params) {
@@ -96,8 +99,6 @@ public class WorksOrderEdit extends AbstractEditor<WorksOrder> {
 
     }
 
-
-
     @Override
     protected void initNewItem(WorksOrder item) {
 
@@ -111,8 +112,6 @@ public class WorksOrderEdit extends AbstractEditor<WorksOrder> {
         item.setUnit(Unit.Litre);
         item.setCurrentStatus(DocumentStatus.New);
     }
-
-
 
     @Override
     protected void postInit() {
@@ -130,9 +129,9 @@ public class WorksOrderEdit extends AbstractEditor<WorksOrder> {
         worksOrderPackingsDs.addCollectionChangeListener(e -> packingChanged());
 
         worksOrderIngredientsDs.addCollectionChangeListener(e -> ingredientsChanged());
+
+//        setShowSaveNotification(false);
     }
-
-
 
     private void packingChanged() {
         log.debug("packingChanged()");
@@ -289,7 +288,7 @@ public class WorksOrderEdit extends AbstractEditor<WorksOrder> {
         return batches;
     }
 
-    private void resetIngredients() {
+    public void resetIngredients() {
         log.debug("resetIngredients()");
         BigDecimal ingredientCost = BigDecimal.ZERO;
 
@@ -322,20 +321,6 @@ public class WorksOrderEdit extends AbstractEditor<WorksOrder> {
 
                 orderIngredient.setKgCost(currentCost);
 
-                BigDecimal onhandQuantity = stockItemService.
-                        getPointInTimeQuantity(orderIngredient.getRawMaterial().getId(), getItem().getDocumentOn());
-
-                if (onhandQuantity.compareTo(orderIngredient.getMass()) < 0) {
-                    ProblemList problem = new ProblemList();
-                    problem.setParent(getItem().getId());
-                    problem.setDescription("Not enough stock: " +
-                            orderIngredient.getRawMaterial().getInstanceName() +
-                            "(" +
-                            onhandQuantity +
-                            " left)");
-
-                    problemListsDs.addItem(problem);
-                }
 
                 worksOrderIngredientsDs.addItem(orderIngredient);
                 //               worksOrderIngredientsDs.includeItem(orderIngredient);
@@ -354,14 +339,67 @@ public class WorksOrderEdit extends AbstractEditor<WorksOrder> {
         }
     }
 
+    @Override
+    protected void postValidate(ValidationErrors errors) {
+        super.postValidate(errors);
+
+        if (problemListsDs.getItems().size() > 0) {
+            errors.add("Insufficient stock levels.");
+        }
+
+    }
+
     private void resetIngredientQuantities(BigDecimal mass) {
-        log.info("resetIngredientQuantities()");
+        log.debug("resetIngredientQuantities()");
+
+        windowCommit.setEnabled(true);
+        windowCommitAndClose.setEnabled(true);
+
+
+        for (ProblemList problemList : new ArrayList<>(problemListsDs.getItems())) {
+            problemListsDs.removeItem(problemList);
+        }
 
         for (WorksOrderIngredient worksOrderIngredient : new ArrayList<>(worksOrderIngredientsDs.getItems())) {
             worksOrderIngredient.setMass(mass.
                     multiply(worksOrderIngredient.getPartsPer100()).
                     divide(BigDecimal.valueOf(100.0), 4, BigDecimal.ROUND_HALF_DOWN));
+
+            BigDecimal onhandQuantity = stockItemService.
+                    getPointInTimeQuantity(worksOrderIngredient.getRawMaterial().getId(), getItem().getDocumentOn());
+
+            if (onhandQuantity.compareTo(worksOrderIngredient.getMass()) < 0) {
+                ProblemList problem = new ProblemList();
+                problem.setParent(getItem().getId());
+                problem.setDescription("Not enough stock: " +
+                        worksOrderIngredient.getRawMaterial().getInstanceName() +
+                        "(" +
+                        onhandQuantity +
+                        " left)");
+
+                problemListsDs.addItem(problem);
+
+
+
+                windowCommit.setEnabled(false);
+                windowCommitAndClose.setEnabled(false);
+
+/*
+                worksOrderIngredientsDs.setAllowCommit(false);
+                worksOrderPackingsDs.setAllowCommit(false);
+
+                worksOrderLablesDs.setAllowCommit(false);
+
+                worksOrderDs.setAllowCommit(false);
+*/
+
+
+            }
+
+
             worksOrderIngredientsDs.updateItem(worksOrderIngredient);
+
+
         }
     }
 
@@ -530,6 +568,7 @@ public class WorksOrderEdit extends AbstractEditor<WorksOrder> {
         }
 
         getItem().setLableCost(labelCost);
+        worksOrderLablesDs.commit();
     }
 
     private void removeAllLabels() {
@@ -540,5 +579,8 @@ public class WorksOrderEdit extends AbstractEditor<WorksOrder> {
 
     private void resetLabelQuantitities() {
 
+    }
+
+    public void resetIngredients(Component source) {
     }
 }

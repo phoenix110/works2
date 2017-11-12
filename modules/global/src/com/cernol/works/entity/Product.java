@@ -11,7 +11,6 @@ import java.math.BigDecimal;
 
 import com.haulmont.chile.core.annotations.NamePattern;
 
-import java.util.Set;
 import javax.validation.Valid;
 import javax.validation.constraints.Size;
 

@@ -1,7 +1,6 @@
 package com.cernol.works.web.stockcountitem;
 
 import com.cernol.works.service.StockItemService;
-import com.cernol.works.service.ToolsService;
 import com.haulmont.cuba.gui.components.AbstractEditor;
 import com.cernol.works.entity.StockCountItem;
 import com.haulmont.cuba.gui.components.LookupPickerField;
@@ -10,15 +9,11 @@ import com.haulmont.cuba.gui.components.TextField;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.math.BigDecimal;
-import java.sql.Date;
 
 public class StockCountItemEdit extends AbstractEditor<StockCountItem> {
 
     @Inject
     private StockItemService stockItemService;
-
-    @Inject
-    private ToolsService toolsService;
 
     @Named("fieldGroup.stockItem")
     private LookupPickerField stockItemField;
@@ -32,7 +27,7 @@ public class StockCountItemEdit extends AbstractEditor<StockCountItem> {
 
         stockItemField.addValueChangeListener(e -> stockItemChanged());
 
-//        countedQuantityField.addValueChangeListener(e -> quantityChanged());
+        countedQuantityField.addValueChangeListener(e -> quantityChanged());
 
     }
 

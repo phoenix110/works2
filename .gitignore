@@ -9,8 +9,13 @@ out
 test-run
 build/
 deploy/
-modules/core/build/
-modules/global/build/
-modules/gui/build/
+
 modules/gui/src/com/cernol/works/web/
-modules/web/build/
+
+.classpath
+.project
+.settings
+/.vscode/
+
+modules/**/bin
+modules/**/build

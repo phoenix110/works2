@@ -34,71 +34,71 @@ order by e.worksOrder.documentOn desc
     </dsContext>
     <dialogMode height="600"
                 width="800"/>
-    <layout spacing="true">
-        <vbox height="100%"
+    <layout expand="windowActionsHBox"
+            spacing="true">
+        <hbox id="hboxTop"
+              spacing="true"
+              width="100%">
+            <fieldGroup id="fieldGroup"
+                        datasource="containerDs">
+                <column width="250px">
+                    <field property="code"/>
+                    <field property="description"/>
+                    <field property="reorder"/>
+                    <field property="maxStock"/>
+                    <field property="capacity"/>
+                    <field property="unit"/>
+                    <field property="currentStatus"/>
+                </column>
+            </fieldGroup>
+            <groupBox id="summaryGroupBox"
+                      spacing="true">
+                <textField id="onHand"
+                           caption="msg://onhandLable"
+                           datatype="partsPer100"
+                           editable="false"/>
+                <textField id="currentPrice"
+                           caption="msg://currentPriceLable"
+                           datatype="currency"
+                           editable="false"/>
+                <textField id="currentUsage"
+                           caption="msg://Current Usage"
+                           datatype="partsPer100"
+                           editable="false"/>
+            </groupBox>
+        </hbox>
+        <hbox id="hboxBottom"
+              spacing="true"
+              width="100%">
+            <groupBox spacing="true">
+                <table id="worksOrderTable">
+                    <columns>
+                        <column id="worksOrder"/>
+                        <column id="quantity"/>
+                        <column id="unitCost"/>
+                        <column id="customersOwn"/>
+                        <column id="additional"/>
+                    </columns>
+                    <rows datasource="worksOrderPackingsDs"/>
+                </table>
+            </groupBox>
+            <groupBox spacing="true">
+                <table id="priceUpdateTable">
+                    <columns>
+                        <column id="priceUpdate"/>
+                        <column id="price"/>
+                    </columns>
+                    <rows datasource="priceUpdateItemsDs"/>
+                </table>
+            </groupBox>
+        </hbox>
+        <hbox id="windowActionsHBox"
               spacing="true">
-            <hbox width="100%">
-                <fieldGroup id="fieldGroup"
-                            datasource="containerDs">
-                    <column width="250px">
-                        <field property="code"/>
-                        <field property="description"/>
-                        <field property="reorder"/>
-                        <field property="maxStock"/>
-                        <field property="capacity"/>
-                        <field property="unit"/>
-                        <field property="currentStatus"/>
-                    </column>
-                </fieldGroup>
-                <groupBox id="summaryGroupBox"
-                          spacing="true">
-                    <textField id="onHand"
-                               caption="msg://onhandLable"
-                               datatype="partsPer100"
-                               editable="false"/>
-                    <textField id="currentPrice"
-                               caption="msg://currentPriceLable"
-                               datatype="currency"
-                               editable="false"/>
-                    <textField id="currentUsage"
-                               caption="msg://Current Usage"
-                               datatype="partsPer100"
-                               editable="false"/>
-                </groupBox>
-            </hbox>
-            <hbox height="400px"
-                  spacing="true"
-                  width="100%">
-                <groupBox spacing="true">
-                    <table id="worksOrderTable">
-                        <columns>
-                            <column id="worksOrder"/>
-                            <column id="quantity"/>
-                            <column id="unitCost"/>
-                            <column id="customersOwn"/>
-                            <column id="additional"/>
-                        </columns>
-                        <rows datasource="worksOrderPackingsDs"/>
-                    </table>
-                </groupBox>
-                <groupBox spacing="true">
-                    <table id="priceUpdateTable">
-                        <columns>
-                            <column id="priceUpdate"/>
-                            <column id="price"/>
-                        </columns>
-                        <rows datasource="priceUpdateItemsDs"/>
-                    </table>
-                </groupBox>
-            </hbox>
-            <hbox id="windowActionsHBox"
-                  spacing="true">
-                <frame id="windowActions"
-                       height="100%"
-                       screen="editWindowActions"/>
-                <button id="printBtn"
-                        icon="icons/reports-print.png"/>
-            </hbox>
-        </vbox>
+            <frame id="windowActions"
+                   screen="editWindowActions"
+                   width="AUTO"/>
+            <button id="printBtn"
+                    icon="icons/reports-print.png"/>
+        </hbox>
     </layout>
 </window>
