@@ -2,10 +2,12 @@ package com.cernol.works.core.jmx;
 
 import com.cernol.works.entity.*;
 import com.cernol.works.service.StockItemService;
+import com.cernol.works.service.ToolsService;
 import com.haulmont.cuba.core.Persistence;
 import com.haulmont.cuba.core.Transaction;
 import com.haulmont.cuba.core.TypedQuery;
 import com.haulmont.cuba.core.global.Metadata;
+import com.haulmont.cuba.core.global.TimeSource;
 import com.haulmont.cuba.security.app.Authenticated;
 import org.apache.commons.lang.exception.ExceptionUtils;
 import org.slf4j.Logger;
@@ -32,7 +34,13 @@ public class PriceLists implements PriceListsMBean {
     private WorksConfig worksConfig;
 
     @Inject
+    private TimeSource timeSource;
+
+    @Inject
     private StockItemService stockItemService;
+
+    @Inject
+    private ToolsService toolsService;
 
     @Override
     @Authenticated
@@ -51,7 +59,7 @@ public class PriceLists implements PriceListsMBean {
 
                 productList = productTypedQuery.getResultList();
 
-                for (Product product: productList) {
+                for (Product product : productList) {
                     productContainerList = product.getContainers();
 
                     for (ProductContainer productContainer : productContainerList) {
@@ -116,7 +124,7 @@ public class PriceLists implements PriceListsMBean {
                                     productContainer.getKeepAwayLabel().getId(),
                                     onDate));
                         }
-                        
+
                         priceTotal = priceRawMaterial.add(priceContainer).add(priceOverhead).add(priceLabel);
 
                         createOrUpdatePriceList(
@@ -134,12 +142,23 @@ public class PriceLists implements PriceListsMBean {
 
             }
             return "Updated price lists for " + onDate.toString();
-        }
-        catch (Throwable e) {
+        } catch (Throwable e) {
             log.error("Error calculating usages", e);
             return ExceptionUtils.getFullStackTrace(e);
         }
 
+    }
+
+    @Override
+    @Authenticated
+    public String calculateYesterdayPriceLists() {
+
+        String message =
+                calculatePriceListsOn(
+                        toolsService.endOfDay(
+                                toolsService.previousDay(
+                                        timeSource.currentTimestamp())));
+        return message;
     }
 
     private void createOrUpdatePriceList(Product product,
@@ -164,7 +183,7 @@ public class PriceLists implements PriceListsMBean {
 
             List<PriceList> priceListList = query.getResultList();
 
-            if (priceListList.size() == 0 ) {
+            if (priceListList.size() == 0) {
                 PriceList priceList = metadata.create(PriceList.class);
 
                 priceList.setProduct(product);
@@ -189,7 +208,7 @@ public class PriceLists implements PriceListsMBean {
 
             } else {
                 throw new IllegalStateException("More than one Price List entry for " + product.getCode() +
-                " in " + container.getDescription() + " on " + priceOn.toString());
+                        " in " + container.getDescription() + " on " + priceOn.toString());
             }
 
             tx.commit();

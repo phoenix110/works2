@@ -208,6 +208,7 @@ public class WorksOrderEdit extends AbstractEditor<WorksOrder> {
             getItem().setMass(zeroVal);
             //getItem().setRawMaterialCost(zeroVal);
             getItem().setContainerCost(zeroVal);
+            getItem().setLableCost(zeroVal);
             //getItem().setOverheadCost(zeroVal);
             if (getItem().getProduct() != null) {
                 getItem().setDescription("Cancelled: " + getItem().getProduct().getCode());

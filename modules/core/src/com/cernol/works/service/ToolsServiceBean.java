@@ -65,4 +65,11 @@ public class ToolsServiceBean implements ToolsService {
     }
 
 
+    @Override
+    public Date previousDay(Date date) {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        cal.add(Calendar.DATE, -1);
+        return cal.getTime();
+    }
 }

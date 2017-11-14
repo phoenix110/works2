@@ -8,7 +8,10 @@ import java.util.Date;
 @ManagedResource(description = "Manages price list updates")
 public interface PriceListsMBean {
 
-    @ManagedOperation
+    @ManagedOperation(description = "Calculate prices as at a certain date")
     String calculatePriceListsOn(Date onDate);
+
+    @ManagedOperation(description = "Calculate prices for previous day")
+    String calculateYesterdayPriceLists();
 
 }

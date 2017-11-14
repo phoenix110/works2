@@ -22,5 +22,5 @@ public interface ToolsService {
 
     public Date endOfDay(Date date);
 
-
+    public Date previousDay(Date date);
 }
