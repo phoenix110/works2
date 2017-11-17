@@ -194,6 +194,7 @@
                   view="_minimal">
             <property name="product"
                       view="_minimal"/>
+            <property name="documentOn"/>
         </property>
         <property name="container"
                   view="_minimal">

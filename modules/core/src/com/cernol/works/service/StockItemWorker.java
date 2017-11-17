@@ -194,8 +194,8 @@ public class StockItemWorker {
 
     private BigDecimal getOutQuantityRMWO(final UUID stockItemId, final Date fromDate, final Date toDate) {
 
-        Date beginOfFromDate = toolsService.beginOfDay(fromDate);
-        Date endOfToDate = toolsService.endOfDay(toDate);
+/*        Date beginOfFromDate = toolsService.beginOfDay(fromDate);
+        Date endOfToDate = toolsService.endOfDay(toDate);*/
 
         try (Transaction tx = persistence.createTransaction()) {
             EntityManager em = persistence.getEntityManager();
@@ -208,8 +208,8 @@ public class StockItemWorker {
                             "and i.worksOrder.currentStatus = ?4 "
             );
             rawMaterialQuery.setParameter(1, stockItemId);
-            rawMaterialQuery.setParameter(2, beginOfFromDate);
-            rawMaterialQuery.setParameter(3, endOfToDate);
+            rawMaterialQuery.setParameter(2, fromDate);
+            rawMaterialQuery.setParameter(3, toDate);
             rawMaterialQuery.setParameter(4, DocumentStatus.Accepted);
             BigDecimal outQuantity = (BigDecimal) rawMaterialQuery.getSingleResult();
 
@@ -220,8 +220,8 @@ public class StockItemWorker {
 
     private BigDecimal getOutQuanityRMSO(final UUID stockItemId, final Date fromDate, final Date toDate) {
 
-        Date beginOfFromDate = toolsService.beginOfDay(fromDate);
-        Date endOfToDate = toolsService.endOfDay(toDate);
+        /*Date beginOfFromDate = toolsService.beginOfDay(fromDate);
+        Date endOfToDate = toolsService.endOfDay(toDate);*/
 
         try (Transaction tx = persistence.createTransaction()) {
             EntityManager em = persistence.getEntityManager();
@@ -234,8 +234,8 @@ public class StockItemWorker {
                             "and i.salesOrder.currentStatus = ?4 "
             );
             rawMaterialQuery.setParameter(1, stockItemId);
-            rawMaterialQuery.setParameter(2, beginOfFromDate);
-            rawMaterialQuery.setParameter(3, endOfToDate);
+            rawMaterialQuery.setParameter(2, fromDate);
+            rawMaterialQuery.setParameter(3, toDate);
             rawMaterialQuery.setParameter(4, DocumentStatus.Accepted);
             BigDecimal outQuantity = (BigDecimal) rawMaterialQuery.getSingleResult();
 
@@ -245,8 +245,8 @@ public class StockItemWorker {
 
     private BigDecimal getOutQuantityCWO(final UUID stockItemId, final Date fromDate, final Date toDate) {
 
-        Date beginOfFromDate = toolsService.beginOfDay(fromDate);
-        Date endOfToDate = toolsService.endOfDay(toDate);
+        /*Date beginOfFromDate = toolsService.beginOfDay(fromDate);
+        Date endOfToDate = toolsService.endOfDay(toDate);*/
 
         try (Transaction tx = persistence.createTransaction()) {
             EntityManager em = persistence.getEntityManager();
@@ -259,8 +259,8 @@ public class StockItemWorker {
                             "and i.worksOrder.currentStatus = ?4 "
             );
             rawMaterialQuery.setParameter(1, stockItemId);
-            rawMaterialQuery.setParameter(2, beginOfFromDate);
-            rawMaterialQuery.setParameter(3, endOfToDate);
+            rawMaterialQuery.setParameter(2, fromDate);
+            rawMaterialQuery.setParameter(3, toDate);
             rawMaterialQuery.setParameter(4, DocumentStatus.Accepted);
 
             Long outQuantity = (Long) rawMaterialQuery.getSingleResult();
@@ -272,8 +272,8 @@ public class StockItemWorker {
 
     private BigDecimal getOutQuantityCSO(final UUID stockItemId, final Date fromDate, final Date toDate) {
 
-        Date beginOfFromDate = toolsService.beginOfDay(fromDate);
-        Date endOfToDate = toolsService.endOfDay(toDate);
+        /*Date beginOfFromDate = toolsService.beginOfDay(fromDate);
+        Date endOfToDate = toolsService.endOfDay(toDate);*/
 
         try (Transaction tx = persistence.createTransaction()) {
             EntityManager em = persistence.getEntityManager();
@@ -286,8 +286,8 @@ public class StockItemWorker {
                             "and i.salesOrder.currentStatus = ?4 "
             );
             rawMaterialQuery.setParameter(1, stockItemId);
-            rawMaterialQuery.setParameter(2, beginOfFromDate);
-            rawMaterialQuery.setParameter(3, endOfToDate);
+            rawMaterialQuery.setParameter(2, fromDate);
+            rawMaterialQuery.setParameter(3, toDate);
             rawMaterialQuery.setParameter(4, DocumentStatus.Accepted);
             BigDecimal outQuantity = (BigDecimal) rawMaterialQuery.getSingleResult();
 
@@ -296,8 +296,9 @@ public class StockItemWorker {
     }
 
     private BigDecimal getOutQuantityCDO(final UUID stockItemId, final Date fromDate, final Date toDate) {
-        Date beginOfFromDate = toolsService.beginOfDay(fromDate);
-        Date endOfToDate = toolsService.endOfDay(toDate);
+        /*Date beginOfFromDate = toolsService.beginOfDay(fromDate);
+        Date endOfToDate = toolsService.endOfDay(toDate);*/
+
         try (Transaction tx = persistence.createTransaction()) {
             EntityManager em = persistence.getEntityManager();
 
@@ -309,8 +310,8 @@ public class StockItemWorker {
                             "and i.decantingOrder.currentStatus = ?4 "
             );
             rawMaterialQuery.setParameter(1, stockItemId);
-            rawMaterialQuery.setParameter(2, beginOfFromDate);
-            rawMaterialQuery.setParameter(3, endOfToDate);
+            rawMaterialQuery.setParameter(2, fromDate);
+            rawMaterialQuery.setParameter(3, toDate);
             rawMaterialQuery.setParameter(4, DocumentStatus.Accepted);
 
             Long outQuantity = (Long) rawMaterialQuery.getSingleResult();

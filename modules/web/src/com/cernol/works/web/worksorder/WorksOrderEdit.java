@@ -2,29 +2,28 @@ package com.cernol.works.web.worksorder;
 
 import com.cernol.works.entity.*;
 import com.cernol.works.service.StockItemService;
-import com.cernol.works.service.ToolsService;
 import com.haulmont.cuba.core.global.DataManager;
 import com.haulmont.cuba.core.global.LoadContext;
 import com.haulmont.cuba.core.global.Metadata;
+import com.haulmont.cuba.core.global.TimeSource;
 import com.haulmont.cuba.gui.components.*;
 import com.haulmont.cuba.gui.data.CollectionDatasource;
 import com.haulmont.cuba.gui.data.Datasource;
 import com.haulmont.reports.gui.actions.EditorPrintFormAction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.parsing.Problem;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.math.BigDecimal;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 
 public class WorksOrderEdit extends AbstractEditor<WorksOrder> {
 
     private Logger log = LoggerFactory.getLogger(WorksOrderEdit.class);
-
-    @Inject
-    ToolsService toolsService;
 
     @Inject
     private StockItemService stockItemService;
@@ -52,6 +51,9 @@ public class WorksOrderEdit extends AbstractEditor<WorksOrder> {
 
     @Inject
     private Metadata metadata;
+
+    @Inject
+    private TimeSource timeSource;
 
     @Inject
     private Button instructionReportBtn;
@@ -96,7 +98,6 @@ public class WorksOrderEdit extends AbstractEditor<WorksOrder> {
 
         massField.addValueChangeListener(e -> massChanged());
 
-
     }
 
     @Override
@@ -106,7 +107,7 @@ public class WorksOrderEdit extends AbstractEditor<WorksOrder> {
 
         super.initNewItem(item);
 
-        item.setDocumentOn(Date.from(toolsService.getNow()));
+        item.setDocumentOn(timeSource.currentTimestamp());
         item.setDescription("Works Order - No product");
         item.setManufacturingKey(ManufacturingKey.Orders);
         item.setUnit(Unit.Litre);
@@ -135,8 +136,8 @@ public class WorksOrderEdit extends AbstractEditor<WorksOrder> {
 
     private void packingChanged() {
         log.debug("packingChanged()");
-        BigDecimal volume = BigDecimal.ZERO;
 
+        BigDecimal volume = BigDecimal.ZERO;
         BigDecimal containerCost = BigDecimal.ZERO;
 
         for (WorksOrderPacking line : worksOrderPackingsDs.getItems()) {
