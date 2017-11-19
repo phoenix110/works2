@@ -64,7 +64,6 @@ public class WorksOrderEdit extends AbstractEditor<WorksOrder> {
     @Inject
     private Button windowCommitAndClose;
 
-
     @Named("fieldGroup.product")
     protected PickerField productPicker;
 
@@ -83,27 +82,20 @@ public class WorksOrderEdit extends AbstractEditor<WorksOrder> {
     @Named("fieldGroup.rawMaterialCost")
     private TextField rawMaterialCostField;
 
-
     @Override
     public void init(Map<String, Object> params) {
-        log.debug("init()");
+        log.info("init()");
 
         super.init(params);
 
         instructionReportBtn.setAction(new EditorPrintFormAction(this, null));
-
-//        worksOrderIngredientsDs.addCollectionChangeListener(e -> packingChanged());
-
-        volumeField.addValueChangeListener(e -> volumeChanged());
-
-        massField.addValueChangeListener(e -> massChanged());
 
     }
 
     @Override
     protected void initNewItem(WorksOrder item) {
 
-        log.debug("initNewItem()");
+        log.info("initNewItem()");
 
         super.initNewItem(item);
 
@@ -116,9 +108,13 @@ public class WorksOrderEdit extends AbstractEditor<WorksOrder> {
 
     @Override
     protected void postInit() {
-        log.debug("postInit()");
+        log.info("postInit()");
         super.postInit();
 
+        volumeField.addValueChangeListener(e -> volumeChanged());
+
+        massField.addValueChangeListener(e -> massChanged());
+        
         productPicker.addValueChangeListener(e -> productChanged());
 
         containerCostField.addValueChangeListener(e -> containerCostChanged());
@@ -129,13 +125,12 @@ public class WorksOrderEdit extends AbstractEditor<WorksOrder> {
 
         worksOrderPackingsDs.addCollectionChangeListener(e -> packingChanged());
 
-        worksOrderIngredientsDs.addCollectionChangeListener(e -> ingredientsChanged());
+        //worksOrderIngredientsDs.addCollectionChangeListener(e -> ingredientsChanged());
 
-//        setShowSaveNotification(false);
     }
 
     private void packingChanged() {
-        log.debug("packingChanged()");
+        log.info("packingChanged()");
 
         BigDecimal volume = BigDecimal.ZERO;
         BigDecimal containerCost = BigDecimal.ZERO;
@@ -151,9 +146,7 @@ public class WorksOrderEdit extends AbstractEditor<WorksOrder> {
 
         if (getItem().getProduct() != null) {
             getItem().setMass(calculateMass(volume));
-//            getItem().setBatchQuantity(calculateBatches(volume));
-//            resetIngredients();
-//            getItem().setOverheadCost(calculateOverhead());
+
         }
     }
 
@@ -177,7 +170,6 @@ public class WorksOrderEdit extends AbstractEditor<WorksOrder> {
             getItem().setMass(calculateMass(getItem().getVolume()));
             getItem().setBatchQuantity(calculateBatches(getItem().getVolume()));
             resetLabels();
-
         }
 
     }
@@ -186,7 +178,7 @@ public class WorksOrderEdit extends AbstractEditor<WorksOrder> {
         log.info("massChanged()");
 
         resetIngredientQuantities(getItem().getMass());
-
+        ingredientsChanged();
     }
 
     private void containerCostChanged() {
@@ -204,13 +196,12 @@ public class WorksOrderEdit extends AbstractEditor<WorksOrder> {
         log.info("statusChanged()");
 
         if (getItem().getCurrentStatus() == DocumentStatus.Cancelled) {
-            BigDecimal zeroVal = BigDecimal.ZERO;
 
-            getItem().setMass(zeroVal);
-            //getItem().setRawMaterialCost(zeroVal);
-            getItem().setContainerCost(zeroVal);
-            getItem().setLableCost(zeroVal);
-            //getItem().setOverheadCost(zeroVal);
+            for (WorksOrderPacking line : worksOrderPackingsDs.getItems()) {
+                line.setQuantity(0);
+            }
+            worksOrderPackingsDs.refresh();
+
             if (getItem().getProduct() != null) {
                 getItem().setDescription("Cancelled: " + getItem().getProduct().getCode());
             }
@@ -239,11 +230,9 @@ public class WorksOrderEdit extends AbstractEditor<WorksOrder> {
         if (getItem().getProduct() != null) {
 
             getItem().setDescription(getItem().getProduct().getCode());
-            //getItem().setMass(calculateMass(getItem().getVolume()));
             getItem().setUnit(getItem().getProduct().getUnit());
             resetIngredients();
             resetIngredientQuantities(getItem().getMass());
-            //getItem().setOverheadCost(calculateOverhead());
         }
     }
 
@@ -265,9 +254,7 @@ public class WorksOrderEdit extends AbstractEditor<WorksOrder> {
     private BigDecimal calculateMass(BigDecimal volume) {
         log.info("calculateMass()");
 
-        BigDecimal mass = volume.multiply(getItem().getProduct().getSpecificGravity());
-
-        return mass;
+        return volume.multiply(getItem().getProduct().getSpecificGravity());
     }
 
     private Integer calculateBatches(BigDecimal volume) {
@@ -291,7 +278,7 @@ public class WorksOrderEdit extends AbstractEditor<WorksOrder> {
     }
 
     public void resetIngredients() {
-        log.debug("resetIngredients()");
+        log.info("resetIngredients()");
         BigDecimal ingredientCost = BigDecimal.ZERO;
 
         removeAllIngredients();
@@ -352,7 +339,7 @@ public class WorksOrderEdit extends AbstractEditor<WorksOrder> {
     }
 
     private void resetIngredientQuantities(BigDecimal mass) {
-        log.debug("resetIngredientQuantities()");
+        log.info("resetIngredientQuantities()");
 
         windowCommit.setEnabled(true);
         windowCommitAndClose.setEnabled(true);
@@ -386,32 +373,20 @@ public class WorksOrderEdit extends AbstractEditor<WorksOrder> {
                 windowCommit.setEnabled(false);
                 windowCommitAndClose.setEnabled(false);
 
-/*
-                worksOrderIngredientsDs.setAllowCommit(false);
-                worksOrderPackingsDs.setAllowCommit(false);
-
-                worksOrderLablesDs.setAllowCommit(false);
-
-                worksOrderDs.setAllowCommit(false);
-*/
-
-
             }
 
 
             worksOrderIngredientsDs.updateItem(worksOrderIngredient);
 
-
         }
     }
 
     private void resetLabels() {
-        log.debug("resetLabels()");
+        log.info("resetLabels()");
         BigDecimal labelCost = BigDecimal.ZERO;
 
         List<WorksOrderPacking> worksOrderPackingList;
         List<ProductContainer> productContainerList;
-        List<WorksOrderLable> worksOrderLableList;
 
         removeAllLabels();
 
@@ -577,10 +552,6 @@ public class WorksOrderEdit extends AbstractEditor<WorksOrder> {
         for (WorksOrderLable worksOrderLabel : new ArrayList<>(worksOrderLablesDs.getItems())) {
             worksOrderLablesDs.removeItem(worksOrderLabel);
         }
-    }
-
-    private void resetLabelQuantitities() {
-
     }
 
     public void resetIngredients(Component source) {
