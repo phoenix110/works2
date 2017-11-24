@@ -43,6 +43,11 @@ create table WORKS_ORDER (
     -- from works$SalesOrder
     INVOICE_NO varchar(255),
     --
+    -- from works$IntermediateOrder
+    PRODUCT_ID uuid not null,
+    MIXER_ID uuid not null,
+    BATCH_QUANTITY integer not null,
+    --
     -- from works$DecantingOrder
     DECANTED_PRODUCT_ID uuid,
     INFORMATION varchar(255),
@@ -525,3 +530,23 @@ create table WORKS_WORKS_ORDER_KEY (
     primary key (ID)
 )^
 -- end WORKS_WORKS_ORDER_KEY
+-- begin WORKS_INTERMEDIATE_ORDER_INGREDIENT
+create table WORKS_INTERMEDIATE_ORDER_INGREDIENT (
+    ID uuid,
+    VERSION integer not null,
+    CREATE_TS timestamp,
+    CREATED_BY varchar(50),
+    UPDATE_TS timestamp,
+    UPDATED_BY varchar(50),
+    DELETE_TS timestamp,
+    DELETED_BY varchar(50),
+    --
+    INTERMEDIATE_ORDER_ID uuid not null,
+    SEQUENCE_NO integer not null,
+    RAW_MATERIAL_ID uuid not null,
+    MASS decimal not null,
+    PARTS_PER100 decimal not null,
+    --
+    primary key (ID)
+)^
+-- end WORKS_INTERMEDIATE_ORDER_INGREDIENT

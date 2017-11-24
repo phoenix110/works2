@@ -69,6 +69,7 @@ public class StockItemWorker {
             Date sinceDate = startTransaction != null ? startTransaction.getStockCount().getDocumentOn() : beginDate;
 
             BigDecimal outQuantity = getOutQuantityRMWO(stockItemId, sinceDate, queryDate)
+                    .add(getOutQuantityRMIO(stockItemId, sinceDate, queryDate))
                     .add(getOutQuanityRMSO(stockItemId, sinceDate, queryDate))
                     .add(getOutQuantityCWO(stockItemId, sinceDate, queryDate))
                     .add(getOutQuantityCDO(stockItemId, sinceDate, queryDate))
@@ -133,17 +134,19 @@ public class StockItemWorker {
        LocalDate lastOfMonth = firstOfNextMonth.minusDays(1);
 */
 
-        BigDecimal usedQuantity = getOutQuantityRMWO(stockItemId, firstOfMonth, lastOfMonth)
-                .add(getOutQuanityRMSO(stockItemId, firstOfMonth, lastOfMonth))
-                .add(getOutQuantityCWO(stockItemId, firstOfMonth, lastOfMonth))
-                .add(getOutQuantityCDO(stockItemId, firstOfMonth, lastOfMonth))
-                .add(getOutQuantityCSO(stockItemId, firstOfMonth, lastOfMonth));
+        BigDecimal usedQuantity =
+                getOutQuantityRMWO(stockItemId, firstOfMonth, lastOfMonth)
+                        .add(getOutQuantityRMIO(stockItemId, firstOfMonth, lastOfMonth))
+                        .add(getOutQuanityRMSO(stockItemId, firstOfMonth, lastOfMonth))
+                        .add(getOutQuantityCWO(stockItemId, firstOfMonth, lastOfMonth))
+                        .add(getOutQuantityCDO(stockItemId, firstOfMonth, lastOfMonth))
+                        .add(getOutQuantityCSO(stockItemId, firstOfMonth, lastOfMonth));
 
         return usedQuantity;
 
     }
     
-    public void calculateUsage() {
+/*    public void calculateUsage() {
         String s = "2017-07-01";
         String e = "2017-10-31";
         LocalDate start = LocalDate.parse(s);
@@ -156,9 +159,9 @@ public class StockItemWorker {
             updateRawMaterialUsage(toolsService.asDate(start));
             start = start.plusDays(1);
         }
-    }
+    }*/
 
-    public void updateRawMaterialUsage(final Date myDate) {
+/*    public void updateRawMaterialUsage(final Date myDate) {
 
         List<RawMaterial> rawMaterials;
 
@@ -178,24 +181,25 @@ public class StockItemWorker {
                 log.info(rm.getCode() + " = " + du.toPlainString());
             }
         }
-    }
+    }*/
 
     public BigDecimal getDayUsage(final UUID stockItemId, final Date myDate) {
 
+        Date beginOfFromDate = toolsService.beginOfDay(myDate);
+        Date endOfToDate = toolsService.endOfDay(myDate);
+
         BigDecimal usedQuantity = BigDecimal.ZERO
-                .add(getOutQuantityRMWO(stockItemId, myDate, myDate))
-                .add(getOutQuanityRMSO(stockItemId, myDate, myDate))
-                .add(getOutQuantityCWO(stockItemId, myDate, myDate))
-                .add(getOutQuantityCDO(stockItemId, myDate, myDate))
-                .add(getOutQuantityCSO(stockItemId, myDate, myDate));
+                .add(getOutQuantityRMWO(stockItemId, beginOfFromDate, endOfToDate))
+                .add(getOutQuantityRMIO(stockItemId, beginOfFromDate, endOfToDate))
+                .add(getOutQuanityRMSO(stockItemId, beginOfFromDate, endOfToDate))
+                .add(getOutQuantityCWO(stockItemId, beginOfFromDate, endOfToDate))
+                .add(getOutQuantityCDO(stockItemId, beginOfFromDate, endOfToDate))
+                .add(getOutQuantityCSO(stockItemId, beginOfFromDate, endOfToDate));
 
         return usedQuantity != null ? usedQuantity : BigDecimal.ZERO;
     }
 
     private BigDecimal getOutQuantityRMWO(final UUID stockItemId, final Date fromDate, final Date toDate) {
-
-/*        Date beginOfFromDate = toolsService.beginOfDay(fromDate);
-        Date endOfToDate = toolsService.endOfDay(toDate);*/
 
         try (Transaction tx = persistence.createTransaction()) {
             EntityManager em = persistence.getEntityManager();
@@ -216,6 +220,28 @@ public class StockItemWorker {
             return outQuantity != null ? outQuantity : BigDecimal.ZERO;
         }
 
+    }
+
+    private BigDecimal getOutQuantityRMIO(final UUID stockItemId, final Date fromDate, final Date toDate) {
+        try (Transaction tx = persistence.createTransaction()) {
+
+            Query query = persistence.getEntityManager().createQuery(
+                    "select sum(i.mass) from works$IntermediateOrderIngredient i " +
+                            "where i.rawMaterial.id = ?1 " +
+                            "and i.intermediateOrder.documentOn >= ?2 " +
+                            "and i.intermediateOrder.documentOn <= ?3 " +
+                            "and i.intermediateOrder.currentStatus = ?4 "
+            );
+
+            query.setParameter(1, stockItemId);
+            query.setParameter(2, fromDate);
+            query.setParameter(3, toDate);
+            query.setParameter(4, DocumentStatus.Accepted);
+
+            BigDecimal outQuantity = (BigDecimal) query.getSingleResult();
+
+            return outQuantity != null ? outQuantity : BigDecimal.ZERO;
+        }
     }
 
     private BigDecimal getOutQuanityRMSO(final UUID stockItemId, final Date fromDate, final Date toDate) {

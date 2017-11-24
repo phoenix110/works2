@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/window.xsd"
+        caption="msg://browseCaption"
+        class="com.cernol.works.web.intermediateorder.IntermediateOrderBrowse"
+        focusComponent="intermediateOrdersTable"
+        lookupComponent="intermediateOrdersTable"
+        messagesPack="com.cernol.works.web.intermediateorder">
+    <dsContext>
+        <groupDatasource id="intermediateOrdersDs"
+                         class="com.cernol.works.entity.IntermediateOrder"
+                         view="intermediateOrder-view">
+            <query>
+                <![CDATA[select e from works$IntermediateOrder e]]>
+            </query>
+        </groupDatasource>
+    </dsContext>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="intermediateOrdersTable"
+            spacing="true">
+        <filter id="filter"
+                applyTo="intermediateOrdersTable"
+                datasource="intermediateOrdersDs">
+            <properties include=".*"/>
+        </filter>
+        <groupTable id="intermediateOrdersTable"
+                    width="100%">
+            <actions>
+                <action id="create"/>
+                <action id="edit"/>
+                <action id="remove"/>
+            </actions>
+            <columns>
+                <column id="documentNo"/>
+                <column id="documentOn"/>
+                <column id="product"/>
+                <column id="unit"/>
+                <column id="volume"/>
+                <column id="mass"/>
+                <column id="currentStatus"/>
+                <column id="mixer"/>
+                <column id="batchQuantity"/>
+            </columns>
+            <rows datasource="intermediateOrdersDs"/>
+            <rowsCount/>
+            <buttonsPanel id="buttonsPanel"
+                          alwaysVisible="true">
+                <button id="createBtn"
+                        action="intermediateOrdersTable.create"/>
+                <button id="editBtn"
+                        action="intermediateOrdersTable.edit"/>
+                <button id="removeBtn"
+                        action="intermediateOrdersTable.remove"/>
+            </buttonsPanel>
+        </groupTable>
+    </layout>
+</window>

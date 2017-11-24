@@ -44,7 +44,8 @@ order by e.usedOn
                 width="800"/>
     <layout expand="windowActions_hbox"
             spacing="true">
-        <hbox spacing="true"
+        <hbox expand="priceChangeHistoryGroupBox"
+              spacing="true"
               width="100%">
             <fieldGroup id="fieldGroup"
                         datasource="rawMaterialDs">
@@ -76,7 +77,8 @@ order by e.usedOn
             </groupBox>
             <groupBox id="formulaeGroupBox"
                       caption="msg://formulaeGroupBox"
-                      spacing="true">
+                      spacing="true"
+                      width="AUTO">
                 <table id="tableFormulae"
                        height="300px">
                     <columns>

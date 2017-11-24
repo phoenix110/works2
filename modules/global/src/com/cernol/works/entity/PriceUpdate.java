@@ -14,7 +14,7 @@ import com.haulmont.cuba.core.global.DeletePolicy;
 import java.util.List;
 import javax.persistence.OneToMany;
 
-@NamePattern("%s|documentNo")
+@NamePattern("%s %s|documentNo,documentOn")
 @Table(name = "WORKS_PRICE_UPDATE")
 @Entity(name = "works$PriceUpdate")
 public class PriceUpdate extends StandardEntity {

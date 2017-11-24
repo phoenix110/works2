@@ -182,7 +182,10 @@
           extends="_local"
           name="priceUpdate-view">
         <property name="priceUpdateItems"
-                  view="priceUpdateItem-view"/>
+                  view="_local">
+            <property name="stockItem"
+                      view="_minimal"/>
+        </property>
     </view>
     <view class="com.cernol.works.entity.Container"
           extends="_local"
@@ -223,5 +226,21 @@
                   view="_minimal"/>
         <property name="container"
                   view="_minimal"/>
+    </view>
+    <view class="com.cernol.works.entity.IntermediateOrder"
+          extends="_local"
+          name="intermediateOrder-view">
+        <property name="mixer"
+                  view="_local"/>
+        <property name="intermediateOrderIngredients"
+                  view="intermediateOrderIngredient-view"/>
+        <property name="product"
+                  view="_local"/>
+    </view>
+    <view class="com.cernol.works.entity.IntermediateOrderIngredient"
+          extends="_local"
+          name="intermediateOrderIngredient-view">
+        <property name="rawMaterial"
+                  view="_local"/>
     </view>
 </views>

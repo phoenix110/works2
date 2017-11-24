@@ -39,5 +39,7 @@
         <class>com.cernol.works.entity.PriceList</class>
         <class>com.cernol.works.entity.Calendar</class>
         <class>com.cernol.works.entity.WorksOrderKey</class>
+        <class>com.cernol.works.entity.IntermediateOrder</class>
+        <class>com.cernol.works.entity.IntermediateOrderIngredient</class>
     </persistence-unit>
 </persistence>

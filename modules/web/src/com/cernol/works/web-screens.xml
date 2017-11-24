@@ -75,4 +75,10 @@
             template="com/cernol/works/web/pricelist/price-list-browse.xml"/>
     <screen id="works$PriceList.edit"
             template="com/cernol/works/web/pricelist/price-list-edit.xml"/>
+    <screen id="works$IntermediateOrder.browse"
+            template="com/cernol/works/web/intermediateorder/intermediate-order-browse.xml"/>
+    <screen id="works$IntermediateOrder.edit"
+            template="com/cernol/works/web/intermediateorder/intermediate-order-edit.xml"/>
+    <screen id="works$IntermediateOrderIngredient.edit"
+            template="com/cernol/works/web/intermediateorderingredient/intermediate-order-ingredient-edit.xml"/>
 </screen-config>

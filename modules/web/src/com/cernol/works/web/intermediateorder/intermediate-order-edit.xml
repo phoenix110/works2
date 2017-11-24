@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/window.xsd"
+        caption="msg://editorCaption"
+        class="com.cernol.works.web.intermediateorder.IntermediateOrderEdit"
+        datasource="intermediateOrderDs"
+        focusComponent="fieldGroup"
+        messagesPack="com.cernol.works.web.intermediateorder">
+    <dsContext>
+        <datasource id="intermediateOrderDs"
+                    class="com.cernol.works.entity.IntermediateOrder"
+                    view="intermediateOrder-view">
+            <collectionDatasource id="intermediateOrderIngredientsDs"
+                                  property="intermediateOrderIngredients"/>
+        </datasource>
+        <collectionDatasource id="problemListsDs"
+                              class="com.cernol.works.entity.ProblemList"
+                              refreshMode="NEVER"/>
+    </dsContext>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="scrollBox"
+            spacing="true">
+        <scrollBox id="scrollBox"
+                   spacing="true">
+            <hbox expand="problemTable_groupBox"
+                  spacing="true"
+                  width="100%">
+                <fieldGroup id="fieldGroup"
+                            datasource="intermediateOrderDs">
+                    <column width="250px">
+                        <field editable="false"
+                               property="documentNo"/>
+                        <field property="documentOn"/>
+                        <field property="product"/>
+                        <field property="mixer"/>
+                        <field property="batchQuantity"/>
+                        <field property="currentStatus"/>
+                        <field property="volume"/>
+                        <field editable="false"
+                               property="mass"/>
+                    </column>
+                </fieldGroup>
+                <groupBox id="problemTable_groupBox"
+                          spacing="true">
+                    <table id="problemTable"
+                           height="300px"
+                           width="100%">
+                        <columns>
+                            <column id="description"/>
+                        </columns>
+                        <rows datasource="problemListsDs"/>
+                    </table>
+                </groupBox>
+            </hbox>
+            <groupBox id="intermediateOrderIngredientsBox"
+                      caption="msg://com.cernol.works.entity/IntermediateOrder.intermediateOrderIngredients">
+                <table id="intermediateOrderIngredientsTable"
+                       height="400px"
+                       width="100%">
+                    <actions>
+                        <action id="create"/>
+                        <action id="edit"/>
+                        <action id="remove"/>
+                    </actions>
+                    <columns>
+                        <column id="sequenceNo"/>
+                        <column id="rawMaterial"/>
+                        <column id="partsPer100"/>
+                        <column id="mass"/>
+                    </columns>
+                    <rows datasource="intermediateOrderIngredientsDs"/>
+                    <buttonsPanel>
+                        <button action="intermediateOrderIngredientsTable.create"/>
+                        <button action="intermediateOrderIngredientsTable.edit"/>
+                        <button action="intermediateOrderIngredientsTable.remove"/>
+                    </buttonsPanel>
+                </table>
+            </groupBox>
+        </scrollBox>
+        <frame id="windowActions"
+               screen="extendedEditWindowActions"/>
+    </layout>
+</window>

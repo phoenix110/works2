@@ -3,6 +3,7 @@
     <menu id="application-works"
           insertBefore="administration">
         <item screen="works$WorksOrder.browse"/>
+        <item screen="works$IntermediateOrder.browse"/>
         <item screen="works$SalesOrder.browse"/>
         <item screen="works$DecantingOrder.browse"/>
         <separator/>
