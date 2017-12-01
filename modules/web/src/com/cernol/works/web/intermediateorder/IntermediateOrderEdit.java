@@ -11,6 +11,7 @@ import com.haulmont.cuba.gui.components.Button;
 import com.haulmont.cuba.gui.components.PickerField;
 import com.haulmont.cuba.gui.components.TextField;
 import com.haulmont.cuba.gui.data.CollectionDatasource;
+import com.haulmont.reports.gui.actions.EditorPrintFormAction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -18,6 +19,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Map;
 import java.util.UUID;
 
 public class IntermediateOrderEdit extends AbstractEditor<IntermediateOrder> {
@@ -55,6 +57,16 @@ public class IntermediateOrderEdit extends AbstractEditor<IntermediateOrder> {
 
     @Named("fieldGroup.mass")
     private TextField massField;
+
+    @Inject
+    private Button reportButton;
+
+    @Override
+    public void init(Map<String, Object> params) {
+        super.init(params);
+
+        reportButton.setAction(new EditorPrintFormAction("report", this, null));
+    }
 
     @Override
     protected void initNewItem(IntermediateOrder item) {

@@ -77,7 +77,12 @@
                 </table>
             </groupBox>
         </scrollBox>
-        <frame id="windowActions"
-               screen="extendedEditWindowActions"/>
+        <hbox id="windowActionsBox"
+              spacing="true">
+            <frame id="windowActions"
+                   screen="extendedEditWindowActions"
+                   width="AUTO"/>
+            <button id="reportButton"/>
+        </hbox>
     </layout>
 </window>
