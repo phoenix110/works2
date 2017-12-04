@@ -26,7 +26,7 @@ public class StockIntake extends StandardEntity {
     @Column(name = "DOCUMENT_NO", nullable = false)
     protected String documentNo;
 
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "DOCUMENT_ON", nullable = false)
     protected Date documentOn;
 
