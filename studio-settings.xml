@@ -5,4 +5,8 @@
                 module="web"
                 reference="com/cernol/works/web/worksorder/works-order-edit.xml"/>
     </screenDesigner>
+    <functionalitySettings>
+        <functionality id="oneToOneIndex"
+                       state="ENABLE"/>
+    </functionalitySettings>
 </studio>

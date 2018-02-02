@@ -49,6 +49,7 @@
                         action="containersTable.edit"/>
                 <button id="removeBtn"
                         action="containersTable.remove"/>
+                <button id="printBtn"/>
             </buttonsPanel>
         </groupTable>
     </layout>
