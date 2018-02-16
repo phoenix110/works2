@@ -6,10 +6,7 @@ import com.haulmont.cuba.core.global.DataManager;
 import com.haulmont.cuba.core.global.LoadContext;
 import com.haulmont.cuba.core.global.Metadata;
 import com.haulmont.cuba.core.global.TimeSource;
-import com.haulmont.cuba.gui.components.AbstractEditor;
-import com.haulmont.cuba.gui.components.Button;
-import com.haulmont.cuba.gui.components.PickerField;
-import com.haulmont.cuba.gui.components.TextField;
+import com.haulmont.cuba.gui.components.*;
 import com.haulmont.cuba.gui.data.CollectionDatasource;
 import com.haulmont.reports.gui.actions.EditorPrintFormAction;
 import org.slf4j.Logger;
@@ -58,6 +55,9 @@ public class IntermediateOrderEdit extends AbstractEditor<IntermediateOrder> {
     @Named("fieldGroup.mass")
     private TextField massField;
 
+    @Named("fieldGroup.currentStatus")
+    private LookupField currentStatusField;
+
     @Inject
     private Button reportButton;
 
@@ -95,6 +95,37 @@ public class IntermediateOrderEdit extends AbstractEditor<IntermediateOrder> {
 
         massField.addValueChangeListener(e -> massChanged());
 
+        currentStatusField.addValueChangeListener(e -> statusChanged());
+
+    }
+
+    private void statusChanged() {
+        log.info("statusChanged()");
+
+        if (getItem().getCurrentStatus() == DocumentStatus.Cancelled) {
+
+            for (IntermediateOrderIngredient orderIngredient : intermediateOrderIngredientsDs.getItems()) {
+                orderIngredient.setMass(BigDecimal.ZERO);
+            }
+
+            intermediateOrderIngredientsDs.refresh();
+
+            if (getItem().getProduct() != null) {
+                getItem().setDescription("Cancelled: " + getItem().getProduct().getCode());
+            }
+            else {
+                getItem().setDescription("Cancelled: No product");
+            }
+
+        } else {
+            if (getItem().getProduct() != null) {
+
+                getItem().setDescription(getItem().getProduct().getCode());
+            } else
+            {
+                getItem().setDescription("Intermediate Order - No product");
+            }
+        }
     }
 
     private void productChanged() {

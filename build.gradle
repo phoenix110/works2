@@ -1,12 +1,17 @@
 
 buildscript {
-    ext.cubaVersion = '6.8.0'
+    ext.cubaVersion = '6.8.1'
     repositories {
+        mavenLocal()
         maven {
-            url 'https://dl.bintray.com/cuba-platform/main'
+            url 'https://repo.cuba-platform.com/content/groups/work'
+            credentials {
+                username(rootProject.hasProperty('repoUser') ? rootProject['repoUser'] : '170225000409')
+                password(rootProject.hasProperty('repoPass') ? rootProject['repoPass'] : 'bhoMcxUrlbgC')
+            }
         }
         maven {
-            url 'https://cuba-platform.bintray.com/premium'
+            url 'https://repo.cuba-platform.com/content/groups/premium'
             credentials {
                 username(rootProject.hasProperty('premiumRepoUser') ? rootProject['premiumRepoUser'] : System.getenv('CUBA_PREMIUM_USER'))
                 password(rootProject.hasProperty('premiumRepoPass') ? rootProject['premiumRepoPass'] : System.getenv('CUBA_PREMIUM_PASSWORD'))
@@ -40,7 +45,7 @@ apply(plugin: 'cuba')
 cuba {
     artifact {
         group = 'com.cernol.works'
-        version = "1"
+        version = "1.0.0"
         isSnapshot = true
     }
     tomcat {

@@ -125,9 +125,9 @@ order by e.usedOn
                                     tickLength="0"/>
             </chart:serialChart>
             <chart:stockChart id="stockChart"
-                              height="300px"
+                              height="250px"
                               mainDataSet="dataSet1"
-                              theme="LIGHT"
+                              theme="DARK"
                               width="100%">
                 <chart:dataSets>
                     <chart:dataSet id="dataSet1"
@@ -176,10 +176,8 @@ order by e.usedOn
             </chart:stockChart>
         </groupBox>
         <hbox id="windowActions_hbox"
-              expand="windowActions"
               spacing="true">
             <frame id="windowActions"
-                   height="100%"
                    screen="editWindowActions"/>
             <button id="printBtn"
                     icon="icons/reports-print.png"/>

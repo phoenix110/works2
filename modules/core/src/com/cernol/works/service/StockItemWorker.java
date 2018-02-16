@@ -53,7 +53,7 @@ public class StockItemWorker {
             TypedQuery<StockCountItem> startQuery = em.createQuery(
                     "select s from works$StockCountItem s " +
                             "where s.stockItem.id = ?1 " +
-                            "and s.stockCount.documentOn <= ?2 " +
+                            "and s.stockCount.documentOn < ?2 " +
                             "and s.stockCount.currentStatus = ?3 " +
                             "order by s.stockCount.documentOn desc", StockCountItem.class);
 
@@ -208,7 +208,7 @@ public class StockItemWorker {
                     "select sum(i.mass) from works$WorksOrderIngredient i " +
                             "where i.rawMaterial.id = ?1 " +
                             "and i.worksOrder.documentOn >= ?2 " +
-                            "and i.worksOrder.documentOn <= ?3 " +
+                            "and i.worksOrder.documentOn < ?3 " +
                             "and i.worksOrder.currentStatus = ?4 "
             );
             rawMaterialQuery.setParameter(1, stockItemId);
@@ -229,7 +229,7 @@ public class StockItemWorker {
                     "select sum(i.mass) from works$IntermediateOrderIngredient i " +
                             "where i.rawMaterial.id = ?1 " +
                             "and i.intermediateOrder.documentOn >= ?2 " +
-                            "and i.intermediateOrder.documentOn <= ?3 " +
+                            "and i.intermediateOrder.documentOn < ?3 " +
                             "and i.intermediateOrder.currentStatus = ?4 "
             );
 
@@ -256,7 +256,7 @@ public class StockItemWorker {
                     "select sum(i.quantity) from works$SalesOrderRawMaterial i " +
                             "where i.rawMaterial.id = ?1 " +
                             "and i.salesOrder.documentOn >= ?2 " +
-                            "and i.salesOrder.documentOn <= ?3 " +
+                            "and i.salesOrder.documentOn < ?3 " +
                             "and i.salesOrder.currentStatus = ?4 "
             );
             rawMaterialQuery.setParameter(1, stockItemId);
@@ -281,7 +281,7 @@ public class StockItemWorker {
                     "select sum(i.quantity) from works$WorksOrderPacking i " +
                             "where i.container.id = ?1 " +
                             "and i.worksOrder.documentOn >= ?2 " +
-                            "and i.worksOrder.documentOn <= ?3 " +
+                            "and i.worksOrder.documentOn < ?3 " +
                             "and i.worksOrder.currentStatus = ?4 "
             );
             rawMaterialQuery.setParameter(1, stockItemId);
@@ -308,7 +308,7 @@ public class StockItemWorker {
                     "select sum(i.quantity) from works$SalesOrderContainer i " +
                             "where i.container.id = ?1 " +
                             "and i.salesOrder.documentOn >= ?2 " +
-                            "and i.salesOrder.documentOn <= ?3 " +
+                            "and i.salesOrder.documentOn < ?3 " +
                             "and i.salesOrder.currentStatus = ?4 "
             );
             rawMaterialQuery.setParameter(1, stockItemId);
@@ -332,7 +332,7 @@ public class StockItemWorker {
                     "select sum(i.quantity) from works$DecantingOrderTarget i " +
                             "where i.container.id = ?1 " +
                             "and i.decantingOrder.documentOn >= ?2 " +
-                            "and i.decantingOrder.documentOn <= ?3 " +
+                            "and i.decantingOrder.documentOn < ?3 " +
                             "and i.decantingOrder.currentStatus = ?4 "
             );
             rawMaterialQuery.setParameter(1, stockItemId);
@@ -355,7 +355,7 @@ public class StockItemWorker {
                     "select sum(s.quantity) from works$StockIntakeItem s " +
                             "where s.stockItem.id = ?1 " +
                             "and s.stockIntake.documentOn >= ?2 " +
-                            "and s.stockIntake.documentOn <= ?3 " +
+                            "and s.stockIntake.documentOn < ?3 " +
                             "and s.stockIntake.currentStatus = ?4 "
             );
             stockIntakeQuery.setParameter(1, stockItemId);
