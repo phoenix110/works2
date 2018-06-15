@@ -19,5 +19,6 @@
         <item screen="works$Category.browse"/>
         <separator/>
         <item screen="works$PriceList.browse"/>
+        <item screen="works$Instruction.browse"/>
     </menu>
 </menu-config>

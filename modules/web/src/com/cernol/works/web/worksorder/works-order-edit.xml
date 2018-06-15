@@ -21,6 +21,12 @@
         <collectionDatasource id="problemListsDs"
                               class="com.cernol.works.entity.ProblemList"
                               refreshMode="NEVER"/>
+        <collectionDatasource id="instructionsDs"
+                              class="com.cernol.works.entity.Instruction">
+            <query>
+                <![CDATA[select e from works$Instruction e]]>
+            </query>
+        </collectionDatasource>
     </dsContext>
     <actions>
         <action id="refreshValues"
@@ -34,11 +40,13 @@
         <scrollBox id="scrollBox"
                    spacing="true">
             <hbox expand="problemTable_groupBox"
+                  spacing="true"
                   width="100%">
                 <groupBox id="fieldGroup_hBox_groupBox"
                           spacing="true"
                           width="AUTO">
-                    <hbox id="fieldGroup_hBox">
+                    <hbox id="fieldGroup_hBox"
+                          spacing="true">
                         <fieldGroup id="fieldGroup"
                                     datasource="worksOrderDs">
                             <column width="250px">
@@ -72,11 +80,22 @@
                         <groupBox id="ogManufacturingKey_groupBox"
                                   spacing="true"
                                   width="AUTO">
-                            <optionsGroup id="ogManufacturingKey"
-                                          datasource="worksOrderDs"
-                                          multiselect="true"
-                                          optionsEnum="com.cernol.works.entity.ManufacturingKey"
-                                          property="manufacturingKey"/>
+                            <table id="manufacturingKeyTable"
+                                   height="300px"
+                                   width="200px">
+                                <actions>
+                                    <action id="create"/>
+                                    <action id="remove"/>
+                                </actions>
+                                <columns>
+                                    <column id="manufacturingKey"/>
+                                </columns>
+                                <rows datasource="worksOrderKeysDs"/>
+                                <buttonsPanel>
+                                    <button action="manufacturingKeyTable.create"/>
+                                    <button action="manufacturingKeyTable.remove"/>
+                                </buttonsPanel>
+                            </table>
                         </groupBox>
                     </hbox>
                 </groupBox>

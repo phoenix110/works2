@@ -82,6 +82,7 @@ public class WorksOrderEdit extends AbstractEditor<WorksOrder> {
     @Named("fieldGroup.rawMaterialCost")
     private TextField rawMaterialCostField;
 
+
     @Override
     public void init(Map<String, Object> params) {
         log.info("init()");
@@ -126,6 +127,8 @@ public class WorksOrderEdit extends AbstractEditor<WorksOrder> {
         worksOrderPackingsDs.addCollectionChangeListener(e -> packingChanged());
 
         //worksOrderIngredientsDs.addCollectionChangeListener(e -> ingredientsChanged());
+
+        worksOrderLablesDs.addCollectionChangeListener(e -> labelsChanged());
 
     }
 
@@ -383,7 +386,7 @@ public class WorksOrderEdit extends AbstractEditor<WorksOrder> {
 
     private void resetLabels() {
         log.info("resetLabels()");
-        BigDecimal labelCost = BigDecimal.ZERO;
+
 
         List<WorksOrderPacking> worksOrderPackingList;
         List<ProductContainer> productContainerList;
@@ -536,15 +539,9 @@ public class WorksOrderEdit extends AbstractEditor<WorksOrder> {
                         }
                     }
                 }
-
-                for (WorksOrderLable worksOrderLable : worksOrderLablesDs.getItems()) {
-                    labelCost = labelCost.add(worksOrderLable.getLineCost());
-
-                }
             }
         }
 
-        getItem().setLableCost(labelCost);
         worksOrderLablesDs.commit();
     }
 
@@ -552,6 +549,15 @@ public class WorksOrderEdit extends AbstractEditor<WorksOrder> {
         for (WorksOrderLable worksOrderLabel : new ArrayList<>(worksOrderLablesDs.getItems())) {
             worksOrderLablesDs.removeItem(worksOrderLabel);
         }
+    }
+
+    private void labelsChanged() {
+        BigDecimal labelCost = BigDecimal.ZERO;
+        for (WorksOrderLable worksOrderLable : worksOrderLablesDs.getItems()) {
+            labelCost = labelCost.add(worksOrderLable.getLineCost());
+
+        }
+        getItem().setLableCost(labelCost);
     }
 
     public void resetIngredients(Component source) {

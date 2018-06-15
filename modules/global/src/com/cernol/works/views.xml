@@ -36,7 +36,10 @@
         <property name="worksOrderLables"
                   view="worksOrderLable-view"/>
         <property name="worksOrderKeys"
-                  view="_local"/>
+                  view="_local">
+            <property name="manufacturingKey"
+                      view="_minimal"/>
+        </property>
     </view>
     <view class="com.cernol.works.entity.Product"
           extends="_local"
@@ -243,4 +246,13 @@
         <property name="rawMaterial"
                   view="_local"/>
     </view>
+    <view class="com.cernol.works.entity.WorksOrderKey"
+          extends="_local"
+          name="worksOrderKey-view">
+        <property name="manufacturingKey"
+                  view="_minimal"/>
+    </view>
+    <view class="com.cernol.works.entity.Instruction"
+          extends="_local"
+          name="instruction-view"/>
 </views>

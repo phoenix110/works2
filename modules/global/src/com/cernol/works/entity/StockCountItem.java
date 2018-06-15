@@ -13,7 +13,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Transient;
 import com.haulmont.cuba.core.entity.StandardEntity;
 import com.haulmont.chile.core.annotations.NamePattern;
-import com.haulmont.cuba.core.entity.annotation.Listeners;
 
 @NamePattern("%s|stockItem")
 @Table(name = "WORKS_STOCK_COUNT_ITEM")

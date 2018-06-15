@@ -8,7 +8,6 @@ import com.haulmont.cuba.core.entity.annotation.OnDelete;
 import com.haulmont.cuba.core.global.DeletePolicy;
 import java.util.List;
 import javax.persistence.OneToMany;
-import com.haulmont.cuba.core.entity.annotation.Listeners;
 
 @NamePattern("%s %s|documentNo,description")
 @Entity(name = "works$SalesOrder")

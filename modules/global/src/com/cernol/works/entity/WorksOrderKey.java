@@ -8,8 +8,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import com.haulmont.cuba.core.entity.StandardEntity;
 import com.haulmont.chile.core.annotations.NamePattern;
+import com.haulmont.cuba.core.entity.annotation.Lookup;
+import com.haulmont.cuba.core.entity.annotation.LookupType;
 
-@NamePattern("%s %s|worksOrder,manufacturingKey")
+@NamePattern("%s|manufacturingKey")
 @Table(name = "WORKS_WORKS_ORDER_KEY")
 @Entity(name = "works$WorksOrderKey")
 public class WorksOrderKey extends StandardEntity {
@@ -19,8 +21,20 @@ public class WorksOrderKey extends StandardEntity {
     @JoinColumn(name = "WORKS_ORDER_ID")
     protected WorksOrder worksOrder;
 
-    @Column(name = "MANUFACTURING_KEY", nullable = false)
-    protected String manufacturingKey;
+    @Lookup(type = LookupType.DROPDOWN, actions = {"lookup", "open", "clear"})
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "MANUFACTURING_KEY_ID")
+    protected Instruction manufacturingKey;
+
+    public Instruction getManufacturingKey() {
+        return manufacturingKey;
+    }
+
+    public void setManufacturingKey(Instruction manufacturingKey) {
+        this.manufacturingKey = manufacturingKey;
+    }
+
+
 
     public void setWorksOrder(WorksOrder worksOrder) {
         this.worksOrder = worksOrder;
@@ -28,14 +42,6 @@ public class WorksOrderKey extends StandardEntity {
 
     public WorksOrder getWorksOrder() {
         return worksOrder;
-    }
-
-    public void setManufacturingKey(ManufacturingKey manufacturingKey) {
-        this.manufacturingKey = manufacturingKey == null ? null : manufacturingKey.getId();
-    }
-
-    public ManufacturingKey getManufacturingKey() {
-        return manufacturingKey == null ? null : ManufacturingKey.fromId(manufacturingKey);
     }
 
 

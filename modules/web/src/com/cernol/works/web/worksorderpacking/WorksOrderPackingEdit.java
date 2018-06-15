@@ -5,12 +5,10 @@ import com.haulmont.cuba.core.global.TimeSource;
 import com.haulmont.cuba.gui.components.AbstractEditor;
 import com.cernol.works.entity.WorksOrderPacking;
 import com.haulmont.cuba.gui.components.PickerField;
-import com.haulmont.cuba.gui.components.TextField;
 import com.haulmont.cuba.gui.components.ValidationErrors;
 
 import javax.inject.Inject;
 import javax.inject.Named;
-import java.math.BigDecimal;
 
 public class WorksOrderPackingEdit extends AbstractEditor<WorksOrderPacking> {
 

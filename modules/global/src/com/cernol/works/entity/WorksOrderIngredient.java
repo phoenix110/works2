@@ -12,7 +12,6 @@ import javax.persistence.Transient;
 import com.haulmont.cuba.core.entity.StandardEntity;
 import com.haulmont.chile.core.annotations.NamePattern;
 import javax.persistence.UniqueConstraint;
-import javax.persistence.OneToOne;
 
 @NamePattern("%s|rawMaterial")
 @Table(name = "WORKS_WORKS_ORDER_INGREDIENT", uniqueConstraints = {
