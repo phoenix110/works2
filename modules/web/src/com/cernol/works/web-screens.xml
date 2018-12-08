@@ -87,4 +87,8 @@
             template="com/cernol/works/web/instruction/instruction-edit.xml"/>
     <screen id="works$WorksOrderKey.edit"
             template="com/cernol/works/web/worksorderkey/works-order-key-edit.xml"/>
+    <screen id="works$Packing.browse"
+            template="com/cernol/works/web/packing/packing-browse.xml"/>
+    <screen id="works$Packing.edit"
+            template="com/cernol/works/web/packing/packing-edit.xml"/>
 </screen-config>

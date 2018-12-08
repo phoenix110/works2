@@ -17,6 +17,22 @@ public interface WorksConfig extends Config {
     @DefaultInteger(0)
     Integer getOrderOverhead();
 
+    @Property("works.rawMaterialOverheadPercentage")
+    @DefaultInteger(0)
+    Integer getRawMaterialOverheadPercentage();
+
+    @Property("works.containerOverheadPercentage")
+    @DefaultInteger(0)
+    Integer getContainerOverheadPercentage();
+
+    @Property("works.labelOverheadPercentage")
+    @DefaultInteger(0)
+    Integer getLabelOverheadPercentage();
+
+    @Property("works.packingOverheadPercentage")
+    @DefaultInteger(0)
+    Integer getPackingOverheadPercentage();
+
     @Property("works.decantingOverhead")
     @DefaultInteger(0)
     Integer getDecantingOverhead();

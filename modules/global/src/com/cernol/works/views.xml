@@ -255,4 +255,7 @@
     <view class="com.cernol.works.entity.Instruction"
           extends="_local"
           name="instruction-view"/>
+    <view class="com.cernol.works.entity.Packing"
+          extends="_local"
+          name="packing-view"/>
 </views>

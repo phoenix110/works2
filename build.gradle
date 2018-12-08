@@ -1,6 +1,6 @@
 
 buildscript {
-    ext.cubaVersion = '6.8.8'
+    ext.cubaVersion = '6.10.4'
     repositories {
         mavenLocal()
         maven {
@@ -36,7 +36,7 @@ def guiModule = project(':app-gui')
 def webModule = project(':app-web')
 def webThemesModule = project(':app-web-themes')
 
-def servletApi = 'org.apache.tomcat:tomcat-servlet-api:8.0.26'
+def servletApi = 'javax.servlet:javax.servlet-api:3.1.0'
 
 
 apply(plugin: 'idea')
@@ -45,7 +45,7 @@ apply(plugin: 'cuba')
 cuba {
     artifact {
         group = 'com.cernol.works'
-        version = "6.8.8.1"
+        version = "6.10.4.1"
         isSnapshot = true
     }
     tomcat {
@@ -86,7 +86,9 @@ configure([globalModule, coreModule, guiModule, webModule]) {
 }
 
 configure(globalModule) {
-    task enhance(type: CubaEnhancing)
+    entitiesEnhancing {
+        main { enabled = true }
+    }
 
     
 }

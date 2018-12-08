@@ -1,1 +1,0 @@
-create unique index IDX_WORKS_INSTRUCTION_UK_NAME on WORKS_INSTRUCTION (NAME) where DELETE_TS is null ;

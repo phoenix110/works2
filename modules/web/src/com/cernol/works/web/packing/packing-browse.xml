@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/window.xsd"
+        caption="msg://browseCaption"
+        class="com.cernol.works.web.packing.PackingBrowse"
+        focusComponent="packingsTable"
+        lookupComponent="packingsTable"
+        messagesPack="com.cernol.works.web.packing">
+    <dsContext>
+        <groupDatasource id="packingsDs"
+                         class="com.cernol.works.entity.Packing"
+                         view="packing-view">
+            <query>
+                <![CDATA[select e from works$Packing e]]>
+            </query>
+        </groupDatasource>
+    </dsContext>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="packingsTable"
+            spacing="true">
+        <filter id="filter"
+                applyTo="packingsTable"
+                datasource="packingsDs">
+            <properties include=".*"/>
+        </filter>
+        <groupTable id="packingsTable"
+                    width="100%">
+            <actions>
+                <action id="create"/>
+                <action id="edit"/>
+                <action id="remove"/>
+            </actions>
+            <columns>
+                <column id="code"/>
+                <column id="codeNumber"/>
+                <column id="description"/>
+                <column id="reorder"/>
+                <column id="maxStock"/>
+                <column id="unit"/>
+                <column id="currentStatus"/>
+                <column id="packing_units"/>
+            </columns>
+            <rows datasource="packingsDs"/>
+            <rowsCount/>
+            <buttonsPanel id="buttonsPanel"
+                          alwaysVisible="true">
+                <button id="createBtn"
+                        action="packingsTable.create"/>
+                <button id="editBtn"
+                        action="packingsTable.edit"/>
+                <button id="removeBtn"
+                        action="packingsTable.remove"/>
+            </buttonsPanel>
+        </groupTable>
+    </layout>
+</window>

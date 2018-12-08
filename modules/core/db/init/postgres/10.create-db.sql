@@ -328,8 +328,8 @@ create table WORKS_STOCK_COUNT_ITEM (
     STOCK_COUNT_ID uuid not null,
     STOCK_ITEM_ID uuid not null,
     CURRENT_VALUE decimal not null,
-    COUNTED_QUANTITY decimal(19, 4) not null,
-    CURRENT_QUANTITY decimal(19, 4) not null,
+    COUNTED_QUANTITY decimal not null,
+    CURRENT_QUANTITY decimal not null,
     --
     primary key (ID)
 )^
@@ -347,7 +347,7 @@ create table WORKS_STOCK_INTAKE (
     --
     SUPPLIER varchar(255) not null,
     DOCUMENT_NO varchar(255) not null,
-    DOCUMENT_ON date not null,
+    DOCUMENT_ON timestamp not null,
     CURRENT_STATUS varchar(50) not null,
     --
     primary key (ID)
@@ -366,7 +366,7 @@ create table WORKS_STOCK_INTAKE_ITEM (
     --
     STOCK_INTAKE_ID uuid not null,
     STOCK_ITEM_ID uuid not null,
-    QUANTITY decimal(19, 2) not null,
+    QUANTITY decimal not null,
     UNIT_PRICE decimal not null,
     --
     primary key (ID)
@@ -482,6 +482,7 @@ create table WORKS_PRICE_LIST (
     PRICE_ON date not null,
     RAW_MATERIAL_COST decimal not null,
     CONTAINER_COST decimal not null,
+    PACKING_COST decimal,
     OVERHEAD_COST decimal not null,
     LABEL_COST decimal not null,
     PRICE decimal not null,
@@ -567,3 +568,12 @@ create table WORKS_INSTRUCTION (
     primary key (ID)
 )^
 -- end WORKS_INSTRUCTION
+-- begin WORKS_PACKING
+create table WORKS_PACKING (
+    STOCK_ITEM_ID uuid,
+    --
+    PACKING_UNITS integer,
+    --
+    primary key (STOCK_ITEM_ID)
+)^
+-- end WORKS_PACKING

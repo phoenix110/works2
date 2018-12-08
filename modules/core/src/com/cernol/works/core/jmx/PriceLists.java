@@ -68,6 +68,7 @@ public class PriceLists implements PriceListsMBean {
                         BigDecimal priceContainer = BigDecimal.ZERO;
                         BigDecimal priceOverhead = BigDecimal.ZERO;
                         BigDecimal priceLabel = BigDecimal.ZERO;
+                        BigDecimal pricePacking = BigDecimal.ZERO;
                         BigDecimal priceTotal = BigDecimal.ZERO;
 
                         Container container = productContainer.getContainer();
@@ -87,12 +88,6 @@ public class PriceLists implements PriceListsMBean {
                                             .multiply(formula.getPartsPer100())
                                             .divide(BigDecimal.valueOf(100.0), 4, BigDecimal.ROUND_HALF_DOWN));
 
-                        }
-
-                        if (product.getApplyOverhead()) {
-                            priceOverhead = (priceRawMaterial.add(priceContainer))
-                                    .multiply(BigDecimal.valueOf(worksConfig.getOrderOverhead(), 0))
-                                    .divide(BigDecimal.valueOf(100), 2);
                         }
 
                         if (productContainer.getProductLabel() != null) {
@@ -125,7 +120,33 @@ public class PriceLists implements PriceListsMBean {
                                     onDate));
                         }
 
-                        priceTotal = priceRawMaterial.add(priceContainer).add(priceOverhead).add(priceLabel);
+                        if (product.getApplyOverhead()) {
+
+                            priceOverhead =
+                                    (priceRawMaterial
+                                            .multiply((BigDecimal.valueOf(worksConfig.getRawMaterialOverheadPercentage()))
+                                                    .divide(BigDecimal.valueOf(100), 2)))
+                                            .add(priceContainer
+                                                    .multiply((BigDecimal.valueOf(worksConfig.getContainerOverheadPercentage()))
+                                                            .divide(BigDecimal.valueOf(100), 2)))
+                                            .add(priceLabel
+                                                    .multiply((BigDecimal.valueOf(worksConfig.getLabelOverheadPercentage()))
+                                                            .divide(BigDecimal.valueOf(100), 2)))
+                                            .add(priceContainer
+                                                    .multiply((BigDecimal.valueOf(worksConfig.getContainerOverheadPercentage()))
+                                                            .divide(BigDecimal.valueOf(100), 2)))
+                                            .add(pricePacking
+                                                    .multiply((BigDecimal.valueOf(worksConfig.getPackingOverheadPercentage()))
+                                                            .divide(BigDecimal.valueOf(100), 2)))
+                            ;
+
+                        }
+
+                        priceTotal = priceRawMaterial
+                                .add(priceContainer)
+                                .add(priceLabel)
+                                .add(pricePacking)
+                                .add(priceOverhead);
 
                         createOrUpdatePriceList(
                                 product,

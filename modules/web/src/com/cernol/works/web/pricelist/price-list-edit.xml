@@ -25,6 +25,7 @@
                 <field property="containerCost"/>
                 <field property="overheadCost"/>
                 <field property="labelCost"/>
+                <field property="packingCost"/>
             </column>
         </fieldGroup>
         <frame id="windowActions"

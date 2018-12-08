@@ -42,5 +42,6 @@
         <class>com.cernol.works.entity.IntermediateOrder</class>
         <class>com.cernol.works.entity.IntermediateOrderIngredient</class>
         <class>com.cernol.works.entity.Instruction</class>
+        <class>com.cernol.works.entity.Packing</class>
     </persistence-unit>
 </persistence>

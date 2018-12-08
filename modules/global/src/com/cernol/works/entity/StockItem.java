@@ -7,7 +7,9 @@ import javax.persistence.*;
 
 import com.haulmont.cuba.core.entity.StandardEntity;
 import com.haulmont.chile.core.annotations.NamePattern;
+
 import java.math.BigDecimal;
+
 import com.haulmont.chile.core.annotations.MetaProperty;
 
 @NamePattern("%s %s|code,description")
@@ -58,14 +60,15 @@ public class StockItem extends StandardEntity {
 
     public Integer getCodeNumber() {
 
-        String myString = getCode().replaceAll("\\D+", "");
-        if (myString.isEmpty()) {
-            myString = "0";
+        String myString = getCode();
+        if (myString != null) {
+            myString = myString.replaceAll("\\D+", "");
+            if (myString.isEmpty()) {
+                myString = "0";
+            }
         }
-        Integer codeNumber = Integer.valueOf(myString);
-
         
-        return codeNumber;
+        return myString == null ? null : Integer.valueOf(myString);
     }
 
     public BigDecimal getReorder() {

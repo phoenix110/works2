@@ -43,6 +43,10 @@ public class PriceList extends StandardEntity {
     @Column(name = "CONTAINER_COST", nullable = false)
     protected BigDecimal containerCost;
 
+    @MetaProperty(datatype = "currency")
+    @Column(name = "PACKING_COST")
+    protected BigDecimal packingCost;
+
     @NotNull
     @MetaProperty(datatype = CurrencyDatatype.NAME, mandatory = true)
     @Column(name = "OVERHEAD_COST", nullable = false)
@@ -56,6 +60,15 @@ public class PriceList extends StandardEntity {
     @MetaProperty(datatype = CurrencyDatatype.NAME, mandatory = true)
     @Column(name = "PRICE", nullable = false)
     protected BigDecimal price;
+
+    public void setPackingCost(BigDecimal packingCost) {
+        this.packingCost = packingCost;
+    }
+
+    public BigDecimal getPackingCost() {
+        return packingCost;
+    }
+
 
     public void setRawMaterialCost(BigDecimal rawMaterialCost) {
         this.rawMaterialCost = rawMaterialCost;

@@ -15,6 +15,7 @@
         <item screen="works$RawMaterial.browse"/>
         <item screen="works$Container.browse"/>
         <item screen="works$Lable.browse"/>
+        <item screen="works$Packing.browse"/>
         <item screen="works$Mixer.browse"/>
         <item screen="works$Category.browse"/>
         <separator/>
