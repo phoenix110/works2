@@ -8,7 +8,7 @@
     <dsContext>
         <datasource id="containerDs"
                     class="com.cernol.works.entity.Container"
-                    view="_local"/>
+                    view="container-view"/>
         <collectionDatasource id="priceUpdateItemsDs"
                               class="com.cernol.works.entity.PriceUpdateItem"
                               maxResults="10"
@@ -31,6 +31,9 @@ order by e.worksOrder.documentOn desc
 ]]>
             </query>
         </collectionDatasource>
+        <collectionDatasource id="packingsDs"
+                              class="com.cernol.works.entity.Packing"
+                              view="_minimal"/>
     </dsContext>
     <dialogMode height="600"
                 width="800"/>
@@ -49,6 +52,8 @@ order by e.worksOrder.documentOn desc
                     <field property="capacity"/>
                     <field property="unit"/>
                     <field property="currentStatus"/>
+                    <field optionsDatasource="packingsDs"
+                           property="packing"/>
                 </column>
             </fieldGroup>
             <groupBox id="summaryGroupBox"

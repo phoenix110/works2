@@ -11,6 +11,11 @@ import javax.persistence.Table;
 import javax.persistence.PrimaryKeyJoinColumn;
 import java.util.List;
 import javax.persistence.OneToMany;
+import com.haulmont.cuba.core.entity.annotation.Lookup;
+import com.haulmont.cuba.core.entity.annotation.LookupType;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 @PrimaryKeyJoinColumn(name = "STOCK_ITEM_ID", referencedColumnName = "ID")
 @Table(name = "WORKS_CONTAINER")
@@ -25,6 +30,20 @@ public class Container extends StockItem {
 
     @OneToMany(mappedBy = "container")
     protected List<ProductContainer> productContainers;
+
+    @Lookup(type = LookupType.DROPDOWN)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "PACKING_ID")
+    protected Packing packing;
+
+    public void setPacking(Packing packing) {
+        this.packing = packing;
+    }
+
+    public Packing getPacking() {
+        return packing;
+    }
+
 
     public void setProductContainers(List<ProductContainer> productContainers) {
         this.productContainers = productContainers;
