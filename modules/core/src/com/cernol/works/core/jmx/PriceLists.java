@@ -16,6 +16,7 @@ import org.springframework.stereotype.Component;
 
 import javax.inject.Inject;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Date;
 import java.util.List;
 
@@ -122,24 +123,27 @@ public class PriceLists implements PriceListsMBean {
 
                         if (product.getApplyOverhead()) {
 
-                            priceOverhead =
-                                    (priceRawMaterial
-                                            .multiply((BigDecimal.valueOf(worksConfig.getRawMaterialOverheadPercentage()))
-                                                    .divide(BigDecimal.valueOf(100), 2)))
-                                            .add(priceContainer
-                                                    .multiply((BigDecimal.valueOf(worksConfig.getContainerOverheadPercentage()))
-                                                            .divide(BigDecimal.valueOf(100), 2)))
-                                            .add(priceLabel
-                                                    .multiply((BigDecimal.valueOf(worksConfig.getLabelOverheadPercentage()))
-                                                            .divide(BigDecimal.valueOf(100), 2)))
-                                            .add(priceContainer
-                                                    .multiply((BigDecimal.valueOf(worksConfig.getContainerOverheadPercentage()))
-                                                            .divide(BigDecimal.valueOf(100), 2)))
-                                            .add(pricePacking
-                                                    .multiply((BigDecimal.valueOf(worksConfig.getPackingOverheadPercentage()))
-                                                            .divide(BigDecimal.valueOf(100), 2)))
-                            ;
+                            BigDecimal rawMaterialOverhead = priceRawMaterial
+                                    .multiply(BigDecimal.valueOf(worksConfig.getRawMaterialOverheadPercentage()))
+                                    .divide(BigDecimal.valueOf(100), 2);
 
+                            BigDecimal containerOverhead = priceContainer
+                                    .multiply(BigDecimal.valueOf(worksConfig.getContainerOverheadPercentage()))
+                                    .divide(BigDecimal.valueOf(100), 2);
+
+                            BigDecimal labelOverhead = priceLabel
+                                    .multiply(BigDecimal.valueOf(worksConfig.getLabelOverheadPercentage()))
+                                    .divide(BigDecimal.valueOf(100), 2);
+
+                            BigDecimal packingOverhead = pricePacking
+                                    .multiply(BigDecimal.valueOf(worksConfig.getPackingOverheadPercentage()))
+                                    .divide(BigDecimal.valueOf(100), 2);
+
+                            priceOverhead = rawMaterialOverhead
+                                    .add(containerOverhead)
+                                    .add(labelOverhead)
+                                    .add(packingOverhead)
+                                    .setScale(2, RoundingMode.HALF_UP);
                         }
 
                         priceTotal = priceRawMaterial
