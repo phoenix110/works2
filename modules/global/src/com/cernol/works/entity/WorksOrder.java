@@ -20,18 +20,8 @@ import com.haulmont.chile.core.annotations.NamePattern;
 public class WorksOrder extends Order {
     private static final long serialVersionUID = 705235975323362925L;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "PRODUCT_ID")
-    protected Product product;
 
-    @Lookup(type = LookupType.DROPDOWN, actions = {"lookup"})
-    @OnDelete(DeletePolicy.CASCADE)
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "MIXER_ID")
-    protected Mixer mixer;
 
-    @Column(name = "BATCH_QUANTITY")
-    protected Integer batchQuantity = 0;
 
     @Column(name = "MANUFACTURING_KEY")
     protected String manufacturingKey;
@@ -75,13 +65,7 @@ public class WorksOrder extends Order {
     }
 
 
-    public Product getProduct() {
-        return product;
-    }
 
-    public void setProduct(Product product) {
-        this.product = product;
-    }
 
 
     public void setWorksOrderPackings(List<WorksOrderPacking> worksOrderPackings) {
@@ -110,21 +94,9 @@ public class WorksOrder extends Order {
     }
 
 
-    public void setMixer(Mixer mixer) {
-        this.mixer = mixer;
-    }
 
-    public Mixer getMixer() {
-        return mixer;
-    }
 
-    public void setBatchQuantity(Integer batchQuantity) {
-        this.batchQuantity = batchQuantity;
-    }
 
-    public Integer getBatchQuantity() {
-        return batchQuantity;
-    }
 
 
 

@@ -17,17 +17,6 @@ import javax.persistence.OneToMany;
 public class IntermediateOrder extends Order {
     private static final long serialVersionUID = -5833198010588566064L;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "PRODUCT_ID")
-    protected Product product;
-
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "MIXER_ID")
-    protected Mixer mixer;
-
-    @Column(name = "BATCH_QUANTITY", nullable = false)
-    protected Integer batchQuantity;
-
     @Composition
     @OnDelete(DeletePolicy.CASCADE)
     @OneToMany(mappedBy = "intermediateOrder")
@@ -42,30 +31,6 @@ public class IntermediateOrder extends Order {
     }
 
 
-
-    public void setProduct(Product product) {
-        this.product = product;
-    }
-
-    public Product getProduct() {
-        return product;
-    }
-
-    public void setMixer(Mixer mixer) {
-        this.mixer = mixer;
-    }
-
-    public Mixer getMixer() {
-        return mixer;
-    }
-
-    public void setBatchQuantity(Integer batchQuantity) {
-        this.batchQuantity = batchQuantity;
-    }
-
-    public Integer getBatchQuantity() {
-        return batchQuantity;
-    }
 
 
 }

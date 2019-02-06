@@ -16,6 +16,11 @@ import javax.persistence.DiscriminatorType;
 import javax.persistence.Inheritance;
 import javax.persistence.DiscriminatorColumn;
 import com.haulmont.cuba.core.entity.annotation.Listeners;
+import com.haulmont.cuba.core.entity.annotation.Lookup;
+import com.haulmont.cuba.core.entity.annotation.LookupType;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 @Listeners("works_OrderEntityListener")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
@@ -35,6 +40,19 @@ public class Order extends StandardEntity {
 
     @Column(name = "DESCRIPTION", nullable = false)
     protected String description;
+
+    @Lookup(type = LookupType.DROPDOWN)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "PRODUCT_ID")
+    protected Product product;
+
+    @Lookup(type = LookupType.DROPDOWN)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "MIXER_ID")
+    protected Mixer mixer;
+
+    @Column(name = "BATCH_QUANTITY")
+    protected Integer batchQuantity;
 
     @Column(name = "UNIT", nullable = false)
     protected String unit = Unit.Litre.toString();
@@ -58,6 +76,10 @@ public class Order extends StandardEntity {
     @Column(name = "LABLE_COST", nullable = false)
     protected BigDecimal lableCost = BigDecimal.ZERO;
 
+    @MetaProperty(datatype = "currency")
+    @Column(name = "PACKING_COST")
+    protected BigDecimal packingCost;
+
     @MetaProperty(datatype = CurrencyDatatype.NAME, mandatory = true)
     @Column(name = "OVERHEAD_COST", nullable = false)
     protected BigDecimal overheadCost = BigDecimal.ZERO;
@@ -70,6 +92,42 @@ public class Order extends StandardEntity {
 
     @Column(name = "CURRENT_STATUS", nullable = false)
     protected String currentStatus = DocumentStatus.New.toString();
+
+    public void setPackingCost(BigDecimal packingCost) {
+        this.packingCost = packingCost;
+    }
+
+    public BigDecimal getPackingCost() {
+        return packingCost;
+    }
+
+
+    public void setBatchQuantity(Integer batchQuantity) {
+        this.batchQuantity = batchQuantity;
+    }
+
+    public Integer getBatchQuantity() {
+        return batchQuantity;
+    }
+
+
+    public void setMixer(Mixer mixer) {
+        this.mixer = mixer;
+    }
+
+    public Mixer getMixer() {
+        return mixer;
+    }
+
+
+    public void setProduct(Product product) {
+        this.product = product;
+    }
+
+    public Product getProduct() {
+        return product;
+    }
+
 
     public DocumentStatus getCurrentStatus() {
         return currentStatus == null ? null : DocumentStatus.fromId(currentStatus);

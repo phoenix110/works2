@@ -73,13 +73,13 @@ order by e.documentOn desc]]>
                             <column id="documentOn"/>
                             <column id="volume"/>
                             <column id="mass"/>
-                            <column id="batchQuantity"/>
                             <column id="manufacturingKey"/>
                             <column id="rawMaterialCost"/>
                             <column id="containerCost"/>
                             <column id="lableCost"/>
                             <column id="overheadCost"/>
                             <column id="currentStatus"/>
+                            <column id="packingCost"/>
                         </columns>
                         <rows datasource="worksOrdersDs"/>
                     </table>

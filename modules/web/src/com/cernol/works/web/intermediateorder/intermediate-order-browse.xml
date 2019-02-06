@@ -38,8 +38,6 @@
                 <column id="volume"/>
                 <column id="mass"/>
                 <column id="currentStatus"/>
-                <column id="mixer"/>
-                <column id="batchQuantity"/>
             </columns>
             <rows datasource="intermediateOrdersDs"/>
             <rowsCount/>

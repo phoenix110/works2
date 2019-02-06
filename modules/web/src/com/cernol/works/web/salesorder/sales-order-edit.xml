@@ -14,6 +14,9 @@
             <collectionDatasource id="salesOrderRawMaterialsDs"
                                   property="salesOrderRawMaterials"/>
         </datasource>
+        <collectionDatasource id="mixersDs"
+                              class="com.cernol.works.entity.Mixer"
+                              view="_minimal"/>
     </dsContext>
     <dialogMode height="600"
                 width="800"/>
@@ -30,6 +33,7 @@
                     <field property="invoiceNo"
                            required="true"/>
                     <field property="currentStatus"/>
+                    <field property="packingCost"/>
                 </column>
                 <column>
                     <field editable="false"

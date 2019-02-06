@@ -28,6 +28,7 @@
                     <field property="decantedProduct"/>
                     <field property="information"/>
                     <field property="currentStatus"/>
+                    <field property="packingCost"/>
                 </column>
                 <column>
                     <field editable="false"

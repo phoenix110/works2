@@ -1,6 +1,6 @@
 
 buildscript {
-    ext.cubaVersion = '6.10.5'
+    ext.cubaVersion = '6.10.7'
     repositories {
         mavenLocal()
         maven {
@@ -45,7 +45,7 @@ apply(plugin: 'cuba')
 cuba {
     artifact {
         group = 'com.cernol.works'
-        version = "6.10.5.2"
+        version = "6.10.7.3"
         isSnapshot = true
     }
     tomcat {
