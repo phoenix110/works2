@@ -38,6 +38,7 @@
                 <column id="unit"/>
                 <column id="currentStatus"/>
                 <column id="capacity"/>
+                <column id="unitsPerShipper"/>
             </columns>
             <rows datasource="containersDs"/>
             <rowsCount/>

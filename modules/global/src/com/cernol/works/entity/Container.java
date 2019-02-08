@@ -28,13 +28,25 @@ public class Container extends StockItem {
     protected BigDecimal capacity = BigDecimal.ZERO;
 
 
-    @OneToMany(mappedBy = "container")
-    protected List<ProductContainer> productContainers;
-
     @Lookup(type = LookupType.DROPDOWN)
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "PACKING_ID")
     protected Packing packing;
+
+    @Column(name = "UNITS_PER_SHIPPER")
+    protected Integer unitsPerShipper;
+
+    @OneToMany(mappedBy = "container")
+    protected List<ProductContainer> productContainers;
+
+    public void setUnitsPerShipper(Integer unitsPerShipper) {
+        this.unitsPerShipper = unitsPerShipper;
+    }
+
+    public Integer getUnitsPerShipper() {
+        return unitsPerShipper;
+    }
+
 
     public void setPacking(Packing packing) {
         this.packing = packing;

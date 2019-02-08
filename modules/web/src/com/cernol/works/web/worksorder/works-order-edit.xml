@@ -17,6 +17,8 @@
                                   property="worksOrderLables"/>
             <collectionDatasource id="worksOrderKeysDs"
                                   property="worksOrderKeys"/>
+            <collectionDatasource id="worksOrderShippersDs"
+                                  property="worksOrderShippers"/>
         </datasource>
         <collectionDatasource id="problemListsDs"
                               class="com.cernol.works.entity.ProblemList"
@@ -29,7 +31,12 @@
         </collectionDatasource>
         <collectionDatasource id="mixersDs"
                               class="com.cernol.works.entity.Mixer"
-                              view="_minimal"/>
+                              view="_local">
+            <query>
+                <![CDATA[select e from works$Mixer e
+order by e.name]]>
+            </query>
+        </collectionDatasource>
     </dsContext>
     <actions>
         <action id="refreshValues"
@@ -57,9 +64,11 @@
                                        property="documentNo"/>
                                 <field property="documentOn"/>
                                 <field property="product"/>
+                                <field optionsDatasource="mixersDs"
+                                       property="mixer"
+                                       required="true"/>
                                 <field property="currentStatus"/>
                                 <field property="batchQuantity"/>
-                                <field property="packingCost"/>
                             </column>
                             <column width="250px">
                                 <field editable="false"
@@ -74,6 +83,8 @@
                                        property="containerCost"/>
                                 <field editable="false"
                                        property="lableCost"/>
+                                <field editable="false"
+                                       property="packingCost"/>
                                 <field editable="false"
                                        property="overheadCost"/>
                                 <field editable="false"
@@ -189,6 +200,32 @@
                             <button action="worksOrderLablesTable.create"/>
                             <button action="worksOrderLablesTable.edit"/>
                             <button action="worksOrderLablesTable.remove"/>
+                        </buttonsPanel>
+                    </table>
+                </tab>
+                <tab id="worksOrderShippersTab"
+                     caption="msg://com.cernol.works.entity/WorksOrder.worksOrderShippers"
+                     margin="true,false,false,false"
+                     spacing="true">
+                    <table id="worksOrderShippersTable"
+                           height="200px"
+                           width="100%">
+                        <actions>
+                            <action id="create"/>
+                            <action id="edit"/>
+                            <action id="remove"/>
+                        </actions>
+                        <columns>
+                            <column id="packing"/>
+                            <column id="quantity"/>
+                            <column id="unitCost"/>
+                            <column id="lineCost"/>
+                        </columns>
+                        <rows datasource="worksOrderShippersDs"/>
+                        <buttonsPanel>
+                            <button action="worksOrderShippersTable.create"/>
+                            <button action="worksOrderShippersTable.edit"/>
+                            <button action="worksOrderShippersTable.remove"/>
                         </buttonsPanel>
                     </table>
                 </tab>

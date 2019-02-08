@@ -78,7 +78,7 @@ public class Order extends StandardEntity {
 
     @MetaProperty(datatype = "currency")
     @Column(name = "PACKING_COST")
-    protected BigDecimal packingCost;
+    protected BigDecimal packingCost = BigDecimal.ZERO;
 
     @MetaProperty(datatype = CurrencyDatatype.NAME, mandatory = true)
     @Column(name = "OVERHEAD_COST", nullable = false)

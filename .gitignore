@@ -17,7 +17,7 @@ modules/gui/src/com/cernol/works/web/
 .classpath
 .project
 .settings
-/.vscode/
+.vscode
 
 modules/**/bin
 modules/**/build

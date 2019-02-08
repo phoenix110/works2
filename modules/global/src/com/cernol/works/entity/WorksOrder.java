@@ -47,6 +47,21 @@ public class WorksOrder extends Order {
     @OneToMany(mappedBy = "worksOrder")
     protected List<WorksOrderLable> worksOrderLables;
 
+    @Composition
+    @OnDelete(DeletePolicy.CASCADE)
+    @OneToMany(mappedBy = "worksOrder")
+    protected List<WorksOrderShipper> worksOrderShippers;
+
+    public List<WorksOrderShipper> getWorksOrderShippers() {
+        return worksOrderShippers;
+    }
+
+    public void setWorksOrderShippers(List<WorksOrderShipper> worksOrderShippers) {
+        this.worksOrderShippers = worksOrderShippers;
+    }
+
+
+
     public void setWorksOrderKeys(List<WorksOrderKey> worksOrderKeys) {
         this.worksOrderKeys = worksOrderKeys;
     }

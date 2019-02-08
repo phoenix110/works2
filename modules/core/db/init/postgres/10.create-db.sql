@@ -35,13 +35,13 @@ create table WORKS_ORDER (
     MIXER_ID uuid,
     BATCH_QUANTITY integer,
     UNIT varchar(50) not null,
-    VOLUME decimal not null,
+    VOLUME decimal(19, 2) not null,
     MASS decimal(19, 2) not null,
-    RAW_MATERIAL_COST decimal not null,
-    CONTAINER_COST decimal not null,
-    LABLE_COST decimal not null,
-    PACKING_COST decimal,
-    OVERHEAD_COST decimal not null,
+    RAW_MATERIAL_COST decimal(19, 2) not null,
+    CONTAINER_COST decimal(19, 2) not null,
+    LABLE_COST decimal(19, 2) not null,
+    PACKING_COST decimal(19, 2),
+    OVERHEAD_COST decimal(19, 2) not null,
     CURRENT_STATUS varchar(50) not null,
     --
     -- from works$SalesOrder
@@ -108,6 +108,7 @@ create table WORKS_CONTAINER (
     --
     CAPACITY decimal(19, 2) not null,
     PACKING_ID uuid,
+    UNITS_PER_SHIPPER integer,
     --
     primary key (STOCK_ITEM_ID)
 )^
@@ -164,7 +165,7 @@ create table WORKS_WORKS_ORDER_PACKING (
     WORKS_ORDER_ID uuid not null,
     CONTAINER_ID uuid not null,
     QUANTITY integer not null,
-    UNIT_COST decimal not null,
+    UNIT_COST decimal(19, 2) not null,
     CUSTOMERS_OWN boolean,
     ADDITIONAL boolean,
     --
@@ -185,9 +186,9 @@ create table WORKS_WORKS_ORDER_INGREDIENT (
     WORKS_ORDER_ID uuid not null,
     SEQUENCE_NO integer not null,
     RAW_MATERIAL_ID uuid not null,
-    MASS decimal not null,
-    KG_COST decimal not null,
-    PARTS_PER100 decimal,
+    MASS decimal(19, 2) not null,
+    KG_COST decimal(19, 2) not null,
+    PARTS_PER100 decimal(19, 2),
     --
     primary key (ID)
 )^
@@ -206,7 +207,7 @@ create table WORKS_WORKS_ORDER_LABLE (
     WORKS_ORDER_ID uuid not null,
     LABLE_ID uuid not null,
     QUANTITY integer not null,
-    UNIT_COST decimal not null,
+    UNIT_COST decimal(19, 2) not null,
     --
     primary key (ID)
 )^
@@ -225,7 +226,7 @@ create table WORKS_FORMULA (
     PRODUCT_ID uuid not null,
     SEQUENCE_NO integer not null,
     RAW_MATERIAL_ID uuid not null,
-    PARTS_PER100 decimal not null,
+    PARTS_PER100 decimal(19, 2) not null,
     --
     primary key (ID)
 )^
@@ -244,12 +245,12 @@ create table WORKS_DECANTING_ORDER_TARGET (
     --
     DECANTING_ORDER_ID uuid not null,
     CONTAINER_ID uuid not null,
-    UNIT_COST decimal not null,
+    UNIT_COST decimal(19, 2) not null,
     QUANTITY integer not null,
     CUSTOMERS_OWN boolean,
     ADDITIONAL boolean,
     LINE_CAPACITY decimal(19, 2),
-    LINE_COST decimal,
+    LINE_COST decimal(19, 2),
     --
     primary key (ID)
 )^
@@ -267,7 +268,7 @@ create table WORKS_SALES_ORDER_CONTAINER (
     --
     SALES_ORDER_ID uuid not null,
     CONTAINER_ID uuid not null,
-    UNIT_PRICE decimal not null,
+    UNIT_PRICE decimal(19, 2) not null,
     QUANTITY decimal(19, 2) not null,
     --
     primary key (ID)
@@ -286,7 +287,7 @@ create table WORKS_SALES_ORDER_RAW_MATERIAL (
     --
     SALES_ORDER_ID uuid not null,
     RAW_MATERIAL_ID uuid not null,
-    UNIT_PRICE decimal not null,
+    UNIT_PRICE decimal(19, 2) not null,
     QUANTITY decimal(19, 2) not null,
     --
     primary key (ID)
@@ -324,9 +325,9 @@ create table WORKS_STOCK_COUNT_ITEM (
     --
     STOCK_COUNT_ID uuid not null,
     STOCK_ITEM_ID uuid not null,
-    CURRENT_VALUE decimal not null,
-    COUNTED_QUANTITY decimal not null,
-    CURRENT_QUANTITY decimal not null,
+    CURRENT_VALUE decimal(19, 2) not null,
+    COUNTED_QUANTITY decimal(19, 2) not null,
+    CURRENT_QUANTITY decimal(19, 2) not null,
     --
     primary key (ID)
 )^
@@ -363,8 +364,8 @@ create table WORKS_STOCK_INTAKE_ITEM (
     --
     STOCK_INTAKE_ID uuid not null,
     STOCK_ITEM_ID uuid not null,
-    QUANTITY decimal not null,
-    UNIT_PRICE decimal not null,
+    QUANTITY decimal(19, 2) not null,
+    UNIT_PRICE decimal(19, 2) not null,
     --
     primary key (ID)
 )^
@@ -440,7 +441,7 @@ create table WORKS_PRICE_UPDATE_ITEM (
     --
     PRICE_UPDATE_ID uuid not null,
     STOCK_ITEM_ID uuid not null,
-    PRICE decimal not null,
+    PRICE decimal(19, 2) not null,
     --
     primary key (ID)
 )^
@@ -458,7 +459,7 @@ create table WORKS_STOCK_USAGE (
     --
     STOCK_ITEM_ID uuid not null,
     USED_ON date not null,
-    QUANTITY decimal not null,
+    QUANTITY decimal(19, 2) not null,
     --
     primary key (ID)
 )^
@@ -477,12 +478,12 @@ create table WORKS_PRICE_LIST (
     PRODUCT_ID uuid not null,
     CONTAINER_ID uuid not null,
     PRICE_ON date not null,
-    RAW_MATERIAL_COST decimal not null,
-    CONTAINER_COST decimal not null,
-    PACKING_COST decimal,
-    OVERHEAD_COST decimal not null,
-    LABEL_COST decimal not null,
-    PRICE decimal not null,
+    RAW_MATERIAL_COST decimal(19, 2) not null,
+    CONTAINER_COST decimal(19, 2) not null,
+    PACKING_COST decimal(19, 2),
+    OVERHEAD_COST decimal(19, 2) not null,
+    LABEL_COST decimal(19, 2) not null,
+    PRICE decimal(19, 2) not null,
     --
     primary key (ID)
 )^
@@ -542,8 +543,8 @@ create table WORKS_INTERMEDIATE_ORDER_INGREDIENT (
     INTERMEDIATE_ORDER_ID uuid not null,
     SEQUENCE_NO integer not null,
     RAW_MATERIAL_ID uuid not null,
-    MASS decimal not null,
-    PARTS_PER100 decimal not null,
+    MASS decimal(19, 2) not null,
+    PARTS_PER100 decimal(19, 2) not null,
     --
     primary key (ID)
 )^
@@ -574,3 +575,22 @@ create table WORKS_PACKING (
     primary key (STOCK_ITEM_ID)
 )^
 -- end WORKS_PACKING
+-- begin WORKS_WORKS_ORDER_SHIPPER
+create table WORKS_WORKS_ORDER_SHIPPER (
+    ID uuid,
+    VERSION integer not null,
+    CREATE_TS timestamp,
+    CREATED_BY varchar(50),
+    UPDATE_TS timestamp,
+    UPDATED_BY varchar(50),
+    DELETE_TS timestamp,
+    DELETED_BY varchar(50),
+    --
+    WORKS_ORDER_ID uuid not null,
+    PACKING_ID uuid not null,
+    QUANTITY decimal(19, 2) not null,
+    UNIT_COST decimal(19, 2) not null,
+    --
+    primary key (ID)
+)^
+-- end WORKS_WORKS_ORDER_SHIPPER

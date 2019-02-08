@@ -45,7 +45,7 @@ apply(plugin: 'cuba')
 cuba {
     artifact {
         group = 'com.cernol.works'
-        version = "6.10.7.3"
+        version = "6.10.7.4"
         isSnapshot = true
     }
     tomcat {

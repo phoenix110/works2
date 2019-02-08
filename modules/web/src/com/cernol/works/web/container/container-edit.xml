@@ -54,6 +54,7 @@ order by e.worksOrder.documentOn desc
                     <field property="currentStatus"/>
                     <field optionsDatasource="packingsDs"
                            property="packing"/>
+                    <field property="unitsPerShipper"/>
                 </column>
             </fieldGroup>
             <groupBox id="summaryGroupBox"

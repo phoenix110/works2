@@ -18,7 +18,10 @@
           extends="_local"
           name="worksOrderPacking-view">
         <property name="container"
-                  view="_local"/>
+                  view="_local">
+            <property name="packing"
+                      view="_minimal"/>
+        </property>
         <property name="lineCost"/>
         <property name="lineCapacity"/>
     </view>
@@ -26,7 +29,8 @@
           extends="_local"
           name="worksOrder-view">
         <property name="worksOrderPackings"
-                  view="worksOrderPacking-view"/>
+                  view="worksOrderPacking-view">
+        </property>
         <property name="worksOrderIngredients"
                   view="worksOrderIngredient-view"/>
         <property name="worksOrderLables"
@@ -37,7 +41,13 @@
                       view="_minimal"/>
         </property>
         <property name="product"
-                  view="_minimal"/>
+                  view="_minimal">
+            <property name="applyOverhead"/>
+        </property>
+        <property name="worksOrderShippers"
+                  view="worksOrderShipper-view"/>
+        <property name="mixer"
+                  view="_local"/>
     </view>
     <view class="com.cernol.works.entity.Product"
           extends="_local"
@@ -255,4 +265,11 @@
     <view class="com.cernol.works.entity.Packing"
           extends="_local"
           name="packing-view"/>
+    <view class="com.cernol.works.entity.WorksOrderShipper"
+          extends="_local"
+          name="worksOrderShipper-view">
+        <property name="packing"
+                  view="_minimal"/>
+        <property name="lineCost"/>
+    </view>
 </views>

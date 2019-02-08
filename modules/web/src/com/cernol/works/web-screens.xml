@@ -91,4 +91,6 @@
             template="com/cernol/works/web/packing/packing-browse.xml"/>
     <screen id="works$Packing.edit"
             template="com/cernol/works/web/packing/packing-edit.xml"/>
+    <screen id="works$WorksOrderShipper.edit"
+            template="com/cernol/works/web/worksordershipper/works-order-shipper-edit.xml"/>
 </screen-config>

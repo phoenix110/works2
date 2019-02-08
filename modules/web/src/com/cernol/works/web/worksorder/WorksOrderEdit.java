@@ -16,6 +16,7 @@ import org.slf4j.LoggerFactory;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -48,6 +49,9 @@ public class WorksOrderEdit extends AbstractEditor<WorksOrder> {
 
     @Inject
     private CollectionDatasource<ProblemList, UUID> problemListsDs;
+
+    @Inject
+    private CollectionDatasource<WorksOrderShipper, UUID> worksOrderShippersDs;
 
     @Inject
     private Metadata metadata;
@@ -115,7 +119,7 @@ public class WorksOrderEdit extends AbstractEditor<WorksOrder> {
         volumeField.addValueChangeListener(e -> volumeChanged());
 
         massField.addValueChangeListener(e -> massChanged());
-        
+
         productPicker.addValueChangeListener(e -> productChanged());
 
         containerCostField.addValueChangeListener(e -> containerCostChanged());
@@ -129,6 +133,8 @@ public class WorksOrderEdit extends AbstractEditor<WorksOrder> {
         //worksOrderIngredientsDs.addCollectionChangeListener(e -> ingredientsChanged());
 
         worksOrderLablesDs.addCollectionChangeListener(e -> labelsChanged());
+
+        worksOrderShippersDs.addCollectionChangeListener(e -> shippersChanged());
 
     }
 
@@ -173,6 +179,7 @@ public class WorksOrderEdit extends AbstractEditor<WorksOrder> {
             getItem().setMass(calculateMass(getItem().getVolume()));
             getItem().setBatchQuantity(calculateBatches(getItem().getVolume()));
             resetLabels();
+            resetShippers();
         }
 
     }
@@ -207,9 +214,7 @@ public class WorksOrderEdit extends AbstractEditor<WorksOrder> {
 
             if (getItem().getProduct() != null) {
                 getItem().setDescription("Cancelled: " + getItem().getProduct().getCode());
-            }
-            else
-            {
+            } else {
                 getItem().setDescription("Cancelled: No product");
 
             }
@@ -218,11 +223,10 @@ public class WorksOrderEdit extends AbstractEditor<WorksOrder> {
             if (getItem().getProduct() != null) {
 
                 getItem().setDescription(getItem().getProduct().getCode());
-            } else
-            {
+            } else {
                 getItem().setDescription("Works Order - No product");
             }
-              packingChanged();
+            packingChanged();
 
         }
 
@@ -244,13 +248,29 @@ public class WorksOrderEdit extends AbstractEditor<WorksOrder> {
         BigDecimal overheadCost = BigDecimal.ZERO;
 
         if (getItem().getProduct().getApplyOverhead()) {
-            overheadCost = (getItem().getContainerCost()
-                    .add(getItem().getRawMaterialCost()))
-                    .multiply(BigDecimal.valueOf(worksConfig.getOrderOverhead(), 0))
 
+            BigDecimal rawMaterialOverhead = getItem().getRawMaterialCost()
+                    .multiply(BigDecimal.valueOf(worksConfig.getRawMaterialOverheadPercentage()))
                     .divide(BigDecimal.valueOf(100), 2);
-        }
 
+            BigDecimal containerOverhead = getItem().getContainerCost()
+                    .multiply(BigDecimal.valueOf(worksConfig.getContainerOverheadPercentage()))
+                    .divide(BigDecimal.valueOf(100), 2);
+
+            BigDecimal labelOverhead = getItem().getLableCost()
+                    .multiply(BigDecimal.valueOf(worksConfig.getLabelOverheadPercentage()))
+                    .divide(BigDecimal.valueOf(100), 2);
+
+            BigDecimal packingOverhead = getItem().getPackingCost()
+                    .multiply(BigDecimal.valueOf(worksConfig.getPackingOverheadPercentage()))
+                    .divide(BigDecimal.valueOf(100), 2);
+
+            overheadCost = rawMaterialOverhead
+                    .add(containerOverhead)
+                    .add(labelOverhead)
+                    .add(packingOverhead)
+                    .setScale(2, RoundingMode.HALF_UP);
+        }
         return overheadCost;
     }
 
@@ -372,7 +392,6 @@ public class WorksOrderEdit extends AbstractEditor<WorksOrder> {
                 problemListsDs.addItem(problem);
 
 
-
                 windowCommit.setEnabled(false);
                 windowCommitAndClose.setEnabled(false);
 
@@ -382,6 +401,51 @@ public class WorksOrderEdit extends AbstractEditor<WorksOrder> {
             worksOrderIngredientsDs.updateItem(worksOrderIngredient);
 
         }
+    }
+
+    private void resetShippers() {
+        log.info("resetShippers");
+
+        removeAllShippers();
+
+        List<WorksOrderPacking> worksOrderPackingList;
+        worksOrderPackingList = getItem().getWorksOrderPackings();
+        if (worksOrderPackingList.size() > 0) {
+
+            for (WorksOrderPacking worksOrderPacking : worksOrderPackingList) {
+               if (worksOrderPacking.getContainer().getPacking() != null) {
+/*                     WorksOrderShipper worksOrderShipper = metadata.create(WorksOrderShipper.class);
+                    worksOrderShipper.setPacking(worksOrderPacking.getContainer().getPacking());
+                    worksOrderShipper.setQuantity(BigDecimal.ZERO);
+                    worksOrderShipper.setUnitCost(stockItemService.getPointInTimeCost(
+                            worksOrderPacking.getContainer().getPacking().getId(),
+                            getItem().getDocumentOn()));
+
+                    worksOrderShippersDs.addItem(worksOrderShipper);*/
+                }
+
+            }
+        }
+
+        worksOrderShippersDs.commit();
+    }
+
+    private void removeAllShippers() {
+
+        for (WorksOrderShipper worksOrderShipper : new ArrayList<>(worksOrderShippersDs.getItems())) {
+            worksOrderShippersDs.removeItem(worksOrderShipper);
+        }
+
+    }
+
+    public void shippersChanged() {
+        BigDecimal shipperCost = BigDecimal.ZERO;
+        for (WorksOrderShipper worksOrderShipper : worksOrderShippersDs.getItems()) {
+            shipperCost = shipperCost.add(worksOrderShipper.getLineCost());
+
+        }
+        getItem().setPackingCost(shipperCost);
+        getItem().setOverheadCost(calculateOverhead());
     }
 
     private void resetLabels() {
@@ -432,7 +496,7 @@ public class WorksOrderEdit extends AbstractEditor<WorksOrder> {
                                     worksOrderLablesDs.addItem(worksOrderLable);
                                 }
                             }
-                            
+
                             if (productContainer.getCorrosiveLabel() != null) {
                                 Boolean newItem = Boolean.TRUE;
                                 for (WorksOrderLable worksOrderLable : worksOrderLablesDs.getItems()) {
@@ -558,8 +622,7 @@ public class WorksOrderEdit extends AbstractEditor<WorksOrder> {
 
         }
         getItem().setLableCost(labelCost);
+        getItem().setOverheadCost(calculateOverhead());
     }
 
-    public void resetIngredients(Component source) {
-    }
 }
