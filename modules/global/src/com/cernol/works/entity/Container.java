@@ -3,19 +3,13 @@
  */
 package com.cernol.works.entity;
 
-import javax.persistence.Entity;
-import java.math.BigDecimal;
-import javax.persistence.Column;
 import com.haulmont.chile.core.annotations.NamePattern;
-import javax.persistence.Table;
-import javax.persistence.PrimaryKeyJoinColumn;
-import java.util.List;
-import javax.persistence.OneToMany;
 import com.haulmont.cuba.core.entity.annotation.Lookup;
 import com.haulmont.cuba.core.entity.annotation.LookupType;
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+
+import javax.persistence.*;
+import java.math.BigDecimal;
+import java.util.List;
 
 @PrimaryKeyJoinColumn(name = "STOCK_ITEM_ID", referencedColumnName = "ID")
 @Table(name = "WORKS_CONTAINER")

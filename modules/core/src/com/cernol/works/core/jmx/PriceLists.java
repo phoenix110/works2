@@ -75,6 +75,18 @@ public class PriceLists implements PriceListsMBean {
                         Container container = productContainer.getContainer();
                         priceContainer = stockItemService.getPointInTimeCost(container.getId(), onDate);
 
+                        if ((container.getUnitsPerShipper() != null) && (container.getUnitsPerShipper() > 0)) {
+                            if (container.getPacking() != null) {
+
+                                BigDecimal unitCost = stockItemService.getPointInTimeCost(container.getPacking().getId(),
+                                        onDate);
+                                BigDecimal containerQuantity = BigDecimal.valueOf(1);
+                                BigDecimal containersPerShipper = BigDecimal.valueOf(container.getUnitsPerShipper());
+                                pricePacking = unitCost.multiply(containerQuantity
+                                        .divide(containersPerShipper,2,BigDecimal.ROUND_HALF_UP));
+                            }
+                        }
+
                         BigDecimal containerMass = container.getCapacity().multiply(product.getSpecificGravity());
 
                         prodcutFormulaList = product.getFormula();
@@ -158,8 +170,9 @@ public class PriceLists implements PriceListsMBean {
                                 onDate,
                                 priceRawMaterial,
                                 priceContainer,
-                                priceOverhead,
+                                pricePacking,
                                 priceLabel,
+                                priceOverhead,
                                 priceTotal);
 
                     }
@@ -191,8 +204,9 @@ public class PriceLists implements PriceListsMBean {
                                          Date priceOn,
                                          BigDecimal rawMaterialCost,
                                          BigDecimal containerCost,
-                                         BigDecimal overheadCost,
+                                         BigDecimal packingCost,
                                          BigDecimal labelCost,
+                                         BigDecimal overheadCost,
                                          BigDecimal price) {
         try (Transaction tx = persistence.createTransaction()) {
             TypedQuery<PriceList> query = persistence.getEntityManager().createQuery(
@@ -216,6 +230,7 @@ public class PriceLists implements PriceListsMBean {
                 priceList.setPriceOn(priceOn);
                 priceList.setRawMaterialCost(rawMaterialCost);
                 priceList.setContainerCost(containerCost);
+                priceList.setPackingCost(packingCost);
                 priceList.setOverheadCost(overheadCost);
                 priceList.setLabelCost(labelCost);
                 priceList.setPrice(price);
@@ -227,6 +242,7 @@ public class PriceLists implements PriceListsMBean {
 
                 priceList.setRawMaterialCost(rawMaterialCost);
                 priceList.setContainerCost(containerCost);
+                priceList.setPackingCost(packingCost);
                 priceList.setOverheadCost(overheadCost);
                 priceList.setLabelCost(labelCost);
                 priceList.setPrice(price);

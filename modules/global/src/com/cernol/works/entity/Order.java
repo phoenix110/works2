@@ -1,26 +1,15 @@
 package com.cernol.works.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
 import com.haulmont.chile.core.annotations.MetaProperty;
-import java.math.BigDecimal;
-import java.util.Date;
-import javax.persistence.Column;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-import javax.persistence.Transient;
-import com.haulmont.cuba.core.entity.StandardEntity;
 import com.haulmont.chile.core.annotations.NamePattern;
-import javax.persistence.InheritanceType;
-import javax.persistence.DiscriminatorType;
-import javax.persistence.Inheritance;
-import javax.persistence.DiscriminatorColumn;
+import com.haulmont.cuba.core.entity.StandardEntity;
 import com.haulmont.cuba.core.entity.annotation.Listeners;
 import com.haulmont.cuba.core.entity.annotation.Lookup;
 import com.haulmont.cuba.core.entity.annotation.LookupType;
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+
+import javax.persistence.*;
+import java.math.BigDecimal;
+import java.util.Date;
 
 @Listeners("works_OrderEntityListener")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
@@ -57,22 +46,22 @@ public class Order extends StandardEntity {
     @Column(name = "UNIT", nullable = false)
     protected String unit = Unit.Litre.toString();
 
-    @MetaProperty(datatype = PartsPer100Datatype.NAME, mandatory = true)
+    @MetaProperty(datatype = "partsPer100", mandatory = true)
     @Column(name = "VOLUME", nullable = false)
     protected BigDecimal volume = BigDecimal.ZERO;
 
     @Column(name = "MASS", nullable = false)
     protected BigDecimal mass = BigDecimal.ZERO;
 
-    @MetaProperty(datatype = CurrencyDatatype.NAME, mandatory = true)
+    @MetaProperty(datatype = "currency", mandatory = true)
     @Column(name = "RAW_MATERIAL_COST", nullable = false)
     protected BigDecimal rawMaterialCost = BigDecimal.ZERO;
 
-    @MetaProperty(datatype = CurrencyDatatype.NAME, mandatory = true)
+    @MetaProperty(datatype = "currency", mandatory = true)
     @Column(name = "CONTAINER_COST", nullable = false)
     protected BigDecimal containerCost = BigDecimal.ZERO;
 
-    @MetaProperty(datatype = CurrencyDatatype.NAME, mandatory = true)
+    @MetaProperty(datatype = "currency", mandatory = true)
     @Column(name = "LABLE_COST", nullable = false)
     protected BigDecimal lableCost = BigDecimal.ZERO;
 
@@ -80,14 +69,12 @@ public class Order extends StandardEntity {
     @Column(name = "PACKING_COST")
     protected BigDecimal packingCost = BigDecimal.ZERO;
 
-    @MetaProperty(datatype = CurrencyDatatype.NAME, mandatory = true)
+    @MetaProperty(datatype = "currency", mandatory = true)
     @Column(name = "OVERHEAD_COST", nullable = false)
     protected BigDecimal overheadCost = BigDecimal.ZERO;
 
     @Transient
-    @MetaProperty(datatype = CurrencyDatatype.NAME,
-            mandatory = true,
-            related = {"rawMaterialCost", "containerCost", "lableCost", "overheadCost"})
+    @MetaProperty(datatype = "currency", mandatory = true, related = {"rawMaterialCost", "containerCost", "lableCost", "overheadCost"})
     protected BigDecimal totalCost = BigDecimal.ZERO;
 
     @Column(name = "CURRENT_STATUS", nullable = false)

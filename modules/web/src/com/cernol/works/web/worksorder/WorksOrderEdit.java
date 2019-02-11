@@ -408,26 +408,31 @@ public class WorksOrderEdit extends AbstractEditor<WorksOrder> {
 
         removeAllShippers();
 
-        List<WorksOrderPacking> worksOrderPackingList;
-        worksOrderPackingList = getItem().getWorksOrderPackings();
-        if (worksOrderPackingList.size() > 0) {
+        for (WorksOrderPacking worksOrderPacking : new ArrayList<>(worksOrderPackingsDs.getItems())) {
+            com.cernol.works.entity.Container container = worksOrderPacking.getContainer();
 
-            for (WorksOrderPacking worksOrderPacking : worksOrderPackingList) {
-               if (worksOrderPacking.getContainer().getPacking() != null) {
-/*                     WorksOrderShipper worksOrderShipper = metadata.create(WorksOrderShipper.class);
-                    worksOrderShipper.setPacking(worksOrderPacking.getContainer().getPacking());
-                    worksOrderShipper.setQuantity(BigDecimal.ZERO);
+            if ((container.getUnitsPerShipper() != null) && (container.getUnitsPerShipper() > 0)) {
+                Packing packing = container.getPacking();
+
+                if (packing != null) {
+                    WorksOrderShipper worksOrderShipper = metadata.create(WorksOrderShipper.class);
+                    worksOrderShipper.setWorksOrder(getItem());
+                    worksOrderShipper.setPacking(packing);
                     worksOrderShipper.setUnitCost(stockItemService.getPointInTimeCost(
-                            worksOrderPacking.getContainer().getPacking().getId(),
+                            packing.getId(),
                             getItem().getDocumentOn()));
+                    BigDecimal containerQuantity = BigDecimal.valueOf(worksOrderPacking.getQuantity());
+                    BigDecimal containersPerShipper = BigDecimal.valueOf(container.getUnitsPerShipper());
+                    worksOrderShipper.setQuantity(containerQuantity.divide(containersPerShipper,2,BigDecimal.ROUND_HALF_UP));
 
-                    worksOrderShippersDs.addItem(worksOrderShipper);*/
+                    worksOrderShippersDs.addItem(worksOrderShipper);
+
                 }
 
             }
         }
 
-        worksOrderShippersDs.commit();
+
     }
 
     private void removeAllShippers() {
